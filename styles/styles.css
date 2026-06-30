@@ -54,6 +54,14 @@ img {
   background-color: var(--color-primary);
 }
 
+.fill-dark {
+  fill: var(--color-dark);
+}
+
+.fill-light {
+  fill: var(--color-white);
+}
+
 /* .bg-white {
   background-color: var(--color-bg-light);
 }
@@ -173,6 +181,69 @@ img {
 @media screen and (min-width: 90em) {
 }
 
+/* *************** ICONS *************** */
+.icon {
+  height: 1rem;
+  width: auto;
+}
+
+.icon-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.icon-svg {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (min-width: 18em) {
+  .icon-xs-lg {
+    height: clamp(1rem, 0.8548rem + 0.8065vw, 1.5rem);
+  }
+}
+
+/* *************** CARDS *************** */
+.list-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-oneline {
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+/* *************** BUTTONS *************** */
+.btn-icon,
+.btn-no-fill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.btn-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.3rem;
+}
+
+.btn-no-fill {
+  width: 1rem;
+  height: 1rem;
+  padding: 0;
+}
+
 /* ********************* HEADER ********************* */
 .header-container {
   display: flex;
@@ -213,23 +284,5 @@ img {
     padding-top: 2rem;
   }
 }
-/* ****** Icons ****** */
-.icon {
-  height: 1rem;
-  width: auto;
-}
 
-.icon-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0;
-  cursor: pointer;
-}
-
-@media screen and (min-width: 18em) {
-  .icon-xs-lg {
-    height: clamp(1rem, 0.8548rem + 0.8065vw, 1.5rem);
-  }
-}
+/* ********************* MAIN ********************* */
