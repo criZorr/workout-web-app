@@ -40,6 +40,18 @@ img {
   height: auto;
 }
 
+input,
+select {
+  border: none;
+  width: 100%;
+}
+
+select {
+  background-color: transparent;
+  appearance: none;
+  cursor: pointer;
+}
+
 /* *********************  ********************* */
 /* SmartWatch:  144px ->  9rem */
 /* Phone:       288px -> 18rem */
@@ -60,6 +72,10 @@ img {
 
 .fill-light {
   fill: var(--color-white);
+}
+
+.fill-fst {
+  fill: var(--color-primary);
 }
 
 /* .bg-white {
@@ -125,6 +141,10 @@ img {
 @media screen and (min-width: 18em) {
   .txt-s3-sm {
     font-size: 1.25rem;
+  }
+
+  .txt-s4-sm {
+    font-size: 1rem;
   }
 }
 
@@ -193,7 +213,7 @@ img {
 }
 
 /* **************** VISUALS **************** */
-.dp-none {
+/* .dp-none {
   display: none;
 }
 
@@ -218,7 +238,7 @@ img {
 }
 
 @media screen and (min-width: 90em) {
-}
+} */
 
 /* *************** ICONS *************** */
 .icon {
@@ -255,7 +275,21 @@ img {
   align-items: center;
 }
 
-.card-oneline {
+.list-option {
+  border-bottom: thin solid var(--color-grey-light);
+  padding-block: 0.5rem;
+}
+
+.list-option-fst {
+  padding-top: 0rem;
+}
+
+.list-option-lst {
+  border-bottom: none;
+  padding-bottom: 0rem;
+}
+
+.card-container {
   padding-inline: 1rem;
   padding-block: 0.5rem;
 }
@@ -272,11 +306,20 @@ img {
   .banner-img {
     max-height: clamp(5rem, 1.5714rem + 19.0476vw, 9rem);
   }
+
+  .list-option-fst {
+    padding-top: 0.25rem;
+  }
+
+  .list-option-lst {
+    padding-bottom: 0.25rem;
+  }
 }
 
 /* *************** BUTTONS *************** */
 .btn-icon,
-.btn-no-fill {
+.btn-no-fill,
+.btn-xs-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -290,18 +333,46 @@ img {
   padding: 0.3rem;
 }
 
-@media screen and (min-width: 18em) {
-  .btn-icon-sm {
-    width: 2rem;
-    height: 2rem;
-    padding: 0.5rem;
-  }
+.btn-xs-icon {
+  width: 1rem;
+  height: 1rem;
+  padding: 0.25rem;
+  border-radius: 37.5%;
 }
 
 .btn-no-fill {
   width: 1rem;
   height: 1rem;
   padding: 0;
+}
+
+.btn-icons-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 18em) {
+  .btn-icon-sm {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+  }
+
+  .btn-xs-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0.3rem;
+  }
+
+  .btn-no-fill-sm {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .btn-icons-container {
+    gap: 1rem;
+  }
 }
 
 /* ********************* HEADER ********************* */
@@ -346,8 +417,8 @@ img {
   }
 }
 
-/* ********************* MAIN ********************* */
-.main {
+/* ********************* MAIN PAGE ********************* */
+.main-page {
   display: grid;
   gap: 1rem;
   padding: 0.5rem;
@@ -360,18 +431,18 @@ img {
 }
 
 @media screen and (min-width: 18em) {
-  .main {
+  .main-page {
     padding: 1rem;
     margin-bottom: 4rem;
   }
 }
 
 @media screen and (min-width: 39em) {
-  .main {
+  .main-page {
     padding: 2rem;
   }
 
-  .main > .card-oneline {
+  .main-page > .card-container {
     grid-row: span 1;
     grid-column: span 2;
     max-width: calc(50% - 0.5rem);
@@ -379,12 +450,12 @@ img {
 }
 
 @media screen and (min-width: 80em) {
-  .main {
+  .main-page {
     margin-bottom: 0;
     row-gap: 2rem;
   }
 
-  .main > .card-oneline {
+  .main-page > .card-container {
     grid-row: span 1;
     grid-column: span 3;
     max-width: calc(33.3333333% - 0.5rem);
@@ -395,10 +466,40 @@ img {
   .max-container {
     max-width: 81rem;
   }
+}
 
-  .main > .card-oneline {
-    grid-row: span 1;
-    grid-column: span 3;
-    max-width: calc(33.3333333% - 0.5rem);
+/* ********************* CREATE PAGE ********************* */
+.create-page {
+  display: grid;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* **************** VISUALS **************** */
+.dp-none {
+  display: none;
+}
+
+.shadow {
+  box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
+}
+
+.radio-sm {
+  border-radius: 0.5rem;
+}
+
+@media screen and (min-width: 18em) {
+  .dp-block-sm {
+    display: block;
   }
+}
+
+@media screen and (min-width: 39em) {
+}
+
+@media screen and (min-width: 80em) {
+}
+
+@media screen and (min-width: 90em) {
 }
