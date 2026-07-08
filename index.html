@@ -683,26 +683,7 @@
       </article>
     </main>
     <section class="modal-container">
-      <article class="modal bg-white radio-sm-sm shadow-sm">
-        <!-- <section class="card-container radio-sm bg-white shadow">
-          <section class="list-btn">
-            <p class="txt-s4 txt-s3-sm txt-regular">Create routine</p>
-            <div class="btn-icon btn-icon-sm bg-fst">
-              <div class="icon-svg">
-                <svg
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="auto"
-                >
-                  <path
-                    class="fill-light"
-                    d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </section>
-        </section> -->
+      <article class="modal bg-white radio-sm-sm shadow-sm dp-none">
         <section class="card-container radio-sm bg-white shadow">
           <section class="list-btn">
             <select class="txt-s5 txt-s4-sm txt-regular" name="" id="">
@@ -1270,6 +1251,41 @@
         <section class="btns-container">
           <div class="btn border-fst">
             <p class="txt-s4 txt-bold">Cancel</p>
+          </div>
+        </section>
+      </article>
+      <article class="modal-card bg-white radio-sm-sm shadow-sm">
+        <p class="txt-s4 txt-bold">Workout name</p>
+        <img
+          src="./assets/img/placeholder.jpg"
+          alt=""
+          class="dp-none dp-block-sm"
+        />
+        <section class="option-bar bg-white radio-sm shadow">
+          <input type="radio" name="tabs" id="tab-1" />
+          <label for="tab-1" class="option-bar-item">
+            <p class="txt-s5 txt-semibold">Time</p>
+          </label>
+          <input type="radio" name="tabs" id="tab-2" />
+          <label for="tab-2" class="option-bar-item">
+            <p class="txt-s5 txt-semibold">Reps</p>
+          </label>
+          <div class="underline border-fst"></div>
+        </section>
+        <input
+          class="card-container radio-sm bg-white shadow txt-s4 txt-regular"
+          type="number"
+          min="0"
+          name=""
+          id=""
+          placeholder="Times"
+        />
+        <section class="btns-container">
+          <div class="btn border-fst">
+            <p class="txt-s4 txt-bold">Cancel</p>
+          </div>
+          <div class="btn border-fst btn-fill bg-fst">
+            <p class="txt-s4 txt-bold txt-white">Save</p>
           </div>
         </section>
       </article>
