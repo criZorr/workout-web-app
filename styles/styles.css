@@ -694,6 +694,12 @@ select {
     width: clamp(16rem, 2.2857rem + 76.1905vw, 32rem);
     height: 80dvh;
   }
+
+  .modal-card {
+    padding: 1rem;
+    height: auto;
+    width: 16rem;
+  }
 }
 
 @media screen and (min-width: 39em) {
