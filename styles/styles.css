@@ -456,7 +456,8 @@ select {
   .header {
     position: sticky;
     padding-top: 2rem;
-    padding-bottom: 0;
+    padding-bottom: 1rem;
+    top: 0;
   }
 }
 
@@ -497,6 +498,7 @@ select {
   .main-page {
     margin-bottom: 0;
     row-gap: 2rem;
+    padding-top: 1rem;
   }
 
   .main-page > .card-container {
