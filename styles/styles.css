@@ -190,6 +190,12 @@ select {
   color: var(--color-primary-dark);
 }
 
+.p-one-line {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* **************** GRIDS **************** */
 .col-12 {
   width: 100%;
@@ -209,17 +215,18 @@ select {
   width: 16.6666666%;
 }
 
-@media screen and (min-width: 39em) {
+/* @media screen and (min-width: 39em) {
   .md-2col {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, calc((100% / 2) - 1rem));
   }
-}
+} */
 
-@media screen and (min-width: 80em) {
+/* @media screen and (min-width: 80em) {
   .lg-3col {
     grid-template-columns: repeat(3, 1fr);
   }
-}
+} */
 
 /* **************** VISUALS **************** */
 /* .dp-none {
@@ -282,6 +289,7 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .list-option {
@@ -468,6 +476,7 @@ select {
   gap: 1rem;
   padding: 0.5rem;
   margin-bottom: 3rem;
+  grid-template-columns: 100%;
 }
 
 .max-container {
@@ -492,6 +501,10 @@ select {
     grid-column: span 2;
     max-width: calc(50% - 0.5rem);
   }
+
+  .md-2col {
+    grid-template-columns: repeat(2, calc((100% - 1rem) / 2));
+  }
 }
 
 @media screen and (min-width: 80em) {
@@ -505,6 +518,10 @@ select {
     grid-row: span 1;
     grid-column: span 3;
     max-width: calc(33.3333333% - 0.5rem);
+  }
+
+  .lg-3col {
+    grid-template-columns: repeat(3, calc((100% - 2rem) / 3));
   }
 }
 
