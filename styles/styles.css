@@ -203,7 +203,7 @@ select {
 }
 
 .w-100 {
-  width: 100%;
+  max-width: 100%;
 }
 
 /* **************** GRIDS **************** */
@@ -676,10 +676,10 @@ select {
   width: auto;
 }
 
-.action-content > .description {
+.description {
   overflow-y: scroll;
   scrollbar-width: thin;
-  height: 15dvh;
+  max-height: 15dvh;
 }
 
 .action-content {
@@ -762,8 +762,8 @@ select {
     scrollbar-width: thin;
   }
 
-  .action-content > .description {
-    height: 20dvh;
+  .description {
+    max-height: 20dvh;
   }
 }
 
@@ -807,11 +807,11 @@ select {
 /* ************ MODAL CARD ************ */
 .modal-card {
   align-items: center;
-  max-height: 90dvh;
 }
 
 .modal-card > img {
   height: 8rem;
+  height: clamp(8rem, 4.5714rem + 19.0476vw, 12rem);
   width: auto;
 }
 
@@ -871,6 +871,7 @@ select {
     height: auto;
     width: 16rem;
     width: clamp(16rem, -0.2857rem + 90.4762vw, 35rem);
+    max-height: 90dvh;
   }
 }
 
