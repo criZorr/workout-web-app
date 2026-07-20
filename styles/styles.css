@@ -648,16 +648,7 @@ select {
   align-items: center;
   border-bottom-width: 0.125rem;
   border-bottom-style: solid;
-}
-
-.action-content > p {
-  align-self: center;
-}
-
-.action-content > img {
-  align-self: center;
-  height: clamp(8rem, 4.5714rem + 19.0476vw, 12rem);
-  width: auto;
+  z-index: 2;
 }
 
 .action-list {
@@ -675,7 +666,20 @@ select {
 }
 
 .action-content > p {
+  align-self: center;
   padding-inline: 0.5rem;
+}
+
+.action-content > img {
+  align-self: center;
+  height: clamp(8rem, 4.5714rem + 19.0476vw, 12rem);
+  width: auto;
+}
+
+.action-content > .description {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  height: 15dvh;
 }
 
 .action-content {
@@ -756,6 +760,10 @@ select {
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
+  }
+
+  .action-content > .description {
+    height: 20dvh;
   }
 }
 
