@@ -395,6 +395,7 @@ select {
   box-sizing: border-box;
   border-width: 0.125rem;
   border-style: solid;
+  transition: transform 75ms ease-in;
 }
 
 .btns-container {
@@ -403,6 +404,16 @@ select {
   gap: 1rem;
   align-items: center;
   justify-content: center;
+}
+
+.btn-icon:hover,
+.btn-no-fill:hover,
+.btn-xs-icon:hover {
+  opacity: 0.85;
+}
+
+.btn:hover {
+  transform: scale(1.075);
 }
 
 @media screen and (min-width: 18em) {
