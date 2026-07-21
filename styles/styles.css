@@ -3,9 +3,12 @@
   --color-primary-dark: #1a3325;
   --color-primary-dark-25: #1a332540;
   --color-primary-light: #3fc47e;
+  --color-primary-light-25: #3fc47e40;
   --color-complementary: #b01100;
   --color-bg-light: #fafafa;
-  --color-bg-dark: #2a2a2a;
+  --color-bg-light-75: #fafafabf;
+  --color-bg-dark: #0f0f0f;
+  --color-bg-dark-75: #0f0f0fbf;
   --color-white: #ffffff;
   --color-dark: #000000;
   --color-dark-alpha: #000000bf;
@@ -44,6 +47,7 @@ input,
 select {
   border: none;
   width: 100%;
+  background-color: inherit;
 }
 
 select {
@@ -66,8 +70,10 @@ select {
   background-color: var(--color-primary);
 }
 
-.bg-white {
+.color-os .bg-white,
+.color-light .bg-white {
   background-color: var(--color-bg-light);
+  transition: background-color 125ms ease-out;
 }
 
 .bg-dark-alpha {
@@ -88,6 +94,109 @@ select {
 
 .border-fst {
   border-color: var(--color-primary);
+}
+
+.color-os .txt-white,
+.color-light .txt-white {
+  color: var(--color-white);
+  transition: color 125ms ease-out;
+}
+
+.color-os .txt-dark,
+.color-light .txt-dark {
+  color: var(--color-dark);
+  transition: color 125ms ease-out;
+}
+
+.color-os .txt-grey,
+.color-light .txt-grey {
+  color: var(--color-grey-dark);
+}
+
+.txt-fst {
+  color: var(--color-primary-dark);
+}
+
+.color-os .shadow,
+.color-light .shadow {
+  box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
+}
+
+@media screen and (min-width: 18em) {
+  .color-os .shadow-sm,
+  .color-light .shadow-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
+  }
+}
+
+@media screen and (min-width: 80em) {
+  .color-os .shadow-lg,
+  .color-light .shadow-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
+  }
+}
+
+.color-os .hidden-deg,
+.color-light .hidden-deg {
+  background-image: linear-gradient(
+    to top,
+    var(--color-bg-light) 5%,
+    transparent 75%
+  );
+
+  @media screen and (min-width: 80em) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-bg-light) 10%,
+      transparent 75%
+    );
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .color-os .bg-white {
+    background-color: var(--color-bg-dark);
+  }
+
+  .color-os .txt-dark {
+    color: var(--color-white);
+  }
+
+  .color-os .txt-grey {
+    color: var(--color-grey-light);
+  }
+
+  .color-os .shadow {
+    box-shadow: 0 0 0.25rem 0.05rem var(--color-primary-light-25);
+  }
+
+  @media screen and (min-width: 18em) {
+    .color-os .shadow-sm {
+      box-shadow: 0 0 0.25rem 0 var(--color-primary-light-25);
+    }
+  }
+
+  @media screen and (min-width: 80em) {
+    .color-os .shadow-lg {
+      box-shadow: 0 0 0.25rem 0 var(--color-primary-light-25);
+    }
+  }
+
+  .color-os .hidden-deg {
+    background-image: linear-gradient(
+      to top,
+      var(--color-bg-dark) 5%,
+      transparent 75%
+    );
+
+    @media screen and (min-width: 80em) {
+      background-image: linear-gradient(
+        to bottom,
+        var(--color-bg-dark) 10%,
+        transparent 75%
+      );
+    }
+  }
 }
 
 /*
@@ -177,18 +286,6 @@ select {
 .txt-res-s4-sm {
   font-size: clamp(0.875rem, 0.7727rem + 1.1364vw, 1rem);
 } */
-
-.txt-white {
-  color: var(--color-white);
-}
-
-.txt-grey {
-  color: var(--color-grey-dark);
-}
-
-.txt-fst {
-  color: var(--color-primary-dark);
-}
 
 .p-one-line {
   text-overflow: ellipsis;
@@ -483,6 +580,12 @@ select {
 
   .header {
     padding: 1rem;
+  }
+}
+
+@media screen and (min-width: 39em) {
+  .header-container {
+    padding-block: 0.75rem;
   }
 }
 
@@ -897,10 +1000,6 @@ select {
   display: none;
 }
 
-.shadow {
-  box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
-}
-
 .radio-sm {
   border-radius: 0.5rem;
 }
@@ -908,10 +1007,6 @@ select {
 @media screen and (min-width: 18em) {
   .dp-block-sm {
     display: block;
-  }
-
-  .shadow-sm {
-    box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
   }
 
   .radio-sm-sm {
@@ -923,10 +1018,6 @@ select {
 }
 
 @media screen and (min-width: 80em) {
-  .shadow-lg {
-    box-shadow: 0 0 0.25rem 0 var(--color-primary-dark-25);
-  }
-
   .radio-sm-lg {
     border-radius: 0.5rem;
   }
