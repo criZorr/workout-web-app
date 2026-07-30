@@ -48,6 +48,7 @@ img {
 input,
 select {
   border: none;
+  padding: 0;
   width: 100%;
   background-color: inherit;
 }
@@ -61,6 +62,7 @@ select {
   background-color: transparent;
   appearance: none;
   cursor: pointer;
+  padding-right: 1.5rem;
 }
 
 /* *********************  ********************* */
@@ -355,6 +357,56 @@ select {
   .icon-xs-lg {
     height: clamp(1rem, 0.8548rem + 0.8065vw, 1.5rem);
   }
+}
+
+/* *************** CUSTOM ELEMENTS *************** */
+.custom-select {
+  position: relative;
+}
+
+.custom-select > div {
+  position: absolute;
+  right: 0;
+}
+
+.custom-select > select {
+  z-index: 2;
+}
+
+.custom-radio {
+  min-width: 1rem;
+  min-height: 1rem;
+  max-width: 1rem;
+  max-height: 1rem;
+  border-radius: 50%;
+  border-width: 0.0625rem;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+}
+
+.custom-radio > div {
+  min-width: 0.75rem;
+  min-height: 0.75rem;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 0;
+  transition: border 125ms ease-in;
+}
+
+input[type="radio"]:checked ~ .custom-radio > div {
+  border-width: 0.25rem;
+}
+
+.radio-html {
+  opacity: 0;
+  height: 1rem;
+  width: 1rem;
+  z-index: 2;
+  cursor: pointer;
 }
 
 /* *************** CARDS *************** */
@@ -870,6 +922,8 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .btn-day,
@@ -905,6 +959,11 @@ select {
 .daily-time {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
+}
+
+.daily-time > p {
+  max-width: 50%;
 }
 
 .days-info {
@@ -944,10 +1003,6 @@ select {
 
   .calendar-days > p {
     width: 100%;
-  }
-
-  .calendar-counter {
-    flex: 1;
   }
 
   .calendar-counter-container {
@@ -1036,43 +1091,6 @@ select {
 }
 
 /* ********************* SETTINGS PAGE ********************* */
-
-.custom-radio {
-  min-width: 1rem;
-  min-height: 1rem;
-  max-width: 1rem;
-  max-height: 1rem;
-  border-radius: 50%;
-  border-width: 0.0625rem;
-  border-style: solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 0;
-}
-
-.custom-radio > div {
-  min-width: 0.75rem;
-  min-height: 0.75rem;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 0;
-  transition: border 125ms ease-in;
-}
-
-input[type="radio"]:checked ~ .custom-radio > div {
-  border-width: 0.25rem;
-}
-
-.radio-html {
-  opacity: 0;
-  height: 1rem;
-  width: 1rem;
-  z-index: 2;
-  cursor: pointer;
-}
-
 .radio-container {
   position: relative;
   display: flex;
@@ -1112,6 +1130,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
     flex-direction: column;
     gap: 0.5rem;
     flex: 1;
+    min-width: 0;
   }
 
   .settings-opts {
@@ -1125,19 +1144,6 @@ input[type="radio"]:checked ~ .custom-radio > div {
   .card-setting > .card-container {
     padding: 0.5rem;
   }
-}
-
-.custom-select {
-  position: relative;
-}
-
-.custom-select > div {
-  position: absolute;
-  right: 0;
-}
-
-.custom-select > select {
-  z-index: 2;
 }
 /* ********************* MODALS ********************* */
 /* ************ MODAL CREATE ************ */
