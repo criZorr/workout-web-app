@@ -1,7 +1,25 @@
 {
   "0": {
-    "id": 0,
-    "name": "Workout name",
+    "name": "Push ups",
+    "weight": "body",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur laborum exercitationem optio? Magnam rem voluptates, quia vel, maiores tenetur asperiores optio quidem, doloremque minima blanditiis voluptate incidunt quisquam! Explicabo, corrupti.",
+    "img": "./assets/workouts/name.webp"
+  },
+  "1": {
+    "name": "Squats",
+    "weight": "body",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur laborum exercitationem optio? Magnam rem voluptates, quia vel, maiores tenetur asperiores optio quidem, doloremque minima blanditiis voluptate incidunt quisquam! Explicabo, corrupti.",
+    "img": "./assets/workouts/name.webp"
+  },
+  "2": {
+    "name": "Biceps curl",
+    "weight": "extra",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur laborum exercitationem optio? Magnam rem voluptates, quia vel, maiores tenetur asperiores optio quidem, doloremque minima blanditiis voluptate incidunt quisquam! Explicabo, corrupti.",
+    "img": "./assets/workouts/name.webp"
+  },
+  "3": {
+    "name": "Pull ups",
+    "weight": "body",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur laborum exercitationem optio? Magnam rem voluptates, quia vel, maiores tenetur asperiores optio quidem, doloremque minima blanditiis voluptate incidunt quisquam! Explicabo, corrupti.",
     "img": "./assets/workouts/name.webp"
   }
