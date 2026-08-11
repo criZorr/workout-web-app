@@ -1,15 +1,16 @@
 {
   "0": {
     "name": "Test",
-    "image": "url",
-    "times": 3,
-    "rest-general": 10,
+    "image": "placeholder",
+    "times": 1,
+    "rest-general": 30,
     "workouts": {
       "0": {
-        "id": 0,
+        "id": 662,
         "time": 0,
-        "reps": 20,
-        "rest-time": 0
+        "reps": 10,
+        "series": 1,
+        "rest-focus": 0
       },
       "1": { "id": 1, "time": 10, "reps": 0, "rest-focus": 20 },
       "2": { "id": 2, "time": 0, "reps": 60, "rest-focus": 0 },
