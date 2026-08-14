@@ -1,9 +1,13 @@
 import { HomePage } from "./components/HomePage.js";
+import Header from "./components/Header.js";
 import getData from "./helpers/getData.js";
+import CalendarPage from "./components/CalendarPage.js";
 
 const d = document,
   w = window,
   $main = d.querySelector(".main");
+
+let props = {};
 
 const $test = d.querySelector(".test");
 
@@ -65,10 +69,21 @@ fetch("./db/exercises.json")
   })
   .catch((err) => console.log(err));
 
+const calendarContent = () => {
+  const $mainPage = d.querySelector(".calendar-page");
+  // $mainPage.innerHTML = null;
+  $mainPage.appendChild(CalendarPage(props));
+};
+
 const homeContent = () => {
   const $mainPage = d.querySelector(".main-page");
   $mainPage.innerHTML = null;
-  $mainPage.appendChild(HomePage());
+  $mainPage.appendChild(HomePage(props));
+};
+
+const paintHeader = () => {
+  const $header = d.querySelector(".header");
+  $header.appendChild(Header(props));
 };
 
 const paintMain = (namePage) => {
@@ -84,6 +99,7 @@ const router = () => {
   if (!hash || hash === "home") hash = "main";
   paintMain(hash);
   if (hash === "main") homeContent();
+  if (hash === "calendar") calendarContent();
 };
 
 const localData = async () => {
@@ -94,10 +110,24 @@ const localData = async () => {
   if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto");
   if (!localStorage.getItem("color")) localStorage.setItem("color", "green");
   if (!localStorage.getItem("language")) localStorage.setItem("language", "en");
+  if (!localStorage.getItem("maxStreak"))
+    localStorage.setItem("maxStreak", "40");
+  if (!localStorage.getItem("streak")) localStorage.setItem("streak", "10");
+  if (!localStorage.getItem("lastDay")) localStorage.setItem("lastDay", "");
+  if (!localStorage.getItem("totalTime"))
+    localStorage.setItem("totalTime", "0");
+  if (!localStorage.getItem("workTime")) localStorage.setItem("workTime", "0");
+  if (!localStorage.getItem("workedDays"))
+    localStorage.setItem("workedDays", JSON.stringify({}));
+
+  props.theme = localStorage.getItem("theme");
+  props.color = localStorage.getItem("color");
+  props.lang = localStorage.getItem("language");
 };
 
-d.addEventListener("DOMContentLoaded", async (e) => {
+d.addEventListener("DOMContentLoaded", async () => {
   await localData();
+  paintHeader();
   router();
 });
 
