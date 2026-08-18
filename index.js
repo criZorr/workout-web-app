@@ -2,10 +2,16 @@ import { HomePage } from "./components/HomePage.js";
 import Header from "./components/Header.js";
 import getData from "./helpers/getData.js";
 import CalendarPage from "./components/CalendarPage.js";
+import SettingsPage from "./components/SettingsPage.js";
 
 const d = document,
   w = window,
-  $main = d.querySelector(".main");
+  $main = d.querySelector(".main"),
+  painter = {
+    home: HomePage,
+    calendar: CalendarPage,
+    settings: SettingsPage,
+  };
 
 let props = {};
 
@@ -69,16 +75,23 @@ fetch("./db/exercises.json")
   })
   .catch((err) => console.log(err));
 
-const calendarContent = () => {
-  const $mainPage = d.querySelector(".calendar-page");
-  // $mainPage.innerHTML = null;
-  $mainPage.appendChild(CalendarPage(props));
+const contentPainter = (hash, manager) => {
+  const $container = d.querySelector(`.${hash}-page`);
+  $container.innerHTML = null;
+  $container.appendChild(manager(props));
 };
 
-const homeContent = () => {
-  const $mainPage = d.querySelector(".main-page");
-  $mainPage.innerHTML = null;
-  $mainPage.appendChild(HomePage(props));
+const managePage = (hash) => {
+  const $icons = d.querySelectorAll(".header-container > .icon-text");
+  Array.from($icons).forEach((icon) => {
+    if (icon.hash == `#${hash}`) {
+      icon.classList.add(`active-${props.color}`);
+      icon.classList.remove(`hover-${props.color}`);
+    } else {
+      icon.classList.add(`hover-${props.color}`);
+      icon.classList.remove(`active-${props.color}`);
+    }
+  });
 };
 
 const paintHeader = () => {
@@ -86,7 +99,7 @@ const paintHeader = () => {
   $header.appendChild(Header(props));
 };
 
-const paintMain = (namePage) => {
+const showMain = (namePage) => {
   Array.from($main.children).forEach((el) => {
     el.matches(`.${namePage}-page`)
       ? el.classList.remove("dp-none")
@@ -96,10 +109,10 @@ const paintMain = (namePage) => {
 
 const router = () => {
   let hash = w.location.hash.replaceAll("#", "");
-  if (!hash || hash === "home") hash = "main";
-  paintMain(hash);
-  if (hash === "main") homeContent();
-  if (hash === "calendar") calendarContent();
+  if (!hash) hash = "home";
+  managePage(hash);
+  showMain(hash);
+  contentPainter(hash, painter[hash]);
 };
 
 const localData = async () => {

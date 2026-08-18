@@ -83,7 +83,7 @@ export default function CalendarPage(props) {
   $calendar.appendChild($calendarCard);
 
   //Streak Card
-  $streaks.classList.add("calendar-card", "streaks");
+  $streaks.classList.add("calendar-card", "streak");
   $streaks.innerHTML = `
     <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Streak</p>
     <article class="calendar-counter-container">

@@ -47,7 +47,7 @@ export function HomePage(props) {
     );
     $card.innerHTML = `
       <figure class="banner-container">
-        <div class="shadow-banner dp-none"></div>
+        <div class="shadow-banner"></div>
         <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imageName}.jpg" alt="${e.name} banner image"/>
       </figure>
       <section class="card-container">

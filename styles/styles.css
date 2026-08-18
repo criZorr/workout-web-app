@@ -4,6 +4,8 @@
   --color-green-dark-25: #133d2540;
   --color-green-light: #3fc47e;
   --color-green-light-25: #3fc47e40;
+  --color-green-light-50: #3fc47e80;
+  --color-green-light-75: #3fc47ebf;
   --color-green-comp: #b01100;
   --color-red: #b10000;
   --color-red-dark: #3d1313;
@@ -144,6 +146,22 @@ a {
   border-color: var(--color-green-light);
 }
 
+.fill-red {
+  fill: var(--color-red);
+}
+
+.fill-red-light {
+  fill: var(--color-red-light);
+}
+
+.border-red {
+  border-color: var(--color-red);
+}
+
+.border-red-light {
+  border-color: var(--color-red-light);
+}
+
 .color-os .border-grey,
 .color-light .border-grey {
   border-color: var(--color-grey-dark);
@@ -171,6 +189,14 @@ a {
 
 .txt-green-light {
   color: var(--color-green-light);
+}
+
+.txt-red {
+  color: var(--color-red);
+}
+
+.txt-red-light {
+  color: var(--color-red-light);
 }
 
 .color-os .shadow-green,
@@ -344,6 +370,10 @@ a {
   .txt-s3-md {
     font-size: 1.25rem;
   }
+
+  .txt-s4-md {
+    font-size: 1rem;
+  }
 }
 
 @media screen and (min-width: 80em) {
@@ -386,16 +416,11 @@ a {
 }
 
 /* *************** ICONS *************** */
-.icon {
-  height: 1rem;
-  width: auto;
-}
-
 .icon-text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.125rem;
   padding: 0;
   cursor: pointer;
 }
@@ -405,12 +430,6 @@ a {
   justify-content: center;
   width: 100%;
   height: 100%;
-}
-
-@media screen and (min-width: 18em) {
-  .icon-xs-lg {
-    height: clamp(1rem, 0.8548rem + 0.8065vw, 1.5rem);
-  }
 }
 
 /* *************** CUSTOM ELEMENTS *************** */
@@ -508,9 +527,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
   display: none;
 }
 
-.card-routine:hover > .btn-opts-container,
-.card-routine:hover .shadow-banner {
-  display: block;
+.btn-options > div {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 125ms ease-in;
 }
 
 .card-routine {
@@ -522,6 +542,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 .shadow-banner {
+  opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
@@ -532,6 +553,17 @@ input[type="radio"]:checked ~ .custom-radio > div {
     transparent 50%,
     black 75%
   );
+  transition: opacity 125ms ease-in;
+}
+
+.card-routine:hover div,
+.card-routine:hover .shadow-banner {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.card-routine:hover .btn-opts-container {
+  display: block;
 }
 
 @media screen and (min-width: 18rem) {
@@ -560,6 +592,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
     position: absolute;
     top: 0;
     right: 0;
+  }
+
+  .btn-opts-container {
+    display: block;
   }
 }
 
@@ -685,9 +721,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
 .header-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-inline: 1rem;
   padding-block: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 5rem;
   margin-inline: auto;
 }
 
@@ -704,8 +741,28 @@ input[type="radio"]:checked ~ .custom-radio > div {
   flex: 1;
 }
 
-.header-container > * > p {
-  max-width: 100%;
+.header-container img {
+  height: 1.5rem;
+  width: auto;
+  padding-block: 0.25rem;
+  padding-inline: clamp(0.5rem, 0rem + 5.5556vw, 1rem);
+  border-radius: 2rem;
+
+  transition-property: background-color, padding-inline;
+  transition-duration: 125ms;
+  transition-timing-function: ease-in;
+}
+
+.icon-text[class*="active"] p {
+  font-weight: 800;
+}
+
+.icon-text.active-green > img {
+  background-color: var(--color-green-light);
+}
+
+.icon-text.hover-green:hover img {
+  background-color: var(--color-green-dark-25);
 }
 
 @media screen and (min-width: 18em) {
@@ -717,11 +774,9 @@ input[type="radio"]:checked ~ .custom-radio > div {
   .header {
     padding: 1rem;
   }
-}
 
-@media screen and (min-width: 39em) {
-  .header-container {
-    padding-block: 0.75rem;
+  .icon-text[class*="active"] > img {
+    padding-inline: clamp(1rem, 0.8548rem + 0.8065vw, 1.5rem);
   }
 }
 
@@ -740,7 +795,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 /* ********************* MAIN PAGE ********************* */
-.main-page,
+.home-page,
 .create-page,
 .calendar-page,
 .settings-page {
@@ -757,7 +812,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 @media screen and (min-width: 18em) {
-  .main-page,
+  .home-page,
   .calendar-page,
   .settings-page {
     padding: 1rem;
@@ -766,12 +821,12 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 @media screen and (min-width: 39em) {
-  .main-page,
+  .home-page,
   .settings-page {
     padding: 2rem;
   }
 
-  .main-page > .card-container {
+  .home-page > .card-container {
     grid-row: span 1;
     grid-column: span 2;
     max-width: calc(50% - 0.5rem);
@@ -783,14 +838,14 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 @media screen and (min-width: 80em) {
-  .main-page,
+  .home-page,
   .settings-page {
     margin-bottom: 0;
     row-gap: 2rem;
     padding-top: 1rem;
   }
 
-  .main-page > .card-container {
+  .home-page > .card-container {
     grid-row: span 1;
     grid-column: span 3;
     max-width: calc(33.3333333% - 0.5rem);
@@ -1050,11 +1105,15 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 .btn-day:hover {
+  cursor: pointer;
 }
 
-.btn-green-shadow:hover {
-  cursor: pointer;
-  box-shadow: 0rem 0.1rem 0.15rem var(--color-green-light);
+.btn-day.active-green {
+  background-color: var(--color-green-light-75);
+}
+
+.btn-green-shadow:hover:not(.bg-green, .active-green) {
+  background-color: var(--color-green-light-25);
 }
 
 .calendar {
