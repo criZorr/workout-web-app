@@ -15,7 +15,7 @@ export function HomePage(props) {
   $addCard.innerHTML = `
     <section class="list-btn">
       <p class="txt-s4 txt-s3-sm txt-semibold txt-dark">Create routine</p>
-      <div class="btn-icon btn-icon-sm bg-${color}">
+      <div class="btn-icon btn-icon-sm bg-${color}" data-btn="create">
         <div class="icon-svg">
           <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
             <path class="fill-light" d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"/>
@@ -48,7 +48,7 @@ export function HomePage(props) {
     $card.innerHTML = `
       <figure class="banner-container">
         <div class="shadow-banner"></div>
-        <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imageName}.jpg" alt="${e.name} banner image"/>
+        <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imgName}.jpg" alt="${e.name} banner image"/>
       </figure>
       <section class="card-container">
         <section class="list-btn">
@@ -71,7 +71,7 @@ export function HomePage(props) {
               </svg>
             </div>
           </div>
-          <div class="btn-sm-icon bg-${color} btn-sm-icon-sm" data-id="${e.id}">
+          <div class="btn-sm-icon bg-${color} btn-sm-icon-sm" data-id="${e.id}" data-btn="create">
             <div class="icon-svg">
               <svg viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="fill-light" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z" fill="white"/>

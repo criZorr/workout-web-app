@@ -2,7 +2,7 @@
   {
     "id": "1",
     "name": "ZZZ",
-    "imageName": "placeholder",
+    "imgName": "placeholder",
     "times": 1,
     "seconds-general": 30,
     "workouts": {
@@ -43,7 +43,7 @@
   {
     "id": "2",
     "name": "Test2",
-    "imageName": "placeholder",
+    "imgName": "placeholder",
     "times": 1,
     "seconds-general": 30,
     "workouts": {
@@ -84,7 +84,7 @@
   {
     "id": "3",
     "name": "Furina",
-    "imageName": "placeholder",
+    "imgName": "placeholder",
     "times": 1,
     "seconds-general": 30,
     "workouts": {
@@ -125,7 +125,7 @@
   {
     "id": "4",
     "name": "Test4",
-    "imageName": "placeholder",
+    "imgName": "placeholder",
     "times": 1,
     "seconds-general": 30,
     "workouts": {
@@ -166,7 +166,7 @@
   {
     "id": "5",
     "name": "Test4",
-    "imageName": "placeholder",
+    "imgName": "placeholder",
     "times": 1,
     "seconds-general": 30,
     "workouts": {

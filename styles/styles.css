@@ -46,6 +46,7 @@ html {
 p,
 body {
   margin: 0;
+  position: relative;
 }
 
 img {
@@ -862,6 +863,21 @@ input[type="radio"]:checked ~ .custom-radio > div {
   }
 }
 
+/* ********************* INTERACTION PAGES ********************* */
+@media screen and (min-width: 80em) {
+  .interaction-container {
+    position: fixed;
+    width: 100dvw;
+    height: 100dvh;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-dark-alpha);
+    z-index: 2;
+  }
+}
+
 /* ********************* CREATE PAGE ********************* */
 .create-section {
   display: flex;
@@ -884,10 +900,13 @@ input[type="radio"]:checked ~ .custom-radio > div {
   text-indent: 0rem;
 }
 
+.create-page {
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: 18em) {
   .create-page {
     padding: 1rem;
-    margin-bottom: 4.5rem;
   }
 }
 
@@ -931,18 +950,6 @@ input[type="radio"]:checked ~ .custom-radio > div {
     grid-row: auto;
     grid-column: auto;
     flex-direction: column;
-  }
-
-  .main-modal {
-    position: fixed;
-    width: 100dvw;
-    height: 100vh;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-dark-alpha);
-    z-index: 3;
   }
 }
 
@@ -999,15 +1006,6 @@ input[type="radio"]:checked ~ .custom-radio > div {
   gap: 1rem;
   padding-inline: 0.5rem;
   padding-block: 1rem;
-}
-
-.action-page {
-  position: relative;
-  z-index: 2;
-  height: 100dvh;
-  overflow: hidden;
-  overflow-y: scroll;
-  scrollbar-width: none;
 }
 
 .counter {
@@ -1484,6 +1482,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 @media screen and (min-width: 80em) {
+  .dp-block-lg {
+    display: block;
+  }
+
   .radio-sm-lg {
     border-radius: 0.5rem;
   }

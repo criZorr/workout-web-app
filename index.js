@@ -3,14 +3,19 @@ import Header from "./components/Header.js";
 import getData from "./helpers/getData.js";
 import CalendarPage from "./components/CalendarPage.js";
 import SettingsPage from "./components/SettingsPage.js";
+import CreatePage from "./components/CreatePage.js";
 
 const d = document,
   w = window,
+  $header = d.querySelector(".header"),
   $main = d.querySelector(".main"),
+  $interaction = d.querySelector(".interaction-container"),
+  $modal = d.querySelector(".modal-container"),
   painter = {
     home: HomePage,
     calendar: CalendarPage,
     settings: SettingsPage,
+    create: CreatePage,
   };
 
 let props = {};
@@ -138,14 +143,42 @@ const localData = async () => {
   props.lang = localStorage.getItem("language");
 };
 
+const paintInteractive = (type = false, id = 0) => {
+  const $article = d.querySelector(`.${type}-page`);
+
+  painter[type](props, id);
+
+  $article.innerHTML = null;
+  $article.appendChild(painter[type](props, id));
+};
+
 d.addEventListener("DOMContentLoaded", async () => {
   await localData();
   paintHeader();
   router();
 });
 
-d.addEventListener("click", (e) => {});
+d.addEventListener("click", (e) => {
+  let btnCreate = `[data-btn="create"]`;
 
-w.addEventListener("hashchange", (e) => {
+  if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnCreate).dataset.id || false;
+
+    $header.classList.add("dp-none", "dp-block-lg");
+    $main.classList.add("dp-none", "dp-block-lg");
+    $interaction.classList.remove("dp-none");
+    $interaction.querySelector(".create-page").classList.remove("dp-none");
+    paintInteractive("create", id);
+  }
+
+  if (e.target.matches(".interaction-container")) {
+    $header.classList.remove("dp-none", "dp-block-lg");
+    $main.classList.remove("dp-none", "dp-block-lg");
+    $interaction.classList.add("dp-none");
+  }
+});
+
+w.addEventListener("hashchange", () => {
   router();
 });
