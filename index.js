@@ -4,6 +4,7 @@ import getData from "./helpers/getData.js";
 import CalendarPage from "./components/CalendarPage.js";
 import SettingsPage from "./components/SettingsPage.js";
 import CreatePage from "./components/CreatePage.js";
+import PreviewCard from "./components/PreviewCard.js";
 
 const d = document,
   w = window,
@@ -16,6 +17,7 @@ const d = document,
     calendar: CalendarPage,
     settings: SettingsPage,
     create: CreatePage,
+    preview: PreviewCard,
   };
 
 let props = {};
@@ -143,13 +145,13 @@ const localData = async () => {
   props.lang = localStorage.getItem("language");
 };
 
-const paintInteractive = (type = false, id = 0) => {
-  const $article = d.querySelector(`.${type}-page`);
+const paintInteractive = (id = 0, clase = false, type = false) => {
+  const $article = d.querySelector(`.${clase}`);
 
-  painter[type](props, id);
+  painter[type](id, props);
 
   $article.innerHTML = null;
-  $article.appendChild(painter[type](props, id));
+  $article.appendChild(painter[type](id, props));
 };
 
 d.addEventListener("DOMContentLoaded", async () => {
@@ -159,7 +161,8 @@ d.addEventListener("DOMContentLoaded", async () => {
 });
 
 d.addEventListener("click", (e) => {
-  let btnCreate = `[data-btn="create"]`;
+  let btnCreate = `[data-btn="create"]`,
+    btnStart = `[data-btn="start"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
@@ -169,13 +172,26 @@ d.addEventListener("click", (e) => {
     $main.classList.add("dp-none", "dp-block-lg");
     $interaction.classList.remove("dp-none");
     $interaction.querySelector(".create-page").classList.remove("dp-none");
-    paintInteractive("create", id);
+    paintInteractive(id, "create-page", "create");
+  }
+
+  if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnStart).dataset.id || false;
+
+    $header.classList.add("dp-none", "dp-block-lg");
+    $main.classList.add("dp-none", "dp-block-lg");
+    $interaction.classList.remove("dp-none");
+    $interaction.querySelector(".action-page").classList.remove("dp-none");
+    paintInteractive(id, "action-page", "preview");
   }
 
   if (e.target.matches(".interaction-container")) {
     $header.classList.remove("dp-none", "dp-block-lg");
     $main.classList.remove("dp-none", "dp-block-lg");
     $interaction.classList.add("dp-none");
+    $interaction.querySelector(".create-page").classList.add("dp-none");
+    $interaction.querySelector(".action-page").classList.add("dp-none");
   }
 });
 
