@@ -53,7 +53,7 @@ export function HomePage(props) {
       <section class="card-container">
         <section class="list-btn">
           <p class="txt-s4 txt-s3-sm txt-semibold p-one-line txt-dark">${e.name}</p>
-          <div class="btn-icon bg-${color} btn-icon-sm" data-id="${e.id}" data-btn="start">
+          <div class="btn-icon bg-${color} btn-icon-sm" data-id="${e.id}" data-btn="preview">
             <div class="icon-svg">
               <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                <path class="fill-light" d="M3 0V16L16 8L3 0Z" fill="white"/>

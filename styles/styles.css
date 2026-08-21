@@ -210,30 +210,6 @@ a {
   box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
 }
 
-@media screen and (min-width: 18em) {
-  .color-os .shadow-green-sm,
-  .color-light .shadow-green-sm {
-    box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
-  }
-
-  .color-os .shadow-red-sm,
-  .color-light .shadow-red-sm {
-    box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
-  }
-}
-
-@media screen and (min-width: 80em) {
-  .color-os .shadow-green-lg,
-  .color-light .shadow-green-lg {
-    box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
-  }
-
-  .color-os .shadow-red-lg,
-  .color-light .shadow-red-lg {
-    box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
-  }
-}
-
 .color-os .hidden-deg,
 .color-light .hidden-deg {
   background-image: linear-gradient(
@@ -248,6 +224,43 @@ a {
       var(--color-bg-light) 10%,
       transparent 75%
     );
+  }
+}
+
+@media screen and (min-width: 18em) {
+  .color-os .shadow-green-sm,
+  .color-light .shadow-green-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
+  }
+
+  .color-os .shadow-red-sm,
+  .color-light .shadow-red-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
+  }
+
+  .color-os .hidden-deg-sm-md,
+  .color-light .hidden-deg-sm-md {
+    background-image: linear-gradient(
+      to top,
+      var(--color-bg-light) 5%,
+      transparent 75%
+    );
+
+    @media screen and (min-width: 80em) {
+      background-image: none;
+    }
+  }
+}
+
+@media screen and (min-width: 80em) {
+  .color-os .shadow-green-lg,
+  .color-light .shadow-green-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
+  }
+
+  .color-os .shadow-red-lg,
+  .color-light .shadow-red-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
   }
 }
 
@@ -276,6 +289,14 @@ a {
     box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
   }
 
+  .color-os .hidden-deg {
+    background-image: linear-gradient(
+      to top,
+      var(--color-bg-dark) 5%,
+      transparent 75%
+    );
+  }
+
   @media screen and (min-width: 18em) {
     .color-os .shadow-green-sm {
       box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
@@ -283,6 +304,14 @@ a {
 
     .color-os .shadow-red-sm {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
+    }
+
+    .color-os .hidden-deg-sm-md {
+      background-image: linear-gradient(
+        to top,
+        var(--color-bg-dark) 5%,
+        transparent 75%
+      );
     }
   }
 
@@ -294,21 +323,17 @@ a {
     .color-os .shadow-red-lg {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
-  }
 
-  .color-os .hidden-deg {
-    background-image: linear-gradient(
-      to top,
-      var(--color-bg-dark) 5%,
-      transparent 75%
-    );
-
-    @media screen and (min-width: 80em) {
+    .color-os .hidden-deg {
       background-image: linear-gradient(
         to bottom,
         var(--color-bg-dark) 10%,
         transparent 75%
       );
+    }
+
+    .color-os .hidden-deg-sm-md {
+      background-image: none;
     }
   }
 }
@@ -715,6 +740,24 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
   .btns-container {
     flex-direction: row;
+  }
+
+  .btns-end-sm-md {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 1rem;
+    z-index: 1;
+  }
+}
+
+@media screen and (min-width: 80em) {
+  .btns-end-sm-md {
+    position: static;
+    width: auto;
+    padding-bottom: 0;
+    z-index: auto;
   }
 }
 

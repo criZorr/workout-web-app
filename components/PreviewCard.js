@@ -17,8 +17,8 @@ export default function PreviewCard(id, props) {
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark">${routine.name}</p>
     <img src="./assets/img/${routine.imgName}.jpg" alt="${routine.name} image" class="dp-none dp-block-sm"/>
     <section class="action-list-container"></section>
-    <section class="btns-container">
-      <div class="btn border-${color} btn-fill bg-${color}">
+    <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
+      <div class="btn border-${color} btn-fill bg-${color}" data-id="${id}" data-btn="start">
         <p class="txt-s4 txt-bold txt-white p-one-line">Start</p>
       </div>
     </section>

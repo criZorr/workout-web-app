@@ -5,6 +5,7 @@ import CalendarPage from "./components/CalendarPage.js";
 import SettingsPage from "./components/SettingsPage.js";
 import CreatePage from "./components/CreatePage.js";
 import PreviewCard from "./components/PreviewCard.js";
+import ActivityCard from "./components/ActivityCard.js";
 
 const d = document,
   w = window,
@@ -18,9 +19,13 @@ const d = document,
     settings: SettingsPage,
     create: CreatePage,
     preview: PreviewCard,
+    activity: ActivityCard,
   };
 
-let props = {};
+let props = {},
+  workoutDB = [],
+  routines = [],
+  actualRoutine = {};
 
 const $test = d.querySelector(".test");
 
@@ -140,9 +145,38 @@ const localData = async () => {
   if (!localStorage.getItem("workedDays"))
     localStorage.setItem("workedDays", JSON.stringify({}));
 
+  routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");
   props.color = localStorage.getItem("color");
   props.lang = localStorage.getItem("language");
+};
+
+const activityActions = (count = 0) => {
+  const $title = d.querySelector(".workout-title"),
+    $description = d.querySelector(".workout-description"),
+    $countTime = d.querySelector(".dynamic"),
+    $countReps = d.querySelector(".static"),
+    $btnsNext = d.querySelectorAll(`[data-btn="next"]`);
+
+  let workoutProps = actualRoutine.workouts[count],
+    workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id));
+
+  if (!workoutProps.time) {
+    $countTime.classList.add("dp-none");
+    $countReps.classList.remove("dp-none");
+  }
+
+  if (!workoutProps.reps) {
+    $countReps.classList.add("dp-none");
+    $countTime.classList.remove("dp-none");
+  }
+
+  Array.from($btnsNext).forEach(
+    (btn) => (btn.dataset.count = 1 + Number(count)),
+  );
+
+  $title.innerHTML = workout.name;
+  $description.innerHTML = workout.instructions[props.lang];
 };
 
 const paintInteractive = (id = 0, clase = false, type = false) => {
@@ -158,11 +192,14 @@ d.addEventListener("DOMContentLoaded", async () => {
   await localData();
   paintHeader();
   router();
+  workoutDB = await getData("./db/exercises.json");
 });
 
 d.addEventListener("click", (e) => {
   let btnCreate = `[data-btn="create"]`,
-    btnStart = `[data-btn="start"]`;
+    btnPreview = `[data-btn="preview"]`,
+    btnStart = `[data-btn="start"]`,
+    btnNext = `[data-btn="next"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
@@ -175,6 +212,19 @@ d.addEventListener("click", (e) => {
     paintInteractive(id, "create-page", "create");
   }
 
+  if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnPreview).dataset.id || false;
+
+    $header.classList.add("dp-none", "dp-block-lg");
+    $main.classList.add("dp-none", "dp-block-lg");
+    $interaction.classList.remove("dp-none");
+    $interaction.querySelector(".action-page").classList.remove("dp-none");
+
+    actualRoutine = routines.find((e) => e.id === id);
+    paintInteractive(id, "action-page", "preview");
+  }
+
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
     let id = e.target.dataset.id;
     if (!id) id = e.target.closest(btnStart).dataset.id || false;
@@ -183,7 +233,14 @@ d.addEventListener("click", (e) => {
     $main.classList.add("dp-none", "dp-block-lg");
     $interaction.classList.remove("dp-none");
     $interaction.querySelector(".action-page").classList.remove("dp-none");
-    paintInteractive(id, "action-page", "preview");
+    paintInteractive(id, "action-page", "activity");
+    activityActions();
+  }
+
+  if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`)) {
+    let id = e.target.dataset.count;
+    if (!id) id = e.target.closest(btnNext).dataset.count || false;
+    activityActions(id);
   }
 
   if (e.target.matches(".interaction-container")) {
