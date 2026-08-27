@@ -6,6 +6,8 @@ import SettingsPage from "./components/SettingsPage.js";
 import CreatePage from "./components/CreatePage.js";
 import PreviewCard from "./components/PreviewCard.js";
 import ActivityCard from "./components/ActivityCard.js";
+import DetailsCard from "./components/DetailsCard.js";
+import ModalDelete from "./components/ModalDelete.js";
 
 const d = document,
   w = window,
@@ -20,6 +22,8 @@ const d = document,
     create: CreatePage,
     preview: PreviewCard,
     activity: ActivityCard,
+    details: DetailsCard,
+    delete: ModalDelete,
   };
 
 let props = {},
@@ -87,6 +91,75 @@ fetch("./db/exercises.json")
   })
   .catch((err) => console.log(err));
 
+const paintModal = (id = 0, type = false) => {
+  $modal.innerHTML = null;
+  $modal.appendChild(painter[type](id, props));
+};
+
+const showModal = () => {
+  $modal.classList.remove("dp-none");
+};
+
+const hideModal = () => {
+  $modal.classList.add("dp-none");
+};
+
+const activityActions = (count = 0) => {
+  const $title = d.querySelector(".workout-title"),
+    $description = d.querySelector(".workout-description"),
+    $countTime = d.querySelector(".dynamic"),
+    $countReps = d.querySelector(".static"),
+    $btnsNext = d.querySelectorAll(`[data-btn="next"]`);
+
+  let workoutProps = actualRoutine.workouts[count],
+    workoutsLength = Array.from(Object.keys(actualRoutine.workouts)).length,
+    workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id));
+
+  if (!workoutProps.time) {
+    $countTime.classList.add("dp-none");
+    $countReps.classList.remove("dp-none");
+  }
+
+  if (!workoutProps.reps) {
+    $countReps.classList.add("dp-none");
+    $countTime.classList.remove("dp-none");
+  }
+
+  if (Number(count) < workoutsLength - 1) {
+    Array.from($btnsNext).forEach(
+      (btn) => (btn.dataset.count = 1 + Number(count)),
+    );
+  } else {
+    count = 0;
+    Array.from($btnsNext)[1].querySelector("p").innerHTML = "Finish";
+    Array.from($btnsNext).forEach((btn) => (btn.dataset.btn = "finish"));
+  }
+
+  $title.innerHTML = workout.name;
+  $description.innerHTML = workout.instructions[props.lang];
+};
+
+const paintInteractive = (id = 0, clase = false, type = false) => {
+  const $article = d.querySelector(`.${clase}`);
+  $article.innerHTML = null;
+  $article.appendChild(painter[type](id, props));
+};
+
+const showInteractive = (clase) => {
+  $header.classList.add("dp-none", "dp-block-lg");
+  $main.classList.add("dp-none", "dp-block-lg");
+  $interaction.classList.remove("dp-none");
+  $interaction.querySelector(`.${clase}`).classList.remove("dp-none");
+};
+
+const hideInteractive = () => {
+  $header.classList.remove("dp-none", "dp-block-lg");
+  $main.classList.remove("dp-none", "dp-block-lg");
+  $interaction.classList.add("dp-none");
+  $interaction.querySelector(".create-page").classList.add("dp-none");
+  $interaction.querySelector(".action-page").classList.add("dp-none");
+};
+
 const contentPainter = (hash, manager) => {
   const $container = d.querySelector(`.${hash}-page`);
   $container.innerHTML = null;
@@ -151,43 +224,6 @@ const localData = async () => {
   props.lang = localStorage.getItem("language");
 };
 
-const activityActions = (count = 0) => {
-  const $title = d.querySelector(".workout-title"),
-    $description = d.querySelector(".workout-description"),
-    $countTime = d.querySelector(".dynamic"),
-    $countReps = d.querySelector(".static"),
-    $btnsNext = d.querySelectorAll(`[data-btn="next"]`);
-
-  let workoutProps = actualRoutine.workouts[count],
-    workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id));
-
-  if (!workoutProps.time) {
-    $countTime.classList.add("dp-none");
-    $countReps.classList.remove("dp-none");
-  }
-
-  if (!workoutProps.reps) {
-    $countReps.classList.add("dp-none");
-    $countTime.classList.remove("dp-none");
-  }
-
-  Array.from($btnsNext).forEach(
-    (btn) => (btn.dataset.count = 1 + Number(count)),
-  );
-
-  $title.innerHTML = workout.name;
-  $description.innerHTML = workout.instructions[props.lang];
-};
-
-const paintInteractive = (id = 0, clase = false, type = false) => {
-  const $article = d.querySelector(`.${clase}`);
-
-  painter[type](id, props);
-
-  $article.innerHTML = null;
-  $article.appendChild(painter[type](id, props));
-};
-
 d.addEventListener("DOMContentLoaded", async () => {
   await localData();
   paintHeader();
@@ -199,29 +235,33 @@ d.addEventListener("click", (e) => {
   let btnCreate = `[data-btn="create"]`,
     btnPreview = `[data-btn="preview"]`,
     btnStart = `[data-btn="start"]`,
-    btnNext = `[data-btn="next"]`;
+    btnNext = `[data-btn="next"]`,
+    btnFinish = `[data-btn="finish"]`,
+    btnDetails = `[data-btn="details"]`,
+    btnDelete = `[data-btn="delete"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
     if (!id) id = e.target.closest(btnCreate).dataset.id || false;
 
-    $header.classList.add("dp-none", "dp-block-lg");
-    $main.classList.add("dp-none", "dp-block-lg");
-    $interaction.classList.remove("dp-none");
-    $interaction.querySelector(".create-page").classList.remove("dp-none");
+    showInteractive("create-page");
     paintInteractive(id, "create-page", "create");
+  }
+
+  if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnDetails).dataset.id || false;
+
+    showInteractive("action-page");
+    paintInteractive(id, "action-page", "details");
   }
 
   if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
     let id = e.target.dataset.id;
     if (!id) id = e.target.closest(btnPreview).dataset.id || false;
 
-    $header.classList.add("dp-none", "dp-block-lg");
-    $main.classList.add("dp-none", "dp-block-lg");
-    $interaction.classList.remove("dp-none");
-    $interaction.querySelector(".action-page").classList.remove("dp-none");
-
     actualRoutine = routines.find((e) => e.id === id);
+    showInteractive("action-page");
     paintInteractive(id, "action-page", "preview");
   }
 
@@ -229,26 +269,35 @@ d.addEventListener("click", (e) => {
     let id = e.target.dataset.id;
     if (!id) id = e.target.closest(btnStart).dataset.id || false;
 
-    $header.classList.add("dp-none", "dp-block-lg");
-    $main.classList.add("dp-none", "dp-block-lg");
-    $interaction.classList.remove("dp-none");
-    $interaction.querySelector(".action-page").classList.remove("dp-none");
+    showInteractive("action-page");
     paintInteractive(id, "action-page", "activity");
     activityActions();
   }
 
+  if (e.target.matches(btnFinish) || e.target.matches(`${btnFinish} *`)) {
+    hideInteractive();
+  }
+
   if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`)) {
-    let id = e.target.dataset.count;
-    if (!id) id = e.target.closest(btnNext).dataset.count || false;
-    activityActions(id);
+    let numb = e.target.dataset.count;
+    if (!numb) numb = e.target.closest(btnNext).dataset.count || false;
+    activityActions(numb);
   }
 
   if (e.target.matches(".interaction-container")) {
-    $header.classList.remove("dp-none", "dp-block-lg");
-    $main.classList.remove("dp-none", "dp-block-lg");
-    $interaction.classList.add("dp-none");
-    $interaction.querySelector(".create-page").classList.add("dp-none");
-    $interaction.querySelector(".action-page").classList.add("dp-none");
+    hideInteractive();
+  }
+
+  if (e.target.matches(btnDelete) || e.target.matches(`${btnDelete} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnDelete).dataset.id || false;
+
+    showModal();
+    paintModal(id, "delete");
+  }
+
+  if (e.target.matches(".modal-container")) {
+    hideModal();
   }
 });
 
