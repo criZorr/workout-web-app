@@ -4,332 +4,332 @@
     "name": "ZZZ",
     "imgName": "placeholder",
     "times": 1,
-    "seconds-general": 30,
-    "workouts": {
-      "0": {
-        "id": 662,
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "1": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "2": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "3": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       }
-    }
+    ]
   },
   {
     "id": "2",
     "name": "Test2",
     "imgName": "placeholder",
     "times": 1,
-    "seconds-general": 30,
-    "workouts": {
-      "0": {
-        "id": 662,
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "1": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "2": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "3": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       }
-    }
+    ]
   },
   {
     "id": "3",
     "name": "Furina",
     "imgName": "placeholder",
     "times": 1,
-    "seconds-general": 30,
-    "workouts": {
-      "0": {
-        "id": 662,
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "1": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "2": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
-        "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "series": 1,
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "3": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "4": {
-        "id": 662,
+      {
+        "id": "0662",
         "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "reps": 3,
+        "series": 10,
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "5": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "6": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "7": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "8": {
-        "id": 662,
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "9": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "10": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "11": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "12": {
-        "id": 662,
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "13": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "14": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "15": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "16": {
-        "id": 662,
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "17": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "18": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 10,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "19": {
-        "id": 3544,
-        "time": 90,
+      {
+        "id": "3544",
+        "time": 60,
         "reps": 0,
-        "series": 0,
-        "seconds-serie": 0,
-        "seconds-end": 0
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
       }
-    }
+    ]
   },
   {
     "id": "4",
     "name": "Test4",
     "imgName": "placeholder",
     "times": 1,
-    "seconds-general": 30,
-    "workouts": {
-      "0": {
-        "id": 662,
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "1": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "2": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "3": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       }
-    }
+    ]
   },
   {
     "id": "5",
     "name": "Test4",
     "imgName": "placeholder",
     "times": 1,
-    "seconds-general": 30,
-    "workouts": {
-      "0": {
-        "id": 662,
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0662",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "1": {
-        "id": 812,
+      {
+        "id": "0812",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       },
-      "2": {
-        "id": 283,
+      {
+        "id": "0283",
         "time": 0,
         "reps": 10,
         "series": 3,
-        "seconds-serie": 20,
-        "seconds-end": 60
+        "seconds_serie": 20,
+        "seconds_end": 60
       },
-      "3": {
-        "id": 3544,
+      {
+        "id": "3544",
         "time": 60,
         "reps": 0,
         "series": 3,
-        "seconds-serie": 30,
-        "seconds-end": 0
+        "seconds_serie": 30,
+        "seconds_end": 0
       }
-    }
+    ]
   }
 ]

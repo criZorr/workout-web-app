@@ -1,15 +1,13 @@
 import HeaderBack from "./HeaderBack.js";
 
-export default function DetailsCard(id, props) {
+export default function DetailsCard(id, props, routine) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $container = d.createElement("section"),
     $content = d.createElement("section"),
-    { color, lang } = props,
-    routines = JSON.parse(localStorage.getItem("routines"));
+    { color, lang } = props;
 
-  let routine = routines.find((e) => e.id === id),
-    workoutsLength = Array.from(Object.keys(routine.workouts)).length;
+  let workoutsLength = routine.workouts.length;
 
   $fragment.appendChild(HeaderBack(routine.name, color));
 

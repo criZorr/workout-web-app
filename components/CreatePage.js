@@ -1,4 +1,4 @@
-export default function CreatePage(id, props) {
+export default function CreatePage(id, props, routine) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $createSection = d.createElement("div"),
@@ -7,17 +7,9 @@ export default function CreatePage(id, props) {
     $previewCard = d.createElement("section"),
     $previewList = d.createElement("article"),
     $buttonsSection = d.createElement("section"),
-    { color, lang } = props,
-    routines = JSON.parse(localStorage.getItem("routines"));
+    { color, lang } = props;
 
-  let routine = false;
-  let workoutsLength = 0;
-
-  //Create Section
-  if (id) {
-    routine = routines.find((e) => e.id === id);
-    workoutsLength = Array.from(Object.keys(routine.workouts)).length;
-  }
+  let workoutsLength = routine.workouts.length;
 
   $createSection.classList.add("create-section");
   $createSection.innerHTML += `
@@ -37,7 +29,7 @@ export default function CreatePage(id, props) {
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
         <p class="txt-s4 txt-regular txt-dark">Add workout</p>
-        <div class="btn-no-fill">
+        <div class="btn-no-fill" data-id=${id} data-btn="list">
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
               <path class="fill-${color}" d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"/>
@@ -89,7 +81,7 @@ export default function CreatePage(id, props) {
     $option.innerHTML = `
       <p class="txt-s5 txt-s4-sm txt-regular p-one-line txt-dark">${workout.id}</p>
       <section class="btn-icons-container">
-        <div class="btn-xs-icon bg-${color} btn-icon-sm">
+        <div class="btn-xs-icon bg-${color} btn-icon-sm" data-id="${workout.id}" data-btn="add" data-position=${i}>
           <div class="icon-svg">
             <svg viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path class="fill-light" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z"/>

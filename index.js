@@ -1,4 +1,5 @@
-import { HomePage } from "./components/HomePage.js";
+import toSentenceCase from "./helpers/toSentenceCase.js";
+import HomePage from "./components/HomePage.js";
 import Header from "./components/Header.js";
 import getData from "./helpers/getData.js";
 import CalendarPage from "./components/CalendarPage.js";
@@ -8,6 +9,8 @@ import PreviewCard from "./components/PreviewCard.js";
 import ActivityCard from "./components/ActivityCard.js";
 import DetailsCard from "./components/DetailsCard.js";
 import ModalDelete from "./components/ModalDelete.js";
+import ModalList from "./components/ModalList.js";
+import ModalAdd from "./components/ModalAdd.js";
 
 const d = document,
   w = window,
@@ -24,12 +27,15 @@ const d = document,
     activity: ActivityCard,
     details: DetailsCard,
     delete: ModalDelete,
+    list: ModalList,
+    add: ModalAdd,
   };
 
 let props = {},
   workoutDB = [],
   routines = [],
-  actualRoutine = {};
+  actualRoutine = {},
+  actualEdit = {};
 
 const $test = d.querySelector(".test");
 
@@ -91,6 +97,55 @@ fetch("./db/exercises.json")
   })
   .catch((err) => console.log(err));
 
+const manageFilter = (part = "all", equip = "all") => {
+  const $fstFilter = d.querySelector(".filter-fst"),
+    $sndFilter = d.querySelector(".filter-snd"),
+    $containerList = d.querySelector(".workouts-list"),
+    $fragment = d.createDocumentFragment();
+
+  let fstValue = $fstFilter.value,
+    sndValue = $sndFilter.value,
+    workoutsList = workoutDB;
+
+  if (part !== "all") fstValue = part;
+  if (equip !== "all") sndValue = equip;
+
+  $containerList.innerHTML = null;
+
+  if (fstValue !== "all" && sndValue === "all")
+    workoutsList = workoutDB.filter((ex) => ex.category === fstValue);
+
+  if (fstValue === "all" && sndValue !== "all")
+    workoutsList = workoutDB.filter((ex) => ex.equipment === sndValue);
+
+  if (fstValue !== "all" && sndValue !== "all") {
+    let workoutsListFst = workoutDB.filter((ex) => ex.category === fstValue);
+    workoutsList = workoutsListFst.filter((ex) => ex.equipment === sndValue);
+  }
+
+  workoutsList.forEach((workout, i) => {
+    const $option = d.createElement("section");
+    if (i == 0) $option.classList.add("list-option-fst");
+    if (i == workoutsList.length - 1) $option.classList.add("list-option-lst");
+    $option.classList.add("list-btn", "list-option");
+    $option.innerHTML = `
+        <p class="txt-s5 txt-s4-sm txt-regular p-one-line txt-dark">${toSentenceCase(workout.name)}</p>
+        <section class="btn-icons-container">
+          <div class="btn-xs-icon circle bg-${props.color} btn-icon-sm" data-btn="add" data-id="${workout.id}">
+            <div class="icon-svg">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z" class="fill-light"/>
+              </svg>
+            </div>
+          </div>
+        </section>
+      `;
+    $fragment.appendChild($option);
+  });
+
+  $containerList.appendChild($fragment);
+};
+
 const paintModal = (id = 0, type = false) => {
   $modal.innerHTML = null;
   $modal.appendChild(painter[type](id, props));
@@ -139,10 +194,10 @@ const activityActions = (count = 0) => {
   $description.innerHTML = workout.instructions[props.lang];
 };
 
-const paintInteractive = (id = 0, clase = false, type = false) => {
+const paintInteractive = (id = 0, clase = false, type = false, obj) => {
   const $article = d.querySelector(`.${clase}`);
   $article.innerHTML = null;
-  $article.appendChild(painter[type](id, props));
+  $article.appendChild(painter[type](id, props, obj));
 };
 
 const showInteractive = (clase) => {
@@ -238,14 +293,32 @@ d.addEventListener("click", (e) => {
     btnNext = `[data-btn="next"]`,
     btnFinish = `[data-btn="finish"]`,
     btnDetails = `[data-btn="details"]`,
-    btnDelete = `[data-btn="delete"]`;
+    btnDelete = `[data-btn="delete"]`,
+    btnList = `[data-btn="list"]`,
+    btnAdd = `[data-btn="add"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
+    let newId = "";
     if (!id) id = e.target.closest(btnCreate).dataset.id || false;
 
+    if (id) {
+      actualEdit = routines.find((e) => e.id === id);
+    } else {
+      for (let i = 1; i < routines.length + 2; i++)
+        if (!routines.find((e) => e.id === i.toString())) newId = i.toString();
+
+      actualEdit = {
+        id: newId,
+        imgName: "placeholder",
+        times: 1,
+        seconds_general: 30,
+        workouts: [],
+      };
+    }
+
     showInteractive("create-page");
-    paintInteractive(id, "create-page", "create");
+    paintInteractive(id, "create-page", "create", actualEdit);
   }
 
   if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
@@ -253,7 +326,12 @@ d.addEventListener("click", (e) => {
     if (!id) id = e.target.closest(btnDetails).dataset.id || false;
 
     showInteractive("action-page");
-    paintInteractive(id, "action-page", "details");
+    paintInteractive(
+      id,
+      "action-page",
+      "details",
+      routines.find((e) => e.id === id),
+    );
   }
 
   if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
@@ -262,7 +340,7 @@ d.addEventListener("click", (e) => {
 
     actualRoutine = routines.find((e) => e.id === id);
     showInteractive("action-page");
-    paintInteractive(id, "action-page", "preview");
+    paintInteractive(id, "action-page", "preview", actualRoutine);
   }
 
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
@@ -270,7 +348,7 @@ d.addEventListener("click", (e) => {
     if (!id) id = e.target.closest(btnStart).dataset.id || false;
 
     showInteractive("action-page");
-    paintInteractive(id, "action-page", "activity");
+    paintInteractive(id, "action-page", "activity", actualRoutine);
     activityActions();
   }
 
@@ -296,8 +374,53 @@ d.addEventListener("click", (e) => {
     paintModal(id, "delete");
   }
 
+  if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnList).dataset.id || false;
+
+    showModal();
+    paintModal(id, "list");
+    manageFilter();
+  }
+
+  if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`)) {
+    let id = e.target.dataset.id,
+      position = e.target.dataset.position;
+
+    if (!id) id = e.target.closest(btnAdd).dataset.id || false;
+    if (!position)
+      position = e.target.closest(btnAdd).dataset.position || false;
+
+    let currentWork = workoutDB.find((ex) => ex.id === id),
+      currentProps = actualEdit.workouts[position];
+
+    let data = {
+      workout: currentWork,
+      time: currentProps ? currentProps.time : 30,
+      reps: currentProps ? currentProps.reps : 0,
+      series: currentProps ? currentProps.series : 1,
+      sec_serie: currentProps ? currentProps.seconds_serie : 0,
+      sec_end: currentProps ? currentProps.seconds_end : false,
+    };
+
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(ModalAdd(id, props, data));
+  }
+
   if (e.target.matches(".modal-container")) {
     hideModal();
+  }
+});
+
+d.addEventListener("change", (e) => {
+  if (e.target.matches(".filter-snd") || e.target.matches(".filter-fst"))
+    manageFilter();
+
+  if (e.target.matches("#add-series")) {
+    e.target.value > 1
+      ? d.querySelector(".add-series-time").classList.remove("dp-none")
+      : d.querySelector(".add-series-time").classList.add("dp-none");
   }
 });
 

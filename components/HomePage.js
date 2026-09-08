@@ -1,4 +1,4 @@
-export function HomePage(props) {
+export default function HomePage(props) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $addCard = d.createElement("section"),
