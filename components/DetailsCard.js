@@ -21,7 +21,8 @@ export default function DetailsCard(id, props, routine) {
       workout = routine.workouts[i];
 
     $option.classList.add("action-list", "detail-list");
-    $option.dataset.workout = workout.id;
+    $option.dataset.id = workout.id;
+    $option.dataset.btn = "instruction";
     $option.innerHTML = `
       <img class="detail-img" src="./assets/img/placeholder.jpg" alt="${workout.id} image"/>
       <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line">${workout.id}</p>

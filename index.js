@@ -11,6 +11,7 @@ import DetailsCard from "./components/DetailsCard.js";
 import ModalDelete from "./components/ModalDelete.js";
 import ModalList from "./components/ModalList.js";
 import ModalAdd from "./components/ModalAdd.js";
+import ModalInstructions from "./components/ModalInstructions.js";
 
 const d = document,
   w = window,
@@ -28,7 +29,6 @@ const d = document,
     details: DetailsCard,
     delete: ModalDelete,
     list: ModalList,
-    add: ModalAdd,
   };
 
 let props = {},
@@ -191,7 +191,8 @@ const activityActions = (count = 0) => {
   }
 
   $title.innerHTML = workout.name;
-  $description.innerHTML = workout.instructions[props.lang];
+  $description.innerHTML =
+    workout.instruction_steps[props.lang].join("<br/><br/>");
 };
 
 const paintInteractive = (id = 0, clase = false, type = false, obj) => {
@@ -295,7 +296,8 @@ d.addEventListener("click", (e) => {
     btnDetails = `[data-btn="details"]`,
     btnDelete = `[data-btn="delete"]`,
     btnList = `[data-btn="list"]`,
-    btnAdd = `[data-btn="add"]`;
+    btnAdd = `[data-btn="add"]`,
+    btnInstruction = `[data-btn="instruction"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
@@ -312,7 +314,6 @@ d.addEventListener("click", (e) => {
         id: newId,
         imgName: "placeholder",
         times: 1,
-        seconds_general: 30,
         workouts: [],
       };
     }
@@ -406,6 +407,20 @@ d.addEventListener("click", (e) => {
     showModal();
     $modal.innerHTML = null;
     $modal.appendChild(ModalAdd(id, props, data));
+  }
+
+  if (
+    e.target.matches(btnInstruction) ||
+    e.target.matches(`${btnInstruction} *`)
+  ) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(btnInstruction).dataset.id || false;
+
+    let workout = workoutDB.find((e) => e.id === id);
+
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(ModalInstructions(props, workout));
   }
 
   if (e.target.matches(".modal-container")) {

@@ -13,7 +13,7 @@ export default function CreatePage(id, props, routine) {
 
   $createSection.classList.add("create-section");
   $createSection.innerHTML += `
-    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" name="" id="" placeholder="Insert name"/>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" name="" id="" placeholder="Insert name" value="${routine.name ? routine.name : ""}"/>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
         <p class="txt-s4 txt-regular txt-dark">Add image</p>
@@ -38,7 +38,7 @@ export default function CreatePage(id, props, routine) {
         </div>
       </section>
     </section>
-    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" name="" id="" placeholder="Times"/>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" name="" id="" placeholder="Times" value="${routine.seconds_general ? routine.seconds_general : ""}"/>
   `;
   $createList.classList.add("card-container", "radio-sm", `shadow-${color}`);
 

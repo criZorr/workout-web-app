@@ -4,8 +4,7 @@ export default function ModalAdd(id, props, data) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("article"),
-    { color, lang } = props,
-    routines = JSON.parse(localStorage.getItem("routines"));
+    { color, lang } = props;
 
   let { workout, time, reps, series, sec_serie, sec_end } = data;
 
@@ -17,9 +16,9 @@ export default function ModalAdd(id, props, data) {
   );
 
   $content.innerHTML = `
-    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark">${toSentenceCase(workout.name)}</p>
+    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${toSentenceCase(workout.name)}</p>
     <img src="./assets/img/placeholder.jpg" alt="${workout.name} image" class="dp-none dp-block-sm"/>
-    <p class="dp-none dp-block-sm description txt-dark">${workout.instructions[props.lang]}</p>
+    <p class="dp-none dp-block-sm description txt-dark">${workout.instruction_steps[props.lang].join("<br/>")}</p>
     <section class="option-bar radio-sm shadow-${color} w-100">
       <input type="radio" name="tabs" id="tab-1"/>
       <label for="tab-1" class="option-bar-item">

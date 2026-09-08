@@ -68,6 +68,17 @@ figure {
   padding: 0;
 }
 
+input[type="number"] {
+  appearance: textfield;
+  /* -moz-appearance: textfield; */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 select {
   background-color: transparent;
   appearance: none;
@@ -1041,6 +1052,15 @@ input[type="radio"]:checked ~ .custom-radio > div {
   overflow-y: scroll;
   scrollbar-width: thin;
   max-height: 15dvh;
+  min-height: 5dvh;
+}
+
+.description-card > .description {
+  max-height: 40dvh;
+}
+
+.flex-s-0 {
+  flex-shrink: 0;
 }
 
 .action-content {
@@ -1130,6 +1150,14 @@ input[type="radio"]:checked ~ .custom-radio > div {
   .action-list {
     padding-block: 0.75rem;
   }
+
+  .description {
+    max-height: 30dvh;
+  }
+
+  .description-card > .description {
+    max-height: 20dvh;
+  }
 }
 
 @media screen and (min-width: 80rem) {
@@ -1167,6 +1195,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
     overflow: hidden;
     overflow-y: scroll;
     scrollbar-width: thin;
+  }
+
+  .description-card > .description {
+    max-height: 40dvh;
   }
 }
 
@@ -1461,8 +1493,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 .modal-card > img {
-  height: 8rem;
-  height: clamp(8rem, 4.5714rem + 19.0476vw, 12rem);
+  height: 4rem;
   width: auto;
 }
 
@@ -1479,7 +1510,8 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
 .modal-card > input,
 .input-container > input {
-  width: 6rem;
+  text-align: center;
+  width: 4rem;
 }
 
 .modal-card > p {
@@ -1535,6 +1567,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
 }
 
 @media screen and (min-width: 18em) {
+  .modal-card > img {
+    height: clamp(8rem, 4.5714rem + 19.0476vw, 12rem);
+  }
+
   .modal {
     padding: 1rem;
     width: clamp(16rem, 2.2857rem + 76.1905vw, 32rem);
