@@ -82,7 +82,7 @@ export default function ModalList(id, props) {
     </section>
     <section class="card-container radio-sm bg-white shadow-${color} list-container workouts-list"></section>
     <section class="btns-container w-100">
-      <div class="btn border-${color}">
+      <div class="btn border-${color}" data-modal="close">
         <p class="txt-s4 txt-bold p-one-line txt-dark">Cancel</p>
       </div>
     </section>

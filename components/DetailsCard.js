@@ -9,7 +9,9 @@ export default function DetailsCard(id, props, routine) {
 
   let workoutsLength = routine.workouts.length;
 
-  $fragment.appendChild(HeaderBack(routine.name, color));
+  $fragment.appendChild(
+    HeaderBack(routine.name, color, `data-interaction="close"`),
+  );
 
   $content.classList.add("details-content");
   $container.classList.add("details-container");
@@ -31,7 +33,6 @@ export default function DetailsCard(id, props, routine) {
   }
 
   $container.appendChild($content);
-
   $fragment.appendChild($container);
 
   return $fragment;

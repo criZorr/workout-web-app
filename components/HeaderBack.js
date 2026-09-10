@@ -1,4 +1,9 @@
-export default function HeaderBack(text, color, queryOff = "lg") {
+export default function HeaderBack(
+  text,
+  color,
+  dataTypeBtn = "",
+  queryOff = "lg",
+) {
   const d = document,
     $section = d.createElement("section");
 
@@ -10,7 +15,7 @@ export default function HeaderBack(text, color, queryOff = "lg") {
   );
 
   $section.innerHTML = `
-    <div class="btn-no-fill">
+    <div class="btn-no-fill" ${dataTypeBtn}>
       <div class="icon-svg">
         <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="fill-${color}" d="M10.689 0L3 8L10.689 16L13 13.5958L7.61991 8L13 2.40419L10.689 0Z"/>

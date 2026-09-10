@@ -27,7 +27,6 @@ const d = document,
     preview: PreviewCard,
     activity: ActivityCard,
     details: DetailsCard,
-    delete: ModalDelete,
     list: ModalList,
   };
 
@@ -35,7 +34,8 @@ let props = {},
   workoutDB = [],
   routines = [],
   actualRoutine = {},
-  actualEdit = {};
+  actualEdit = {},
+  currentFilter = ["all", "all"];
 
 const $test = d.querySelector(".test");
 
@@ -97,6 +97,30 @@ fetch("./db/exercises.json")
   })
   .catch((err) => console.log(err));
 
+const addEditManager = (target, type, action) => {
+  let id = target.dataset.id,
+    position = target.dataset.position;
+
+  if (!id) id = target.closest(type).dataset.id || false;
+  if (!position) position = target.closest(type).dataset.position || false;
+
+  let currentWork = workoutDB.find((ex) => ex.id === id),
+    currentProps = actualEdit.workouts[position];
+
+  let data = {
+    workout: currentWork,
+    time: currentProps ? currentProps.time : 30,
+    reps: currentProps ? currentProps.reps : 0,
+    series: currentProps ? currentProps.series : 1,
+    sec_serie: currentProps ? currentProps.seconds_serie : 0,
+    sec_end: currentProps ? currentProps.seconds_end : false,
+  };
+
+  showModal();
+  $modal.innerHTML = null;
+  $modal.appendChild(ModalAdd(id, props, data, action));
+};
+
 const manageFilter = (part = "all", equip = "all") => {
   const $fstFilter = d.querySelector(".filter-fst"),
     $sndFilter = d.querySelector(".filter-snd"),
@@ -107,8 +131,15 @@ const manageFilter = (part = "all", equip = "all") => {
     sndValue = $sndFilter.value,
     workoutsList = workoutDB;
 
-  if (part !== "all") fstValue = part;
-  if (equip !== "all") sndValue = equip;
+  if (part !== "all") {
+    fstValue = part;
+    $fstFilter.value = part;
+  }
+
+  if (equip !== "all") {
+    sndValue = equip;
+    $sndFilter.value = equip;
+  }
 
   $containerList.innerHTML = null;
 
@@ -122,6 +153,8 @@ const manageFilter = (part = "all", equip = "all") => {
     let workoutsListFst = workoutDB.filter((ex) => ex.category === fstValue);
     workoutsList = workoutsListFst.filter((ex) => ex.equipment === sndValue);
   }
+
+  currentFilter = [fstValue, sndValue];
 
   workoutsList.forEach((workout, i) => {
     const $option = d.createElement("section");
@@ -294,10 +327,18 @@ d.addEventListener("click", (e) => {
     btnNext = `[data-btn="next"]`,
     btnFinish = `[data-btn="finish"]`,
     btnDetails = `[data-btn="details"]`,
-    btnDelete = `[data-btn="delete"]`,
+    confirmRoutine = `[data-confirm="routine"]`,
+    confirmWorkout = `[data-confirm="workout"]`,
     btnList = `[data-btn="list"]`,
     btnAdd = `[data-btn="add"]`,
-    btnInstruction = `[data-btn="instruction"]`;
+    btnEdit = `[data-btn="edit"]`,
+    btnInstruction = `[data-btn="instruction"]`,
+    saveWorkout = `[data-save="workout"]`,
+    saveRoutine = `[data-save="routine"]`,
+    deleteRoutine = `[data-delete="routine"]`,
+    deleteWorkout = `[data-delete="workout"]`,
+    modalClose = `[data-modal="close"]`,
+    interactionClose = `[data-interaction="close"]`;
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
     let id = e.target.dataset.id;
@@ -363,16 +404,33 @@ d.addEventListener("click", (e) => {
     activityActions(numb);
   }
 
-  if (e.target.matches(".interaction-container")) {
+  if (
+    e.target.matches(".interaction-container") ||
+    e.target.matches(interactionClose) ||
+    e.target.matches(`${interactionClose} *`)
+  ) {
     hideInteractive();
   }
 
-  if (e.target.matches(btnDelete) || e.target.matches(`${btnDelete} *`)) {
+  if (
+    e.target.matches(confirmRoutine) ||
+    e.target.matches(`${confirmRoutine} *`)
+  ) {
     let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnDelete).dataset.id || false;
+    if (!id) id = e.target.closest(confirmRoutine).dataset.id || false;
+    let obj = routines.find((e) => e.id === id);
 
     showModal();
-    paintModal(id, "delete");
+    $modal.innerHTML = null;
+    $modal.appendChild(
+      ModalDelete(
+        props,
+        obj,
+        "routine",
+        "Do you want to delete the routine:",
+        id,
+      ),
+    );
   }
 
   if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
@@ -381,32 +439,15 @@ d.addEventListener("click", (e) => {
 
     showModal();
     paintModal(id, "list");
-    manageFilter();
+    manageFilter(currentFilter[0], currentFilter[1]);
   }
 
   if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`)) {
-    let id = e.target.dataset.id,
-      position = e.target.dataset.position;
+    addEditManager(e.target, btnAdd, true);
+  }
 
-    if (!id) id = e.target.closest(btnAdd).dataset.id || false;
-    if (!position)
-      position = e.target.closest(btnAdd).dataset.position || false;
-
-    let currentWork = workoutDB.find((ex) => ex.id === id),
-      currentProps = actualEdit.workouts[position];
-
-    let data = {
-      workout: currentWork,
-      time: currentProps ? currentProps.time : 30,
-      reps: currentProps ? currentProps.reps : 0,
-      series: currentProps ? currentProps.series : 1,
-      sec_serie: currentProps ? currentProps.seconds_serie : 0,
-      sec_end: currentProps ? currentProps.seconds_end : false,
-    };
-
-    showModal();
-    $modal.innerHTML = null;
-    $modal.appendChild(ModalAdd(id, props, data));
+  if (e.target.matches(btnEdit) || e.target.matches(`${btnEdit} *`)) {
+    addEditManager(e.target, btnEdit, false);
   }
 
   if (
@@ -423,8 +464,67 @@ d.addEventListener("click", (e) => {
     $modal.appendChild(ModalInstructions(props, workout));
   }
 
-  if (e.target.matches(".modal-container")) {
+  if (
+    e.target.matches(".modal-container") ||
+    e.target.matches(modalClose) ||
+    e.target.matches(`${modalClose} *`)
+  ) {
     hideModal();
+  }
+
+  if (e.target.matches(saveWorkout) || e.target.matches(`${saveWorkout} *`)) {
+    console.log("save workout");
+  }
+
+  if (e.target.matches(saveRoutine) || e.target.matches(`${saveRoutine} *`)) {
+    console.log("save routine");
+  }
+
+  if (
+    e.target.matches(deleteRoutine) ||
+    e.target.matches(`${deleteRoutine} *`)
+  ) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(deleteRoutine).dataset.id || false;
+
+    console.log("delete routine");
+    console.log(routines.find((e) => e.id === id));
+  }
+
+  if (
+    e.target.matches(deleteWorkout) ||
+    e.target.matches(`${deleteWorkout} *`)
+  ) {
+    let id = e.target.dataset.id;
+    if (!id) id = e.target.closest(deleteWorkout).dataset.id || false;
+
+    console.log("delete workout");
+    console.log(actualEdit.workouts[Number(id)]);
+  }
+
+  if (
+    e.target.matches(confirmWorkout) ||
+    e.target.matches(`${confirmWorkout} *`)
+  ) {
+    let id = e.target.dataset.id,
+      position = e.target.dataset.position;
+
+    if (!id) id = e.target.closest(confirmWorkout).dataset.id || false;
+    if (!position)
+      position = e.target.closest(confirmWorkout).dataset.position || null;
+    let obj = workoutDB.find((e) => e.id === id);
+
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(
+      ModalDelete(
+        props,
+        obj,
+        "workout",
+        "Do you want to delete the workout:",
+        position,
+      ),
+    );
   }
 });
 

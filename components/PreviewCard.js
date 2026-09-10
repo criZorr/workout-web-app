@@ -8,7 +8,9 @@ export default function PreviewCard(id, props, routine) {
 
   let workoutsLength = routine.workouts.length;
 
-  $fragment.appendChild(HeaderBack(routine.name, color));
+  $fragment.appendChild(
+    HeaderBack(routine.name, color, `data-interaction="close"`),
+  );
 
   $content.classList.add("action-content");
   $content.innerHTML = `

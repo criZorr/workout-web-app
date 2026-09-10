@@ -17,9 +17,9 @@ export default function ModalInstructions(props, workout) {
   $content.innerHTML = `
     <img src="./assets/img/placeholder.jpg" alt="${workout.name} image"/>
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${toSentenceCase(workout.name)}</p>
-    <p class="description txt-dark flex-s-0">${workout.instruction_steps[props.lang].join("<br/><br/>")}</p>
+    <p class="description txt-dark flex-s-0">${workout.instruction_steps[lang].join("<br/><br/>")}</p>
     <section class="btns-container w-100">
-      <div class="btn border-${color} btn-fill bg-${color}">
+      <div class="btn border-${color} btn-fill bg-${color}" data-modal="close">
         <p class="txt-s4 txt-bold txt-white p-one-line">Confirm</p>
       </div>
     </section>
