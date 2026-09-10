@@ -1,6 +1,6 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
 
-export default function ModalAdd(id, props, data, action) {
+export default function ModalAdd(props, data, action) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("article"),
@@ -17,7 +17,7 @@ export default function ModalAdd(id, props, data, action) {
 
   $content.innerHTML = `
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${toSentenceCase(workout.name)}</p>
-    <img src="./assets/img/placeholder.jpg" alt="${workout.name} image" class="dp-none dp-block-sm"/>
+    <img src="./db/gif/${workout.id}-${workout.media_id}.gif" alt="${workout.name} image" class="dp-none dp-block-sm"/>
     <p class="dp-none dp-block-sm description txt-dark">${workout.instruction_steps[lang].join("<br/>")}</p>
     <section class="option-bar radio-sm shadow-${color} w-100">
       <input type="radio" name="tabs" id="tab-1"/>

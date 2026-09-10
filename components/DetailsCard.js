@@ -1,6 +1,7 @@
+import toSentenceCase from "../helpers/toSentenceCase.js";
 import HeaderBack from "./HeaderBack.js";
 
-export default function DetailsCard(id, props, routine) {
+export default function DetailsCard(props, routine, workoutDB) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $container = d.createElement("section"),
@@ -20,14 +21,15 @@ export default function DetailsCard(id, props, routine) {
 
   for (let i = 0; i < workoutsLength; i++) {
     let $option = d.createElement("div"),
-      workout = routine.workouts[i];
+      id = routine.workouts[i].id,
+      workout = workoutDB.find((e) => e.id === id);
 
     $option.classList.add("action-list", "detail-list");
-    $option.dataset.id = workout.id;
+    $option.dataset.id = id;
     $option.dataset.btn = "instruction";
     $option.innerHTML = `
-      <img class="detail-img" src="./assets/img/placeholder.jpg" alt="${workout.id} image"/>
-      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line">${workout.id}</p>
+      <img class="detail-img" src="./db/img/${workout.id}-${workout.media_id}.webp" alt="${workout.name} image"/>
+      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line-sm">${toSentenceCase(workout.name)}</p>
     `;
     $content.appendChild($option);
   }

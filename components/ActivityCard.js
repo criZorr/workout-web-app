@@ -13,7 +13,7 @@ export default function ActivityCard(id, props, routine) {
   $content.classList.add("action-content");
   $content.innerHTML = `
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark workout-title"></p>
-    <img src="./assets/img/placeholder.jpg" alt="" class="dp-none dp-block-sm"/>
+    <img src="./assets/img/placeholder.jpg" alt="" class="dp-none dp-block-sm workout-img"/>
     <section class="counter static">
       <p class="txt-s5 txt-s4-sm txt-semibold txt-grey workout-reps">Number</p>
     </section>

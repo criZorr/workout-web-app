@@ -410,6 +410,12 @@ a {
   .txt-s5-sm {
     font-size: 0.875rem;
   }
+
+  .p-one-line-sm {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 @media screen and (min-width: 39em) {
@@ -1045,6 +1051,17 @@ input[type="radio"]:checked ~ .custom-radio > div {
 .action-list {
   padding-block: 0.5rem;
   border-bottom: 0.0625rem solid var(--color-grey-light);
+  flex-direction: column;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.action-list > *:last-child {
+  flex-shrink: 0;
+}
+
+.detail-list > *:last-child {
+  flex-shrink: 1;
 }
 
 .action-list-container {
@@ -1168,6 +1185,9 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
   .action-list {
     padding-block: 0.75rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
   }
 
   .description {

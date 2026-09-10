@@ -98,11 +98,9 @@ fetch("./db/exercises.json")
   .catch((err) => console.log(err));
 
 const addEditManager = (target, type, action) => {
-  let id = target.dataset.id,
-    position = target.dataset.position;
-
-  if (!id) id = target.closest(type).dataset.id || false;
-  if (!position) position = target.closest(type).dataset.position || false;
+  let id = target.dataset.id || target.closest(type).dataset.id || false,
+    position =
+      target.dataset.position || target.closest(type).dataset.position || false;
 
   let currentWork = workoutDB.find((ex) => ex.id === id),
     currentProps = actualEdit.workouts[position];
@@ -118,7 +116,7 @@ const addEditManager = (target, type, action) => {
 
   showModal();
   $modal.innerHTML = null;
-  $modal.appendChild(ModalAdd(id, props, data, action));
+  $modal.appendChild(ModalAdd(props, data, action));
 };
 
 const manageFilter = (part = "all", equip = "all") => {
@@ -195,6 +193,7 @@ const hideModal = () => {
 const activityActions = (count = 0) => {
   const $title = d.querySelector(".workout-title"),
     $description = d.querySelector(".workout-description"),
+    $img = d.querySelector(".workout-img"),
     $countTime = d.querySelector(".dynamic"),
     $countReps = d.querySelector(".static"),
     $btnsNext = d.querySelectorAll(`[data-btn="next"]`);
@@ -223,7 +222,9 @@ const activityActions = (count = 0) => {
     Array.from($btnsNext).forEach((btn) => (btn.dataset.btn = "finish"));
   }
 
-  $title.innerHTML = workout.name;
+  $img.src = `./db/gif/${workout.id}-${workout.media_id}.gif`;
+  $img.alt = `${workout.name} image`;
+  $title.innerHTML = toSentenceCase(workout.name);
   $description.innerHTML =
     workout.instruction_steps[props.lang].join("<br/><br/>");
 };
@@ -368,11 +369,15 @@ d.addEventListener("click", (e) => {
     if (!id) id = e.target.closest(btnDetails).dataset.id || false;
 
     showInteractive("action-page");
-    paintInteractive(
-      id,
-      "action-page",
-      "details",
-      routines.find((e) => e.id === id),
+
+    const $article = d.querySelector(".action-page");
+    $article.innerHTML = null;
+    $article.appendChild(
+      DetailsCard(
+        props,
+        routines.find((e) => e.id === id),
+        workoutDB,
+      ),
     );
   }
 
@@ -382,7 +387,10 @@ d.addEventListener("click", (e) => {
 
     actualRoutine = routines.find((e) => e.id === id);
     showInteractive("action-page");
-    paintInteractive(id, "action-page", "preview", actualRoutine);
+
+    const $article = d.querySelector(".action-page");
+    $article.innerHTML = null;
+    $article.appendChild(PreviewCard(props, actualRoutine, workoutDB));
   }
 
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {

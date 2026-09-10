@@ -1,6 +1,7 @@
+import toSentenceCase from "../helpers/toSentenceCase.js";
 import HeaderBack from "./HeaderBack.js";
 
-export default function PreviewCard(id, props, routine) {
+export default function PreviewCard(props, routine, workoutDB) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("section"),
@@ -18,7 +19,7 @@ export default function PreviewCard(id, props, routine) {
     <img src="./assets/img/${routine.imgName}.jpg" alt="${routine.name} image" class="dp-none dp-block-sm"/>
     <section class="action-list-container"></section>
     <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
-      <div class="btn border-${color} btn-fill bg-${color}" data-id="${id}" data-btn="start">
+      <div class="btn border-${color} btn-fill bg-${color}" data-id="${routine.id}" data-btn="start">
         <p class="txt-s4 txt-bold txt-white p-one-line">Start</p>
       </div>
     </section>
@@ -28,12 +29,13 @@ export default function PreviewCard(id, props, routine) {
 
   for (let i = 0; i < workoutsLength; i++) {
     let $option = d.createElement("div"),
-      workout = routine.workouts[i];
+      workoutProps = routine.workouts[i],
+      workout = workoutDB.find((e) => e.id === workoutProps.id);
 
     $option.classList.add("action-list", "list-btn");
     $option.innerHTML = `
-      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line">${workout.id}</p>
-      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey">${workout.series ? `${workout.series} x ` : ""}${workout.reps ? `${workout.reps} reps` : `${workout.time} secs`}</p>
+      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line-sm">${toSentenceCase(workout.name)}</p>
+      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey">${workoutProps.series ? `${workoutProps.series} x ` : ""}${workoutProps.reps ? `${workoutProps.reps} reps` : `${workoutProps.time} secs`}</p>
     `;
     $list.appendChild($option);
   }

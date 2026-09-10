@@ -15,7 +15,7 @@ export default function ModalInstructions(props, workout) {
   );
 
   $content.innerHTML = `
-    <img src="./assets/img/placeholder.jpg" alt="${workout.name} image"/>
+    <img src="./db/gif/${workout.id}-${workout.media_id}.gif" alt="${workout.name} image"/>
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${toSentenceCase(workout.name)}</p>
     <p class="description txt-dark flex-s-0">${workout.instruction_steps[lang].join("<br/><br/>")}</p>
     <section class="btns-container w-100">
