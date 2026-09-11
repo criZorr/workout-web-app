@@ -116,7 +116,7 @@ const addEditManager = (target, type, action) => {
 
   showModal();
   $modal.innerHTML = null;
-  $modal.appendChild(ModalAdd(props, data, action));
+  $modal.appendChild(ModalAdd(props, data, action, position));
 };
 
 const manageFilter = (part = "all", equip = "all") => {
@@ -229,10 +229,10 @@ const activityActions = (count = 0) => {
     workout.instruction_steps[props.lang].join("<br/><br/>");
 };
 
-const paintInteractive = (id = 0, clase = false, type = false, obj) => {
+const paintInteractive = (clase = false, type = false, obj) => {
   const $article = d.querySelector(`.${clase}`);
   $article.innerHTML = null;
-  $article.appendChild(painter[type](id, props, obj));
+  $article.appendChild(painter[type](props, obj, workoutDB));
 };
 
 const showInteractive = (clase) => {
@@ -336,7 +336,7 @@ d.addEventListener("click", (e) => {
     btnInstruction = `[data-btn="instruction"]`,
     saveWorkout = `[data-save="workout"]`,
     saveRoutine = `[data-save="routine"]`,
-    deleteRoutine = `[data-delete="routine"]`,
+    dltRoutine = `[data-delete="routine"]`,
     deleteWorkout = `[data-delete="workout"]`,
     modalClose = `[data-modal="close"]`,
     interactionClose = `[data-interaction="close"]`;
@@ -361,7 +361,7 @@ d.addEventListener("click", (e) => {
     }
 
     showInteractive("create-page");
-    paintInteractive(id, "create-page", "create", actualEdit);
+    paintInteractive("create-page", "create", actualEdit);
   }
 
   if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
@@ -370,14 +370,10 @@ d.addEventListener("click", (e) => {
 
     showInteractive("action-page");
 
-    const $article = d.querySelector(".action-page");
-    $article.innerHTML = null;
-    $article.appendChild(
-      DetailsCard(
-        props,
-        routines.find((e) => e.id === id),
-        workoutDB,
-      ),
+    paintInteractive(
+      "action-page",
+      "details",
+      routines.find((e) => e.id === id),
     );
   }
 
@@ -387,10 +383,7 @@ d.addEventListener("click", (e) => {
 
     actualRoutine = routines.find((e) => e.id === id);
     showInteractive("action-page");
-
-    const $article = d.querySelector(".action-page");
-    $article.innerHTML = null;
-    $article.appendChild(PreviewCard(props, actualRoutine, workoutDB));
+    paintInteractive("action-page", "preview", actualRoutine);
   }
 
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
@@ -398,7 +391,7 @@ d.addEventListener("click", (e) => {
     if (!id) id = e.target.closest(btnStart).dataset.id || false;
 
     showInteractive("action-page");
-    paintInteractive(id, "action-page", "activity", actualRoutine);
+    paintInteractive("action-page", "activity", actualRoutine);
     activityActions();
   }
 
@@ -441,6 +434,48 @@ d.addEventListener("click", (e) => {
     );
   }
 
+  // Save workout
+
+  if (e.target.matches(saveWorkout) || e.target.matches(`${saveWorkout} *`)) {
+    let id =
+        e.target.dataset.id ||
+        e.target.closest(saveWorkout).dataset.id ||
+        false,
+      position =
+        e.target.dataset.position ||
+        e.target.closest(saveWorkout).dataset.position ||
+        false,
+      obj = {},
+      time = 0,
+      reps = 0,
+      series = Number(d.getElementById("add-series").value) || 0,
+      seconds_serie = 0,
+      seconds_end = Number(d.getElementById("add-sec-end").value) || 0;
+
+    d.getElementById("tab-1").checked
+      ? (time = Number(d.getElementById("add-time").value))
+      : (reps = Number(d.getElementById("add-time").value));
+
+    if (series > 1)
+      seconds_serie = Number(d.getElementById("add-sec-series").value) || 0;
+
+    obj = {
+      id,
+      time,
+      reps,
+      series,
+      seconds_serie,
+      seconds_end,
+    };
+
+    position
+      ? (actualEdit.workouts[position] = obj)
+      : actualEdit.workouts.push(obj);
+
+    showInteractive("create-page");
+    paintInteractive("create-page", "create", actualEdit);
+  }
+
   if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
     let id = e.target.dataset.id;
     if (!id) id = e.target.closest(btnList).dataset.id || false;
@@ -480,23 +515,33 @@ d.addEventListener("click", (e) => {
     hideModal();
   }
 
-  if (e.target.matches(saveWorkout) || e.target.matches(`${saveWorkout} *`)) {
-    console.log("save workout");
-  }
-
+  // Save Routine
   if (e.target.matches(saveRoutine) || e.target.matches(`${saveRoutine} *`)) {
-    console.log("save routine");
+    const obj = {};
+
+    obj.id = actualEdit.id;
+    obj.name = d.getElementById("routine-name").value || "New Routine";
+    obj.imgName = "placeholder";
+    obj.seconds_general = Number(d.getElementById("routine-time").value) || 30;
+    obj.workouts = actualEdit.workouts;
+
+    if (actualEdit.workouts.length === 0) return;
+
+    let index = routines.findIndex((e) => e.id === actualEdit.id);
+    index !== -1 ? (routines[index] = obj) : routines.push(obj);
+    localStorage.setItem("routines", JSON.stringify(routines));
+    router();
+    hideInteractive();
   }
 
-  if (
-    e.target.matches(deleteRoutine) ||
-    e.target.matches(`${deleteRoutine} *`)
-  ) {
+  // Delete Routine
+  if (e.target.matches(dltRoutine) || e.target.matches(`${dltRoutine} *`)) {
     let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(deleteRoutine).dataset.id || false;
+    if (!id) id = e.target.closest(dltRoutine).dataset.id || false;
 
-    console.log("delete routine");
-    console.log(routines.find((e) => e.id === id));
+    routines = routines.filter((e) => e.id !== id);
+    localStorage.setItem("routines", JSON.stringify(routines));
+    router();
   }
 
   if (

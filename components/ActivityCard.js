@@ -1,6 +1,6 @@
 import HeaderBack from "./HeaderBack.js";
 
-export default function ActivityCard(id, props, routine) {
+export default function ActivityCard(props, routine) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("section"),
