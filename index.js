@@ -337,104 +337,9 @@ d.addEventListener("click", (e) => {
     saveWorkout = `[data-save="workout"]`,
     saveRoutine = `[data-save="routine"]`,
     dltRoutine = `[data-delete="routine"]`,
-    deleteWorkout = `[data-delete="workout"]`,
+    dltWorkout = `[data-delete="workout"]`,
     modalClose = `[data-modal="close"]`,
     interactionClose = `[data-interaction="close"]`;
-
-  if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
-    let id = e.target.dataset.id;
-    let newId = "";
-    if (!id) id = e.target.closest(btnCreate).dataset.id || false;
-
-    if (id) {
-      actualEdit = routines.find((e) => e.id === id);
-    } else {
-      for (let i = 1; i < routines.length + 2; i++)
-        if (!routines.find((e) => e.id === i.toString())) newId = i.toString();
-
-      actualEdit = {
-        id: newId,
-        imgName: "placeholder",
-        times: 1,
-        workouts: [],
-      };
-    }
-
-    showInteractive("create-page");
-    paintInteractive("create-page", "create", actualEdit);
-  }
-
-  if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnDetails).dataset.id || false;
-
-    showInteractive("action-page");
-
-    paintInteractive(
-      "action-page",
-      "details",
-      routines.find((e) => e.id === id),
-    );
-  }
-
-  if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnPreview).dataset.id || false;
-
-    actualRoutine = routines.find((e) => e.id === id);
-    showInteractive("action-page");
-    paintInteractive("action-page", "preview", actualRoutine);
-  }
-
-  if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnStart).dataset.id || false;
-
-    showInteractive("action-page");
-    paintInteractive("action-page", "activity", actualRoutine);
-    activityActions();
-  }
-
-  if (e.target.matches(btnFinish) || e.target.matches(`${btnFinish} *`)) {
-    hideInteractive();
-  }
-
-  if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`)) {
-    let numb = e.target.dataset.count;
-    if (!numb) numb = e.target.closest(btnNext).dataset.count || false;
-    activityActions(numb);
-  }
-
-  if (
-    e.target.matches(".interaction-container") ||
-    e.target.matches(interactionClose) ||
-    e.target.matches(`${interactionClose} *`)
-  ) {
-    hideInteractive();
-  }
-
-  if (
-    e.target.matches(confirmRoutine) ||
-    e.target.matches(`${confirmRoutine} *`)
-  ) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(confirmRoutine).dataset.id || false;
-    let obj = routines.find((e) => e.id === id);
-
-    showModal();
-    $modal.innerHTML = null;
-    $modal.appendChild(
-      ModalDelete(
-        props,
-        obj,
-        "routine",
-        "Do you want to delete the routine:",
-        id,
-      ),
-    );
-  }
-
-  // Save workout
 
   if (e.target.matches(saveWorkout) || e.target.matches(`${saveWorkout} *`)) {
     let id =
@@ -476,46 +381,15 @@ d.addEventListener("click", (e) => {
     paintInteractive("create-page", "create", actualEdit);
   }
 
-  if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnList).dataset.id || false;
+  if (e.target.matches(dltWorkout) || e.target.matches(`${dltWorkout} *`)) {
+    let id =
+      e.target.dataset.id || e.target.closest(dltWorkout).dataset.id || false;
 
-    showModal();
-    paintModal(id, "list");
-    manageFilter(currentFilter[0], currentFilter[1]);
+    actualEdit.workouts.splice(id, 1);
+    showInteractive("create-page");
+    paintInteractive("create-page", "create", actualEdit);
   }
 
-  if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`)) {
-    addEditManager(e.target, btnAdd, true);
-  }
-
-  if (e.target.matches(btnEdit) || e.target.matches(`${btnEdit} *`)) {
-    addEditManager(e.target, btnEdit, false);
-  }
-
-  if (
-    e.target.matches(btnInstruction) ||
-    e.target.matches(`${btnInstruction} *`)
-  ) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(btnInstruction).dataset.id || false;
-
-    let workout = workoutDB.find((e) => e.id === id);
-
-    showModal();
-    $modal.innerHTML = null;
-    $modal.appendChild(ModalInstructions(props, workout));
-  }
-
-  if (
-    e.target.matches(".modal-container") ||
-    e.target.matches(modalClose) ||
-    e.target.matches(`${modalClose} *`)
-  ) {
-    hideModal();
-  }
-
-  // Save Routine
   if (e.target.matches(saveRoutine) || e.target.matches(`${saveRoutine} *`)) {
     const obj = {};
 
@@ -534,45 +408,171 @@ d.addEventListener("click", (e) => {
     hideInteractive();
   }
 
-  // Delete Routine
   if (e.target.matches(dltRoutine) || e.target.matches(`${dltRoutine} *`)) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(dltRoutine).dataset.id || false;
+    let id =
+      e.target.dataset.id || e.target.closest(dltRoutine).dataset.id || false;
 
     routines = routines.filter((e) => e.id !== id);
     localStorage.setItem("routines", JSON.stringify(routines));
     router();
   }
 
-  if (
-    e.target.matches(deleteWorkout) ||
-    e.target.matches(`${deleteWorkout} *`)
-  ) {
-    let id = e.target.dataset.id;
-    if (!id) id = e.target.closest(deleteWorkout).dataset.id || false;
+  if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
+    let id =
+        e.target.dataset.id || e.target.closest(btnCreate).dataset.id || false,
+      newId = "";
 
-    console.log("delete workout");
-    console.log(actualEdit.workouts[Number(id)]);
+    if (id) {
+      actualEdit = routines.find((e) => e.id === id);
+    } else {
+      for (let i = 1; i < routines.length + 2; i++)
+        if (!routines.find((e) => e.id === i.toString())) newId = i.toString();
+
+      actualEdit = {
+        id: newId,
+        imgName: "placeholder",
+        times: 1,
+        workouts: [],
+      };
+    }
+
+    showInteractive("create-page");
+    paintInteractive("create-page", "create", actualEdit);
+  }
+
+  if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
+    let id =
+      e.target.dataset.id || e.target.closest(btnDetails).dataset.id || false;
+
+    showInteractive("action-page");
+
+    paintInteractive(
+      "action-page",
+      "details",
+      routines.find((e) => e.id === id),
+    );
+  }
+
+  if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
+    let id =
+      e.target.dataset.id || e.target.closest(btnPreview).dataset.id || false;
+
+    actualRoutine = routines.find((e) => e.id === id);
+    showInteractive("action-page");
+    paintInteractive("action-page", "preview", actualRoutine);
+  }
+
+  if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
+    showInteractive("action-page");
+    paintInteractive("action-page", "activity", actualRoutine);
+    activityActions();
+  }
+
+  if (e.target.matches(btnFinish) || e.target.matches(`${btnFinish} *`)) {
+    hideInteractive();
+  }
+
+  if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`)) {
+    let numb =
+      e.target.dataset.count ||
+      e.target.closest(btnNext).dataset.count ||
+      false;
+    activityActions(numb);
   }
 
   if (
-    e.target.matches(confirmWorkout) ||
-    e.target.matches(`${confirmWorkout} *`)
+    e.target.matches(".interaction-container") ||
+    e.target.matches(interactionClose) ||
+    e.target.matches(`${interactionClose} *`)
   ) {
-    let id = e.target.dataset.id,
-      position = e.target.dataset.position;
+    hideInteractive();
+  }
 
-    if (!id) id = e.target.closest(confirmWorkout).dataset.id || false;
-    if (!position)
-      position = e.target.closest(confirmWorkout).dataset.position || null;
-    let obj = workoutDB.find((e) => e.id === id);
+  if (
+    e.target.matches(confirmRoutine) ||
+    e.target.matches(`${confirmRoutine} *`)
+  ) {
+    let id =
+      e.target.dataset.id ||
+      e.target.closest(confirmRoutine).dataset.id ||
+      false;
 
     showModal();
     $modal.innerHTML = null;
     $modal.appendChild(
       ModalDelete(
         props,
-        obj,
+        routines.find((e) => e.id === id),
+        "routine",
+        "Do you want to delete the routine:",
+        id,
+      ),
+    );
+  }
+
+  if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
+    let id =
+      e.target.dataset.id || e.target.closest(btnList).dataset.id || false;
+
+    showModal();
+    paintModal(id, "list");
+    manageFilter(currentFilter[0], currentFilter[1]);
+  }
+
+  if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`)) {
+    addEditManager(e.target, btnAdd, true);
+  }
+
+  if (e.target.matches(btnEdit) || e.target.matches(`${btnEdit} *`)) {
+    addEditManager(e.target, btnEdit, false);
+  }
+
+  if (
+    e.target.matches(btnInstruction) ||
+    e.target.matches(`${btnInstruction} *`)
+  ) {
+    let id =
+      e.target.dataset.id ||
+      e.target.closest(btnInstruction).dataset.id ||
+      false;
+
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(
+      ModalInstructions(
+        props,
+        workoutDB.find((e) => e.id === id),
+      ),
+    );
+  }
+
+  if (
+    e.target.matches(".modal-container") ||
+    e.target.matches(modalClose) ||
+    e.target.matches(`${modalClose} *`)
+  ) {
+    hideModal();
+  }
+
+  if (
+    e.target.matches(confirmWorkout) ||
+    e.target.matches(`${confirmWorkout} *`)
+  ) {
+    let id =
+        e.target.dataset.id ||
+        e.target.closest(confirmWorkout).dataset.id ||
+        false,
+      position =
+        e.target.dataset.position ||
+        e.target.closest(confirmWorkout).dataset.position ||
+        null;
+
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(
+      ModalDelete(
+        props,
+        workoutDB.find((e) => e.id === id),
         "workout",
         "Do you want to delete the workout:",
         position,

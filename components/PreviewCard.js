@@ -19,7 +19,7 @@ export default function PreviewCard(props, routine, workoutDB) {
     <img src="./assets/img/${routine.imgName}.jpg" alt="${routine.name} image" class="dp-none dp-block-sm"/>
     <section class="action-list-container"></section>
     <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
-      <div class="btn border-${color} btn-fill bg-${color}" data-id="${routine.id}" data-btn="start">
+      <div class="btn border-${color} btn-fill bg-${color}" data-btn="start">
         <p class="txt-s4 txt-bold txt-white p-one-line">Start</p>
       </div>
     </section>
