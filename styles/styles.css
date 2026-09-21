@@ -716,6 +716,12 @@ input[type="radio"]:checked ~ .custom-radio > div {
   transition: transform 75ms ease-in;
 }
 
+.btn.disable {
+  opacity: 0.75;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn > svg {
   min-height: 1rem;
   min-width: 1rem;
@@ -1153,7 +1159,7 @@ input[type="radio"]:checked ~ .custom-radio > div {
   transition: width 30s linear;
 }
 
-.bar-animated-active {
+.bar-animated.active {
   width: 100%;
 }
 

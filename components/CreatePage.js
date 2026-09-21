@@ -40,7 +40,7 @@ export default function CreatePage(props, routine, workoutDB) {
         </div>
       </section>
     </section>
-    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" id="routine-time" placeholder="Times" value="${routine.seconds_general ? routine.seconds_general : ""}"/>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" id="routine-time" placeholder="Times" value="${routine.seconds_general ? routine.seconds_general : localStorage.getItem("restTime")}"/>
   `;
 
   $createList.classList.add("card-container", "radio-sm", `shadow-${color}`);

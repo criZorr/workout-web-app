@@ -3,7 +3,6 @@
     "id": "1",
     "name": "ZZZ",
     "imgName": "placeholder",
-
     "seconds_general": 30,
     "workouts": [
       {
@@ -44,7 +43,6 @@
     "id": "2",
     "name": "Test2",
     "imgName": "placeholder",
-
     "seconds_general": 30,
     "workouts": [
       {
@@ -85,7 +83,6 @@
     "id": "3",
     "name": "Furina",
     "imgName": "placeholder",
-
     "seconds_general": 30,
     "workouts": [
       {
@@ -254,7 +251,6 @@
     "id": "4",
     "name": "Test4",
     "imgName": "placeholder",
-
     "seconds_general": 30,
     "workouts": [
       {
@@ -295,7 +291,6 @@
     "id": "5",
     "name": "Test4",
     "imgName": "placeholder",
-
     "seconds_general": 30,
     "workouts": [
       {
@@ -324,6 +319,94 @@
       },
       {
         "id": "3544",
+        "time": 60,
+        "reps": 0,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Upper body test",
+    "imgName": "placeholder",
+    "seconds_general": 30,
+    "workouts": [
+      {
+        "id": "0279",
+        "time": 0,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0687",
+        "time": 0,
+        "reps": 40,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0662",
+        "time": 0,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "3544",
+        "time": 60,
+        "reps": 0,
+        "series": 4,
+        "seconds_serie": 30,
+        "seconds_end": 60
+      },
+      {
+        "id": "3544",
+        "time": 45,
+        "reps": 0,
+        "series": 2,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0259",
+        "time": 0,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "2135",
+        "time": 60,
+        "reps": 0,
+        "series": 3,
+        "seconds_serie": 45,
+        "seconds_end": 0
+      },
+      {
+        "id": "0406",
+        "time": 0,
+        "reps": 20,
+        "series": 6,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0834",
+        "time": 0,
+        "reps": 20,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0691",
         "time": 60,
         "reps": 0,
         "series": 3,

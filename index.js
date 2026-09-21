@@ -12,6 +12,7 @@ import ModalDelete from "./components/ModalDelete.js";
 import ModalList from "./components/ModalList.js";
 import ModalAdd from "./components/ModalAdd.js";
 import ModalInstructions from "./components/ModalInstructions.js";
+import RestCard from "./components/RestCard.js";
 
 const d = document,
   w = window,
@@ -27,7 +28,7 @@ const d = document,
     preview: PreviewCard,
     activity: ActivityCard,
     details: DetailsCard,
-    list: ModalList,
+    rest: RestCard,
   };
 
 let props = {},
@@ -35,84 +36,51 @@ let props = {},
   routines = [],
   actualRoutine = {},
   actualEdit = {},
-  currentFilter = ["all", "all"];
+  workedDays = {},
+  currentFilter = ["all", "all"],
+  startTime = 0,
+  startRestTime = 0,
+  counterWorkout = 0,
+  counterRest = 0,
+  workoutClock = "",
+  handleClock = { action: "" },
+  workoutWatch = "",
+  handleWatch = 0,
+  workoutCounter = "",
+  handleCounter = 0,
+  todayWork = 0,
+  todayRest = 0,
+  day = new Date(),
+  dateString =
+    day.getFullYear().toString() +
+    (day.getMonth() + 1).toString().padStart(2, "0") +
+    day.getDate().toString().padStart(2, "0");
 
-const $test = d.querySelector(".test");
-
-const testData = (data) => {
-  console.log("hola");
-  let $fragment = d.createDocumentFragment(),
-    title = d.createElement("h1"),
-    section = d.createElement("section"),
-    cardText = "";
-
-  section.classList.add("test-container");
-
-  title.innerHTML = "Test";
-  $fragment.appendChild(title);
-
-  let byCategory = data.reduce((acc, ex) => {
-    acc[ex.category] = acc[ex.category] || [];
-    acc[ex.category].push(ex);
-    return acc;
-  }, {});
-
-  let categories = Array.from(Object.keys(byCategory));
-
-  for (let i = 0; i < categories.length; i++) {
-    let card = d.createElement("article");
-    card.classList.add(
-      "radio-sm",
-      "bg-white",
-      "shadow",
-      "card-container",
-      "test-card",
-    );
-
-    card.innerHTML = `
-    <h2>${categories[i]}</h2>
-    `;
-
-    let group = byCategory[categories[i]];
-
-    group.forEach((e) => {
-      let p = d.createElement("p");
-      p.classList.add("p-one-line");
-      p.innerHTML = e.name + " - " + e.id;
-      card.appendChild(p);
-    });
-
-    $fragment.appendChild(card);
-  }
-
-  // $fragment.appendChild(section);
-
-  $test.appendChild($fragment);
+const findData = (el, node, name) => {
+  return el.dataset[name] || el.closest(node).dataset[name];
 };
 
-fetch("./db/exercises.json")
-  .then((res) => (res.ok ? res.json() : Promise.reject()))
-  .then((json) => {
-    testData(json);
-  })
-  .catch((err) => console.log(err));
+const clearTimes = () => {
+  clearTimeout(workoutClock);
+  clearInterval(workoutWatch);
+  clearInterval(workoutCounter);
+};
 
 const addEditManager = (target, type, action) => {
-  let id = target.dataset.id || target.closest(type).dataset.id || false,
-    position =
-      target.dataset.position || target.closest(type).dataset.position || false;
-
-  let currentWork = workoutDB.find((ex) => ex.id === id),
-    currentProps = actualEdit.workouts[position];
-
-  let data = {
-    workout: currentWork,
-    time: currentProps ? currentProps.time : 30,
-    reps: currentProps ? currentProps.reps : 0,
-    series: currentProps ? currentProps.series : 1,
-    sec_serie: currentProps ? currentProps.seconds_serie : 0,
-    sec_end: currentProps ? currentProps.seconds_end : false,
-  };
+  let id = findData(target, type, "id") || false,
+    position = findData(target, type, "position") || false,
+    currentWork = workoutDB.find((ex) => ex.id === id),
+    currentProps = actualEdit.workouts[position],
+    data = {
+      workout: currentWork,
+      time: currentProps ? currentProps.time : 30,
+      reps: currentProps ? currentProps.reps : 0,
+      series: currentProps ? currentProps.series : 1,
+      sec_serie: currentProps
+        ? currentProps.seconds_serie
+        : actualEdit.seconds_general,
+      sec_end: currentProps ? currentProps.seconds_end : 0,
+    };
 
   showModal();
   $modal.innerHTML = null;
@@ -177,11 +145,6 @@ const manageFilter = (part = "all", equip = "all") => {
   $containerList.appendChild($fragment);
 };
 
-const paintModal = (id = 0, type = false) => {
-  $modal.innerHTML = null;
-  $modal.appendChild(painter[type](id, props));
-};
-
 const showModal = () => {
   $modal.classList.remove("dp-none");
 };
@@ -190,36 +153,93 @@ const hideModal = () => {
   $modal.classList.add("dp-none");
 };
 
-const activityActions = (count = 0) => {
+const setTimes = (type) => {
+  switch (type) {
+    case "workout":
+      counterWorkout += Math.round((Date.now() - startTime) / 100) / 10;
+      break;
+    case "rest":
+      counterRest += Math.round((Date.now() - startRestTime) / 100) / 10;
+      break;
+  }
+
+  if (Math.floor(counterWorkout) > 0) {
+    workedDays[dateString] = {
+      workSec: Math.floor(todayWork + counterWorkout),
+      restSec: Math.floor(todayRest + counterRest),
+    };
+    localStorage.setItem("workedDays", JSON.stringify(workedDays));
+  }
+};
+
+const activityActions = (count = 0, seriesCount = 1) => {
   const $title = d.querySelector(".workout-title"),
     $description = d.querySelector(".workout-description"),
     $img = d.querySelector(".workout-img"),
     $countTime = d.querySelector(".dynamic"),
     $countReps = d.querySelector(".static"),
-    $btnsNext = d.querySelectorAll(`[data-btn="next"]`);
+    $btnsNext = d.querySelectorAll(".counter-btns");
 
   let workoutProps = actualRoutine.workouts[count],
-    workoutsLength = Array.from(Object.keys(actualRoutine.workouts)).length,
+    workoutsLength = actualRoutine.workouts.length,
     workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id));
 
   if (!workoutProps.time) {
     $countTime.classList.add("dp-none");
     $countReps.classList.remove("dp-none");
+    $countReps.querySelector("p").innerHTML = `${workoutProps.reps} reps`;
+    $btnsNext[0].dataset.btn = "skip";
   }
 
   if (!workoutProps.reps) {
+    let $bar = d.createElement("div");
+    $bar.classList.add("bar-animated", `border-${props.color}`);
+    $bar.style.transitionDuration = `${workoutProps.time}s`;
+
     $countReps.classList.add("dp-none");
     $countTime.classList.remove("dp-none");
+
+    handleCounter = workoutProps.time;
+    $countTime.querySelector("p").innerHTML = `${handleCounter} s`;
+    workoutCounter = setInterval(() => {
+      handleCounter -= 1;
+      if (handleCounter >= 0)
+        $countTime.querySelector("p").innerHTML = `${handleCounter} s`;
+      if (handleCounter == 0) $btnsNext[1].classList.remove("disable");
+    }, 1000);
+
+    if ($countTime.querySelector(".bar-animated"))
+      $countTime.querySelector(".bar-animated").outerHTML = null;
+
+    $countTime.appendChild($bar);
+    $countTime.querySelector(".bar-animated").offsetHeight;
+    $countTime.querySelector(".bar-animated").classList.add("active");
+
+    $btnsNext[0].dataset.btn = "next";
+    $btnsNext[1].classList.add("disable");
   }
 
-  if (Number(count) < workoutsLength - 1) {
-    Array.from($btnsNext).forEach(
-      (btn) => (btn.dataset.count = 1 + Number(count)),
-    );
+  if (Number(seriesCount) === workoutProps.series) {
+    Array.from($btnsNext).forEach((btn) => {
+      btn.dataset.rest =
+        workoutProps.seconds_end || actualRoutine.seconds_general;
+      btn.dataset.count = 1 + Number(count);
+      btn.removeAttribute("data-reps");
+    });
+    if (!(Number(count) < workoutsLength - 1)) {
+      count = 0;
+      Array.from($btnsNext)[1].querySelector("p").innerHTML = "Finish";
+      Array.from($btnsNext).forEach((btn) => {
+        btn.removeAttribute("data-rest");
+        btn.dataset.btn = "finish";
+      });
+    }
   } else {
-    count = 0;
-    Array.from($btnsNext)[1].querySelector("p").innerHTML = "Finish";
-    Array.from($btnsNext).forEach((btn) => (btn.dataset.btn = "finish"));
+    Array.from($btnsNext).forEach((btn) => {
+      btn.dataset.rest = workoutProps.seconds_serie;
+      btn.dataset.count = Number(count);
+      btn.dataset.reps = 1 + Number(seriesCount);
+    });
   }
 
   $img.src = `./db/gif/${workout.id}-${workout.media_id}.gif`;
@@ -233,6 +253,47 @@ const paintInteractive = (clase = false, type = false, obj) => {
   const $article = d.querySelector(`.${clase}`);
   $article.innerHTML = null;
   $article.appendChild(painter[type](props, obj, workoutDB));
+};
+
+const manageRest = (time) => {
+  paintInteractive("action-page", "rest", actualRoutine);
+  startRestTime = Date.now();
+
+  const $counter = d.querySelector(".dynamic-number");
+  handleWatch = time;
+  $counter.innerHTML = `${handleWatch} s`;
+
+  workoutWatch = setInterval(() => {
+    if (handleWatch > 0) {
+      handleWatch -= 1;
+      $counter.innerHTML = `${handleWatch} s`;
+    }
+  }, 1000);
+};
+
+const handleNext = (el, type, skip = false) => {
+  let numb = findData(el, type, "count") || false,
+    serieNmb = findData(el, type, "reps") || undefined,
+    rest = findData(el, type, "rest") || undefined;
+
+  handleClock.action = () => {
+    clearInterval(workoutWatch);
+    startTime = Date.now();
+    setTimes("rest");
+    paintInteractive("action-page", "activity", actualRoutine);
+    activityActions(numb, serieNmb);
+  };
+
+  if (!skip) setTimes("workout");
+  clearInterval(workoutCounter);
+
+  if (Number(rest) > 0) {
+    manageRest(Number(rest));
+    workoutClock = setTimeout(handleClock.action, Number(rest) * 1000);
+  } else {
+    startRestTime = Date.now();
+    handleClock.action();
+  }
 };
 
 const showInteractive = (clase) => {
@@ -298,15 +359,20 @@ const localData = async () => {
   if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto");
   if (!localStorage.getItem("color")) localStorage.setItem("color", "green");
   if (!localStorage.getItem("language")) localStorage.setItem("language", "en");
-  if (!localStorage.getItem("maxStreak"))
-    localStorage.setItem("maxStreak", "40");
-  if (!localStorage.getItem("streak")) localStorage.setItem("streak", "10");
-  if (!localStorage.getItem("lastDay")) localStorage.setItem("lastDay", "");
-  if (!localStorage.getItem("totalTime"))
-    localStorage.setItem("totalTime", "0");
-  if (!localStorage.getItem("workTime")) localStorage.setItem("workTime", "0");
+  if (!localStorage.getItem("maxStreak")) localStorage.setItem("maxStreak", 0);
+  if (!localStorage.getItem("streak")) localStorage.setItem("streak", 0);
+  // if (!localStorage.getItem("lastDay")) localStorage.setItem("lastDay", "");
+  // if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 0);
+  // if (!localStorage.getItem("workTime")) localStorage.setItem("workTime", 0);
   if (!localStorage.getItem("workedDays"))
     localStorage.setItem("workedDays", JSON.stringify({}));
+  if (!localStorage.getItem("startTime")) localStorage.setItem("startTime", 10);
+  if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 30);
+
+  // if (!localStorage.getItem("date")) localStorage.setItem("date", dateString);
+  // if (localStorage.getItem("date") !== dateString) {
+  //   localStorage.setItem("date", dateString);
+  // }
 
   routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");
@@ -326,6 +392,8 @@ d.addEventListener("click", (e) => {
     btnPreview = `[data-btn="preview"]`,
     btnStart = `[data-btn="start"]`,
     btnNext = `[data-btn="next"]`,
+    btnSkip = `[data-btn="skip"]`,
+    btnSkipRest = `[data-btn="rest"]`,
     btnFinish = `[data-btn="finish"]`,
     btnDetails = `[data-btn="details"]`,
     confirmRoutine = `[data-confirm="routine"]`,
@@ -341,25 +409,25 @@ d.addEventListener("click", (e) => {
     modalClose = `[data-modal="close"]`,
     interactionClose = `[data-interaction="close"]`;
 
+  if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`))
+    addEditManager(e.target, btnAdd, true);
+
+  if (e.target.matches(btnEdit) || e.target.matches(`${btnEdit} *`))
+    addEditManager(e.target, btnEdit, false);
+
   if (e.target.matches(saveWorkout) || e.target.matches(`${saveWorkout} *`)) {
-    let id =
-        e.target.dataset.id ||
-        e.target.closest(saveWorkout).dataset.id ||
-        false,
-      position =
-        e.target.dataset.position ||
-        e.target.closest(saveWorkout).dataset.position ||
-        false,
+    let id = findData(e.target, saveWorkout, "id") || false,
+      position = findData(e.target, saveWorkout, "position") || false,
       obj = {},
       time = 0,
       reps = 0,
-      series = Number(d.getElementById("add-series").value) || 0,
+      series = Number(d.getElementById("add-series").value) || 1,
       seconds_serie = 0,
       seconds_end = Number(d.getElementById("add-sec-end").value) || 0;
 
     d.getElementById("tab-1").checked
-      ? (time = Number(d.getElementById("add-time").value))
-      : (reps = Number(d.getElementById("add-time").value));
+      ? (time = Number(d.getElementById("add-time").value) || 30)
+      : (reps = Number(d.getElementById("add-time").value) || 10);
 
     if (series > 1)
       seconds_serie = Number(d.getElementById("add-sec-series").value) || 0;
@@ -382,9 +450,7 @@ d.addEventListener("click", (e) => {
   }
 
   if (e.target.matches(dltWorkout) || e.target.matches(`${dltWorkout} *`)) {
-    let id =
-      e.target.dataset.id || e.target.closest(dltWorkout).dataset.id || false;
-
+    let id = findData(e.target, dltWorkout, "id") || false;
     actualEdit.workouts.splice(id, 1);
     showInteractive("create-page");
     paintInteractive("create-page", "create", actualEdit);
@@ -392,34 +458,32 @@ d.addEventListener("click", (e) => {
 
   if (e.target.matches(saveRoutine) || e.target.matches(`${saveRoutine} *`)) {
     const obj = {};
-
     obj.id = actualEdit.id;
     obj.name = d.getElementById("routine-name").value || "New Routine";
     obj.imgName = "placeholder";
     obj.seconds_general = Number(d.getElementById("routine-time").value) || 30;
     obj.workouts = actualEdit.workouts;
 
-    if (actualEdit.workouts.length === 0) return;
-
-    let index = routines.findIndex((e) => e.id === actualEdit.id);
-    index !== -1 ? (routines[index] = obj) : routines.push(obj);
-    localStorage.setItem("routines", JSON.stringify(routines));
-    router();
-    hideInteractive();
+    if (actualEdit.workouts.length === 0) {
+      alert("You need to add at least one excersice");
+    } else {
+      let index = routines.findIndex((e) => e.id === actualEdit.id);
+      index !== -1 ? (routines[index] = obj) : routines.push(obj);
+      localStorage.setItem("routines", JSON.stringify(routines));
+      router();
+      hideInteractive();
+    }
   }
 
   if (e.target.matches(dltRoutine) || e.target.matches(`${dltRoutine} *`)) {
-    let id =
-      e.target.dataset.id || e.target.closest(dltRoutine).dataset.id || false;
-
+    let id = findData(e.target, dltRoutine, "id") || false;
     routines = routines.filter((e) => e.id !== id);
     localStorage.setItem("routines", JSON.stringify(routines));
     router();
   }
 
   if (e.target.matches(btnCreate) || e.target.matches(`${btnCreate} *`)) {
-    let id =
-        e.target.dataset.id || e.target.closest(btnCreate).dataset.id || false,
+    let id = findData(e.target, btnCreate, "id") || false,
       newId = "";
 
     if (id) {
@@ -431,7 +495,7 @@ d.addEventListener("click", (e) => {
       actualEdit = {
         id: newId,
         imgName: "placeholder",
-        times: 1,
+        seconds_general: Number(localStorage.getItem("restTime")),
         workouts: [],
       };
     }
@@ -441,11 +505,8 @@ d.addEventListener("click", (e) => {
   }
 
   if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
-    let id =
-      e.target.dataset.id || e.target.closest(btnDetails).dataset.id || false;
-
+    let id = findData(e.target, btnDetails, "id") || false;
     showInteractive("action-page");
-
     paintInteractive(
       "action-page",
       "details",
@@ -454,49 +515,56 @@ d.addEventListener("click", (e) => {
   }
 
   if (e.target.matches(btnPreview) || e.target.matches(`${btnPreview} *`)) {
-    let id =
-      e.target.dataset.id || e.target.closest(btnPreview).dataset.id || false;
-
+    let id = findData(e.target, btnPreview, "id") || false;
     actualRoutine = routines.find((e) => e.id === id);
     showInteractive("action-page");
     paintInteractive("action-page", "preview", actualRoutine);
   }
 
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
+    let fstTime = Number(localStorage.getItem("startTime"));
+
+    handleClock.action = () => {
+      clearInterval(workoutWatch);
+      showInteractive("action-page");
+      paintInteractive("action-page", "activity", actualRoutine);
+      counterWorkout = 0;
+      counterRest = 0;
+      startTime = Date.now();
+      activityActions();
+    };
+
+    workedDays = JSON.parse(localStorage.getItem("workedDays"));
+    todayWork = workedDays[dateString] ? workedDays[dateString].workSec : 0;
+    todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
+
     showInteractive("action-page");
-    paintInteractive("action-page", "activity", actualRoutine);
-    activityActions();
+    manageRest(fstTime);
+    workoutClock = setTimeout(handleClock.action, fstTime * 1000);
   }
+
+  if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`))
+    handleNext(e.target, btnNext);
+
+  if (e.target.matches(btnSkip) || e.target.matches(`${btnSkip} *`))
+    handleNext(e.target, btnSkip, true);
 
   if (e.target.matches(btnFinish) || e.target.matches(`${btnFinish} *`)) {
+    setTimes("workout");
     hideInteractive();
+    clearTimes();
   }
 
-  if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`)) {
-    let numb =
-      e.target.dataset.count ||
-      e.target.closest(btnNext).dataset.count ||
-      false;
-    activityActions(numb);
-  }
-
-  if (
-    e.target.matches(".interaction-container") ||
-    e.target.matches(interactionClose) ||
-    e.target.matches(`${interactionClose} *`)
-  ) {
-    hideInteractive();
+  if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
+    clearTimes();
+    handleClock.action();
   }
 
   if (
     e.target.matches(confirmRoutine) ||
     e.target.matches(`${confirmRoutine} *`)
   ) {
-    let id =
-      e.target.dataset.id ||
-      e.target.closest(confirmRoutine).dataset.id ||
-      false;
-
+    let id = findData(e.target, confirmRoutine, "id") || false;
     showModal();
     $modal.innerHTML = null;
     $modal.appendChild(
@@ -510,63 +578,12 @@ d.addEventListener("click", (e) => {
     );
   }
 
-  if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
-    let id =
-      e.target.dataset.id || e.target.closest(btnList).dataset.id || false;
-
-    showModal();
-    paintModal(id, "list");
-    manageFilter(currentFilter[0], currentFilter[1]);
-  }
-
-  if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`)) {
-    addEditManager(e.target, btnAdd, true);
-  }
-
-  if (e.target.matches(btnEdit) || e.target.matches(`${btnEdit} *`)) {
-    addEditManager(e.target, btnEdit, false);
-  }
-
-  if (
-    e.target.matches(btnInstruction) ||
-    e.target.matches(`${btnInstruction} *`)
-  ) {
-    let id =
-      e.target.dataset.id ||
-      e.target.closest(btnInstruction).dataset.id ||
-      false;
-
-    showModal();
-    $modal.innerHTML = null;
-    $modal.appendChild(
-      ModalInstructions(
-        props,
-        workoutDB.find((e) => e.id === id),
-      ),
-    );
-  }
-
-  if (
-    e.target.matches(".modal-container") ||
-    e.target.matches(modalClose) ||
-    e.target.matches(`${modalClose} *`)
-  ) {
-    hideModal();
-  }
-
   if (
     e.target.matches(confirmWorkout) ||
     e.target.matches(`${confirmWorkout} *`)
   ) {
-    let id =
-        e.target.dataset.id ||
-        e.target.closest(confirmWorkout).dataset.id ||
-        false,
-      position =
-        e.target.dataset.position ||
-        e.target.closest(confirmWorkout).dataset.position ||
-        null;
-
+    let id = findData(e.target, confirmWorkout, "id") || false,
+      position = findData(e.target, confirmWorkout, "position") || null;
     showModal();
     $modal.innerHTML = null;
     $modal.appendChild(
@@ -578,6 +595,46 @@ d.addEventListener("click", (e) => {
         position,
       ),
     );
+  }
+
+  if (e.target.matches(btnList) || e.target.matches(`${btnList} *`)) {
+    let id = findData(e.target, btnList, "id") || false;
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(ModalList(id, props));
+    manageFilter(currentFilter[0], currentFilter[1]);
+  }
+
+  if (
+    e.target.matches(btnInstruction) ||
+    e.target.matches(`${btnInstruction} *`)
+  ) {
+    let id = findData(e.target, btnInstruction, "id") || false;
+    showModal();
+    $modal.innerHTML = null;
+    $modal.appendChild(
+      ModalInstructions(
+        props,
+        workoutDB.find((e) => e.id === id),
+      ),
+    );
+  }
+
+  if (
+    e.target.matches(".interaction-container") ||
+    e.target.matches(interactionClose) ||
+    e.target.matches(`${interactionClose} *`)
+  ) {
+    clearTimes();
+    hideInteractive();
+  }
+
+  if (
+    e.target.matches(".modal-container") ||
+    e.target.matches(modalClose) ||
+    e.target.matches(`${modalClose} *`)
+  ) {
+    hideModal();
   }
 });
 
