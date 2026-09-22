@@ -12,6 +12,10 @@ export default function ModalList(id, props) {
   );
 
   $content.innerHTML = `
+    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark">Search</p>
+    <section class="card-container radio-sm shadow-${color}">
+      <input class="list-search txt-s5 txt-s4-sm txt-regular txt-dark" type="search" id="" name="">
+    </section>
     <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark">Body parts</p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn custom-select">

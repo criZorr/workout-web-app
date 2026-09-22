@@ -38,6 +38,7 @@ let props = {},
   actualEdit = {},
   workedDays = {},
   currentFilter = ["all", "all"],
+  currentSearch = "",
   startTime = 0,
   startRestTime = 0,
   counterWorkout = 0,
@@ -50,6 +51,7 @@ let props = {},
   handleCounter = 0,
   todayWork = 0,
   todayRest = 0,
+  listSearch = [],
   day = new Date(),
   dateString =
     day.getFullYear().toString() +
@@ -87,11 +89,36 @@ const addEditManager = (target, type, action) => {
   $modal.appendChild(ModalAdd(props, data, action, position));
 };
 
+const showResults = (list, search = false) => {
+  const $fragment = d.createDocumentFragment();
+  list.forEach((workout, i) => {
+    const $option = d.createElement("section");
+    if (i == 0) $option.classList.add("list-option-fst");
+    if (i == list.length - 1) $option.classList.add("list-option-lst");
+    $option.classList.add("list-btn", "list-option");
+    $option.innerHTML = `
+        <p class="txt-s5 txt-s4-sm txt-regular p-one-line txt-dark">${toSentenceCase(workout.name)}</p>
+        <section class="btn-icons-container">
+          <div class="btn-xs-icon circle bg-${props.color} btn-icon-sm" data-btn="add" data-id="${workout.id}">
+            <div class="icon-svg">
+              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z" class="fill-light"/>
+              </svg>
+            </div>
+          </div>
+        </section>
+      `;
+    $fragment.appendChild($option);
+    if (!search) listSearch.push({ name: workout.name, id: workout.id });
+  });
+  return $fragment;
+};
+
 const manageFilter = (part = "all", equip = "all") => {
   const $fstFilter = d.querySelector(".filter-fst"),
     $sndFilter = d.querySelector(".filter-snd"),
     $containerList = d.querySelector(".workouts-list"),
-    $fragment = d.createDocumentFragment();
+    $search = d.querySelector(".list-search");
 
   let fstValue = $fstFilter.value,
     sndValue = $sndFilter.value,
@@ -107,8 +134,6 @@ const manageFilter = (part = "all", equip = "all") => {
     $sndFilter.value = equip;
   }
 
-  $containerList.innerHTML = null;
-
   if (fstValue !== "all" && sndValue === "all")
     workoutsList = workoutDB.filter((ex) => ex.category === fstValue);
 
@@ -121,28 +146,28 @@ const manageFilter = (part = "all", equip = "all") => {
   }
 
   currentFilter = [fstValue, sndValue];
+  listSearch = [];
 
-  workoutsList.forEach((workout, i) => {
-    const $option = d.createElement("section");
-    if (i == 0) $option.classList.add("list-option-fst");
-    if (i == workoutsList.length - 1) $option.classList.add("list-option-lst");
-    $option.classList.add("list-btn", "list-option");
-    $option.innerHTML = `
-        <p class="txt-s5 txt-s4-sm txt-regular p-one-line txt-dark">${toSentenceCase(workout.name)}</p>
-        <section class="btn-icons-container">
-          <div class="btn-xs-icon circle bg-${props.color} btn-icon-sm" data-btn="add" data-id="${workout.id}">
-            <div class="icon-svg">
-              <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z" class="fill-light"/>
-              </svg>
-            </div>
-          </div>
-        </section>
-      `;
-    $fragment.appendChild($option);
+  const manageAppend = (action = true) => {
+    $containerList.innerHTML = null;
+    if (action) {
+      $containerList.appendChild(showResults(workoutsList));
+    } else {
+      let res = listSearch.filter((el) =>
+        el.name.includes($search.value.toLowerCase()),
+      );
+      $containerList.appendChild(showResults(res, true));
+    }
+  };
+
+  manageAppend();
+  $search.value = currentSearch;
+  if ($search.value !== "") manageAppend(false);
+
+  $search.addEventListener("keyup", (e) => {
+    e.target.value === "" ? manageAppend() : manageAppend(false);
+    currentSearch = e.target.value;
   });
-
-  $containerList.appendChild($fragment);
 };
 
 const showModal = () => {
@@ -375,18 +400,10 @@ const localData = async () => {
   if (!localStorage.getItem("language")) localStorage.setItem("language", "en");
   if (!localStorage.getItem("maxStreak")) localStorage.setItem("maxStreak", 0);
   if (!localStorage.getItem("streak")) localStorage.setItem("streak", 0);
-  // if (!localStorage.getItem("lastDay")) localStorage.setItem("lastDay", "");
-  // if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 0);
-  // if (!localStorage.getItem("workTime")) localStorage.setItem("workTime", 0);
   if (!localStorage.getItem("workedDays"))
     localStorage.setItem("workedDays", JSON.stringify({}));
   if (!localStorage.getItem("startTime")) localStorage.setItem("startTime", 10);
   if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 30);
-
-  // if (!localStorage.getItem("date")) localStorage.setItem("date", dateString);
-  // if (localStorage.getItem("date") !== dateString) {
-  //   localStorage.setItem("date", dateString);
-  // }
 
   routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");

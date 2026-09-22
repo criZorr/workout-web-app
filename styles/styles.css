@@ -79,6 +79,12 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+input[type="search"] {
+  text-decoration: none;
+  border: none;
+  outline: none;
+}
+
 select {
   background-color: transparent;
   appearance: none;
