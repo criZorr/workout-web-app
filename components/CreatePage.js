@@ -78,13 +78,30 @@ export default function CreatePage(props, routine, workoutDB) {
       timeSlug = [horText, minText, secText].filter(Boolean).join(" - ");
     }
 
-    $option.classList.add("list-btn", "list-option");
+    $option.classList.add("list-btn", "list-option", "list-tgl");
 
     if (i === 0) $option.classList.add("list-option-fst");
     if (i === workoutsLength - 1) $option.classList.add("list-option-lst");
 
     $option.innerHTML = `
-      <p class="txt-s5 txt-s4-sm txt-regular p-one-line txt-dark">${toSentenceCase(workout.name)}</p>
+      <p class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100">${toSentenceCase(workout.name)}</p>
+      <article class="list-btns-container">
+      <section class="btn-icons-container">
+        <div class="btn-xs-icon bg-${color} btn-icon-sm ${i === 0 ? "disable" : ""}" data-position=${i} data-btn="up">
+          <div class="icon-svg">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="fill-light" d="M16 10.689L8 3L2.5338e-07 10.689L2.40419 13L8 7.61991L13.5958 13L16 10.689Z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="btn-xs-icon bg-${color} btn-icon-sm ${i === workoutsLength - 1 ? "disable" : ""}" data-position=${i} data-btn="down">
+          <div class="icon-svg">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="fill-light" d="M0 5.31104L8 13L16 5.31104L13.5958 3L8 8.38009L2.40419 3L0 5.31104Z"/>
+            </svg>
+          </div>
+        </div>
+      </section>
       <section class="btn-icons-container">
         <div class="btn-xs-icon bg-${color} btn-icon-sm" data-id="${workoutProps.id}" data-btn="edit" data-position=${i}>
           <div class="icon-svg">
@@ -93,7 +110,7 @@ export default function CreatePage(props, routine, workoutDB) {
             </svg>
           </div>
         </div>
-        <div class="btn-xs-icon bg-${color} btn-icon-sm" data-id="${workoutProps.id}" data-confirm="workout" data-position=${i}>
+        <div class="btn-xs-icon bg-${color}-comp btn-icon-sm" data-id="${workoutProps.id}" data-confirm="workout" data-position=${i}>
           <div class="icon-svg">
             <svg viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path class="fill-light" d="M2.33333 4H1.55556V14.4C1.55556 14.8243 1.71944 15.2313 2.01117 15.5314C2.30289 15.8314 2.69855 16 3.11111 16H10.8889C11.3014 16 11.6971 15.8314 11.9888 15.5314C12.2806 15.2313 12.4444 14.8243 12.4444 14.4V4H2.33333ZM10.5918 1.6L9.33333 0H4.66667L3.40822 1.6H0V3.2H14V1.6H10.5918Z"/>
@@ -101,6 +118,7 @@ export default function CreatePage(props, routine, workoutDB) {
           </div>
         </div>
       </section>
+      </article>
     `;
 
     $workName.classList.add(

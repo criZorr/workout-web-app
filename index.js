@@ -303,6 +303,20 @@ const showInteractive = (clase) => {
   $interaction.querySelector(`.${clase}`).classList.remove("dp-none");
 };
 
+const handleMove = (target, node, up = true) => {
+  let position = findData(target, node, "position") || false;
+
+  if (!position) return;
+  let num = up ? -1 : 1,
+    ogP = actualEdit.workouts[Number(position) + num],
+    newP = actualEdit.workouts[Number(position)];
+
+  actualEdit.workouts[Number(position) + num] = newP;
+  actualEdit.workouts[Number(position)] = ogP;
+  showInteractive("create-page");
+  paintInteractive("create-page", "create", actualEdit);
+};
+
 const hideInteractive = () => {
   $header.classList.remove("dp-none", "dp-block-lg");
   $main.classList.remove("dp-none", "dp-block-lg");
@@ -407,7 +421,9 @@ d.addEventListener("click", (e) => {
     dltRoutine = `[data-delete="routine"]`,
     dltWorkout = `[data-delete="workout"]`,
     modalClose = `[data-modal="close"]`,
-    interactionClose = `[data-interaction="close"]`;
+    interactionClose = `[data-interaction="close"]`,
+    btnUp = `[data-btn="up"]`,
+    btnDown = `[data-btn="down"]`;
 
   if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`))
     addEditManager(e.target, btnAdd, true);
@@ -619,6 +635,12 @@ d.addEventListener("click", (e) => {
       ),
     );
   }
+
+  if (e.target.matches(btnUp) || e.target.matches(`${btnUp} *`))
+    handleMove(e.target, btnUp);
+
+  if (e.target.matches(btnDown) || e.target.matches(`${btnDown} *`))
+    handleMove(e.target, btnDown, false);
 
   if (
     e.target.matches(".interaction-container") ||
