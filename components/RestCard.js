@@ -7,14 +7,19 @@ export default function RestCard(props, routine) {
     { color, lang } = props;
 
   $fragment.appendChild(
-    HeaderBack(routine.name, color, `data-interaction="close"`),
+    HeaderBack(routine.headerName, color, `data-interaction="close"`),
   );
 
   $content.classList.add("action-content");
 
   $content.innerHTML = `
-    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">Rest time</p>
-    <p class="txt-s5 txt-s4-sm txt-bold txt-${color} dynamic-number"></p>
+    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">Take a rest!</p>
+    <section class="counter dynamic">
+      <p class="txt-s5 txt-s4-sm txt-bold txt-${color} dynamic-number"></p>
+    </section>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark p-one-line w-100 txt-dark flex-s-0">Next exercise</p>
+    <img src="./db/img/${routine.mediaName}.webp" alt="${routine.name} image" class="dp-none dp-block-sm"/>
+    <p class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100 txt-dark flex-s-0">${routine.name} - ${routine.time ? `${routine.time} seconds` : `${routine.reps} repetitions`}</p>
     <section class="btns-container">
       <div class="btn border-${color}" data-btn="rest">
         <p class="txt-s4 txt-bold p-one-line txt-dark dp-none dp-block-sm">Skip</p>

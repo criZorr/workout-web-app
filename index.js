@@ -280,13 +280,31 @@ const paintInteractive = (clase = false, type = false, obj) => {
   $article.appendChild(painter[type](props, obj, workoutDB));
 };
 
-const manageRest = (time) => {
-  paintInteractive("action-page", "rest", actualRoutine);
-  startRestTime = Date.now();
+const manageRest = (time, workoutProps) => {
+  let workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id)),
+    $bar = d.createElement("div");
 
-  const $counter = d.querySelector(".dynamic-number");
+  $bar.classList.add("bar-animated", `border-${props.color}`);
+  $bar.style.transitionDuration = `${time}s`;
+
+  paintInteractive("action-page", "rest", {
+    headerName: actualRoutine.name,
+    mediaName: `${workout.id}-${workout.media_id}`,
+    name: toSentenceCase(workout.name),
+    time: workoutProps.time,
+    reps: workoutProps.reps,
+  });
+
+  const $counterTime = d.querySelector(".dynamic"),
+    $counter = $counterTime.querySelector(".dynamic-number");
+
+  $counterTime.appendChild($bar);
+  $counterTime.querySelector(".bar-animated").offsetHeight;
+  $counterTime.querySelector(".bar-animated").classList.add("active");
+
   handleWatch = time;
   $counter.innerHTML = `${handleWatch} s`;
+  startRestTime = Date.now();
 
   workoutWatch = setInterval(() => {
     if (handleWatch > 0) {
@@ -313,7 +331,7 @@ const handleNext = (el, type, skip = false) => {
   clearInterval(workoutCounter);
 
   if (Number(rest) > 0) {
-    manageRest(Number(rest));
+    manageRest(Number(rest), actualRoutine.workouts[numb]);
     workoutClock = setTimeout(handleClock.action, Number(rest) * 1000);
   } else {
     startRestTime = Date.now();
@@ -572,7 +590,7 @@ d.addEventListener("click", (e) => {
     todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
 
     showInteractive("action-page");
-    manageRest(fstTime);
+    manageRest(fstTime, actualRoutine.workouts[0]);
     workoutClock = setTimeout(handleClock.action, fstTime * 1000);
   }
 
