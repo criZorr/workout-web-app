@@ -91,6 +91,7 @@ const addEditManager = (target, type, action) => {
 
 const showResults = (list, search = false) => {
   const $fragment = d.createDocumentFragment();
+  if (!search) listSearch = [];
   list.forEach((workout, i) => {
     const $option = d.createElement("section");
     if (i == 0) $option.classList.add("list-option-fst");
@@ -146,7 +147,6 @@ const manageFilter = (part = "all", equip = "all") => {
   }
 
   currentFilter = [fstValue, sndValue];
-  listSearch = [];
 
   const manageAppend = (action = true) => {
     $containerList.innerHTML = null;

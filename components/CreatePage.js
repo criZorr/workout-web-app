@@ -15,7 +15,9 @@ export default function CreatePage(props, routine, workoutDB) {
 
   $createSection.classList.add("create-section");
   $createSection.innerHTML += `
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Name</p>
     <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" id="routine-name" placeholder="Insert name" value="${routine.name ? routine.name : ""}"/>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Custom Image</p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
         <p class="txt-s4 txt-regular txt-dark">Add image</p>
@@ -28,6 +30,7 @@ export default function CreatePage(props, routine, workoutDB) {
         </div>
       </section>
     </section>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Add more workouts</p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
         <p class="txt-s4 txt-regular txt-dark">Add workout</p>
@@ -40,7 +43,9 @@ export default function CreatePage(props, routine, workoutDB) {
         </div>
       </section>
     </section>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Seconds between each workout</p>
     <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" id="routine-time" placeholder="Times" value="${routine.seconds_general ? routine.seconds_general : localStorage.getItem("restTime")}"/>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Workouts list</p>
   `;
 
   $createList.classList.add("card-container", "radio-sm", `shadow-${color}`);

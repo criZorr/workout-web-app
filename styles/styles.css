@@ -1008,6 +1008,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
   gap: 1rem;
 }
 
+.create-section > *:nth-child(odd) {
+  margin-bottom: -0.5rem;
+}
+
 .preview-info {
   display: flex;
   flex-direction: column;
@@ -1052,8 +1056,8 @@ input[type="radio"]:checked ~ .custom-radio > div {
     gap: 2rem;
     margin-bottom: 0;
     grid-template-columns: 3fr 3fr 1fr;
-    width: 70rem;
-    height: 30rem;
+    width: 70%;
+    height: 60%;
     overflow-y: hidden;
   }
 
@@ -1599,6 +1603,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
 .modal-card > p {
   padding-inline: 0.5rem;
+}
+
+.modal-list > p {
+  margin-bottom: -0.5rem;
 }
 
 .option-bar {
