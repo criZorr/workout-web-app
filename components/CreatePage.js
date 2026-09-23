@@ -63,6 +63,7 @@ export default function CreatePage(props, routine, workoutDB) {
     let $option = d.createElement("section"),
       $workName = d.createElement("p"),
       $workDescription = d.createElement("p"),
+      $listContainer = d.createElement("div"),
       workoutProps = routine.workouts[i],
       time = workoutProps.time || 0,
       timeSlug = "",
@@ -84,9 +85,6 @@ export default function CreatePage(props, routine, workoutDB) {
     }
 
     $option.classList.add("list-btn", "list-option", "list-tgl");
-
-    if (i === 0) $option.classList.add("list-option-fst");
-    if (i === workoutsLength - 1) $option.classList.add("list-option-lst");
 
     $option.innerHTML = `
       <p class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100">${toSentenceCase(workout.name)}</p>
@@ -144,9 +142,11 @@ export default function CreatePage(props, routine, workoutDB) {
     $workName.innerHTML = toSentenceCase(workout.name);
     $workDescription.innerHTML = `${workoutProps.series} series of ${workoutProps.reps ? `${workoutProps.reps} repetitions` : timeSlug} `;
 
+    $listContainer.classList.add("preview-item");
+    $listContainer.appendChild($workName);
+    $listContainer.appendChild($workDescription);
     $createList.appendChild($option);
-    $previewList.appendChild($workName);
-    $previewList.appendChild($workDescription);
+    $previewList.appendChild($listContainer);
   }
 
   //Buttons Section

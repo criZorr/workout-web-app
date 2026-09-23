@@ -387,17 +387,51 @@ const showInteractive = (clase) => {
 };
 
 const handleMove = (target, node, up = true) => {
+  const $list = d.querySelector("#routine-workouts"),
+    $listInfo = d.querySelector(".preview-info");
   let position = findData(target, node, "position") || false;
 
   if (!position) return;
   let num = up ? -1 : 1,
-    ogP = actualEdit.workouts[Number(position) + num],
-    newP = actualEdit.workouts[Number(position)];
+    nP = Number(position),
+    ogP = actualEdit.workouts[nP + num],
+    newP = actualEdit.workouts[nP],
+    ogN = $list.childNodes[nP + num],
+    newN = $list.childNodes[nP],
+    ogI = $listInfo.childNodes[nP + num + 1],
+    newI = $listInfo.childNodes[nP + 1],
+    ogBtns = ogN.querySelectorAll("[data-position]"),
+    newBtns = newN.querySelectorAll("[data-position]");
 
-  actualEdit.workouts[Number(position) + num] = newP;
-  actualEdit.workouts[Number(position)] = ogP;
-  showInteractive("create-page");
-  paintInteractive("create-page", "create", actualEdit);
+  actualEdit.workouts[nP + num] = newP;
+  actualEdit.workouts[nP] = ogP;
+
+  if (up) {
+    ogN.before(newN);
+    ogI.before(newI);
+  } else {
+    ogN.after(newN);
+    ogI.after(newI);
+  }
+
+  ogBtns.forEach((e) => (e.dataset.position = nP));
+  newBtns.forEach((e) => (e.dataset.position = nP + num));
+
+  nP === 0
+    ? ogBtns[0].classList.add("disable")
+    : ogBtns[0].classList.remove("disable");
+
+  nP + num === 0
+    ? newBtns[0].classList.add("disable")
+    : newBtns[0].classList.remove("disable");
+
+  nP === actualEdit.workouts.length - 1
+    ? ogBtns[1].classList.add("disable")
+    : ogBtns[1].classList.remove("disable");
+
+  nP + num === actualEdit.workouts.length - 1
+    ? newBtns[1].classList.add("disable")
+    : newBtns[1].classList.remove("disable");
 };
 
 const hideInteractive = () => {
