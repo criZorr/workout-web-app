@@ -13,7 +13,7 @@ export default function RestCard(props, routine) {
   $content.classList.add("action-content");
 
   $content.innerHTML = `
-    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">Take a rest!</p>
+    <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${routine.msg}</p>
     <section class="counter dynamic">
       <p class="txt-s5 txt-s4-sm txt-bold txt-${color} dynamic-number"></p>
     </section>

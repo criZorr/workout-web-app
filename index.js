@@ -61,11 +61,12 @@ let props = {},
     (day.getMonth() + 1).toString().padStart(2, "0") +
     day.getDate().toString().padStart(2, "0");
 
-const speak = (text = "") => {
+const speak = (text = "", speed = 1) => {
   if ("speechSynthesis" in window && text !== "") {
+    speechSynthesis.cancel();
     let msg = new SpeechSynthesisUtterance(text);
     msg.voice = voiceName ? voices.find((e) => e.name === voiceName) : null;
-    msg.rate = 1.25;
+    msg.rate = speed;
     msg.volume = 1;
     w.speechSynthesis.speak(msg);
   }
@@ -250,7 +251,7 @@ const activityActions = (count = 0, seriesCount = 1) => {
       if (handleCounter > 0) {
         handleCounter -= 1;
         $counter.innerHTML = `${handleCounter} s`;
-        if (handleCounter <= 3 && handleCounter > 0) speak(handleCounter);
+        if (handleCounter <= 3 && handleCounter > 0) speak(handleCounter, 1.25);
         if (handleCounter === 0) {
           $btnsNext[1].classList.remove("disable");
           playSound(alarm);
@@ -305,9 +306,10 @@ const paintInteractive = (clase = false, type = false, obj) => {
   $article.appendChild(painter[type](props, obj, workoutDB));
 };
 
-const manageRest = (time, workoutProps) => {
+const manageRest = (time, workoutProps, msg = "Take a rest!") => {
   let workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id)),
-    $bar = d.createElement("div");
+    $bar = d.createElement("div"),
+    txt = [];
 
   $bar.classList.add("bar-animated", `border-${props.color}`);
   $bar.style.transitionDuration = `${time}s`;
@@ -318,10 +320,21 @@ const manageRest = (time, workoutProps) => {
     name: toSentenceCase(workout.name),
     time: workoutProps.time,
     reps: workoutProps.reps,
+    msg,
   });
 
   const $counterTime = d.querySelector(".dynamic"),
     $counter = $counterTime.querySelector(".dynamic-number");
+
+  txt = [
+    msg,
+    "Next exercise:",
+    `${workout.name},`,
+    workoutProps.time
+      ? `${workoutProps.time} seconds.`
+      : `${workoutProps.reps} repetitions.`,
+  ];
+  speak(txt.join(" "));
 
   $counterTime.appendChild($bar);
   $counterTime.querySelector(".bar-animated").offsetHeight;
@@ -335,7 +348,7 @@ const manageRest = (time, workoutProps) => {
     if (handleWatch > 0) {
       handleWatch -= 1;
       $counter.innerHTML = `${handleWatch} s`;
-      if (handleWatch <= 3 && handleWatch > 0) speak(handleWatch);
+      if (handleWatch <= 3 && handleWatch > 0) speak(handleWatch, 1.25);
     }
   }, 1000);
 };
@@ -627,7 +640,7 @@ d.addEventListener("click", (e) => {
     todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
 
     showInteractive("action-page");
-    manageRest(fstTime, actualRoutine.workouts[0]);
+    manageRest(fstTime, actualRoutine.workouts[0], "Get ready!");
     workoutClock = setTimeout(handleClock.action, fstTime * 1000);
   }
 
@@ -641,6 +654,7 @@ d.addEventListener("click", (e) => {
     setTimes("workout");
     hideInteractive();
     clearTimes();
+    speak("Congratulations!");
   }
 
   if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
