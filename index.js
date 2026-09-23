@@ -52,11 +52,29 @@ let props = {},
   todayWork = 0,
   todayRest = 0,
   listSearch = [],
+  alarm = "",
+  voiceName = "",
+  voices = [],
   day = new Date(),
   dateString =
     day.getFullYear().toString() +
     (day.getMonth() + 1).toString().padStart(2, "0") +
     day.getDate().toString().padStart(2, "0");
+
+const speak = (text = "") => {
+  if ("speechSynthesis" in window && text !== "") {
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.voice = voiceName ? voices.find((e) => e.name === voiceName) : null;
+    msg.rate = 1.25;
+    msg.volume = 1;
+    w.speechSynthesis.speak(msg);
+  }
+};
+
+const playSound = (sound) => {
+  sound.currentTime = 0;
+  sound.play();
+};
 
 const findData = (el, node, name) => {
   return el.dataset[name] || el.closest(node).dataset[name];
@@ -202,6 +220,7 @@ const activityActions = (count = 0, seriesCount = 1) => {
     $description = d.querySelector(".workout-description"),
     $img = d.querySelector(".workout-img"),
     $countTime = d.querySelector(".dynamic"),
+    $counter = $countTime.querySelector("p"),
     $countReps = d.querySelector(".static"),
     $btnsNext = d.querySelectorAll(".counter-btns");
 
@@ -225,12 +244,18 @@ const activityActions = (count = 0, seriesCount = 1) => {
     $countTime.classList.remove("dp-none");
 
     handleCounter = workoutProps.time;
-    $countTime.querySelector("p").innerHTML = `${handleCounter} s`;
+    $counter.innerHTML = `${handleCounter} s`;
+
     workoutCounter = setInterval(() => {
-      handleCounter -= 1;
-      if (handleCounter >= 0)
-        $countTime.querySelector("p").innerHTML = `${handleCounter} s`;
-      if (handleCounter == 0) $btnsNext[1].classList.remove("disable");
+      if (handleCounter > 0) {
+        handleCounter -= 1;
+        $counter.innerHTML = `${handleCounter} s`;
+        if (handleCounter <= 3 && handleCounter > 0) speak(handleCounter);
+        if (handleCounter === 0) {
+          $btnsNext[1].classList.remove("disable");
+          playSound(alarm);
+        }
+      }
     }, 1000);
 
     if ($countTime.querySelector(".bar-animated"))
@@ -310,6 +335,7 @@ const manageRest = (time, workoutProps) => {
     if (handleWatch > 0) {
       handleWatch -= 1;
       $counter.innerHTML = `${handleWatch} s`;
+      if (handleWatch <= 3 && handleWatch > 0) speak(handleWatch);
     }
   }, 1000);
 };
@@ -319,7 +345,8 @@ const handleNext = (el, type, skip = false) => {
     serieNmb = findData(el, type, "reps") || undefined,
     rest = findData(el, type, "rest") || undefined;
 
-  handleClock.action = () => {
+  handleClock.action = (action = true) => {
+    if (action) playSound(alarm);
     clearInterval(workoutWatch);
     startTime = Date.now();
     setTimes("rest");
@@ -409,6 +436,10 @@ const router = () => {
 };
 
 const localData = async () => {
+  alarm = new Audio("./assets/sounds/bell-98033.mp3");
+  voices = w.speechSynthesis.getVoices();
+  console.log(voices);
+
   if (!localStorage.getItem("routines")) {
     let defaultRoutines = await getData("./db/default-routines.json");
     localStorage.setItem("routines", JSON.stringify(defaultRoutines));
@@ -422,11 +453,15 @@ const localData = async () => {
     localStorage.setItem("workedDays", JSON.stringify({}));
   if (!localStorage.getItem("startTime")) localStorage.setItem("startTime", 10);
   if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 30);
+  if (!localStorage.getItem("voiceName"))
+    localStorage.setItem("voiceName", voices[0] ? voices[0].name : "");
 
   routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");
   props.color = localStorage.getItem("color");
   props.lang = localStorage.getItem("language");
+
+  voiceName = localStorage.getItem("voiceName");
 };
 
 d.addEventListener("DOMContentLoaded", async () => {
@@ -575,7 +610,9 @@ d.addEventListener("click", (e) => {
   if (e.target.matches(btnStart) || e.target.matches(`${btnStart} *`)) {
     let fstTime = Number(localStorage.getItem("startTime"));
 
-    handleClock.action = () => {
+    handleClock.action = (action = true) => {
+      if (action) playSound(alarm);
+
       clearInterval(workoutWatch);
       showInteractive("action-page");
       paintInteractive("action-page", "activity", actualRoutine);
@@ -608,7 +645,7 @@ d.addEventListener("click", (e) => {
 
   if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
     clearTimes();
-    handleClock.action();
+    handleClock.action(false);
   }
 
   if (
