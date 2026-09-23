@@ -601,6 +601,9 @@ d.addEventListener("click", (e) => {
 
     showInteractive("create-page");
     paintInteractive("create-page", "create", actualEdit);
+    d.querySelector("#routine-name").addEventListener("keyup", (e) => {
+      actualEdit["name"] = e.target.value;
+    });
   }
 
   if (e.target.matches(btnDetails) || e.target.matches(`${btnDetails} *`)) {
