@@ -14,6 +14,7 @@ import ModalAdd from "./components/ModalAdd.js";
 import ModalInstructions from "./components/ModalInstructions.js";
 import RestCard from "./components/RestCard.js";
 import MonthDays from "./components/MonthDays.js";
+import getTimes from "./helpers/getTimes.js";
 
 const d = document,
   w = window,
@@ -64,7 +65,11 @@ let props = {},
   year = "",
   dateString = "";
 
-const drawCalendar = (target, node, prev = true) => {
+const findData = (el, node, name) => {
+  return el.dataset[name] || el.closest(node).dataset[name];
+};
+
+const drawCalendar = (target, node, prev = true, dia = false) => {
   const $fragment = d.createDocumentFragment(),
     $header = d.querySelector(".calendar-header"),
     $name = $header.querySelector("p"),
@@ -79,6 +84,7 @@ const drawCalendar = (target, node, prev = true) => {
 
   newD.setFullYear(Number(y));
   newD.setMonth(Number(m) - num);
+  if (dia) newD.setDate(dia);
 
   $name.innerHTML = newD
     .toLocaleDateString(props.lang, { month: "short" })
@@ -97,7 +103,9 @@ const drawCalendar = (target, node, prev = true) => {
       newD.getMonth(),
       newD.getFullYear(),
       props.color,
-      newD.getMonth() === month && newD.getFullYear() === year ? true : false,
+      (newD.getMonth() === month && newD.getFullYear() === year) || dia
+        ? true
+        : false,
     ),
   );
 
@@ -139,10 +147,6 @@ const speak = (text = "", speed = 1) => {
 const playSound = (sound) => {
   sound.currentTime = 0;
   sound.play();
-};
-
-const findData = (el, node, name) => {
-  return el.dataset[name] || el.closest(node).dataset[name];
 };
 
 const clearTimes = () => {
@@ -626,7 +630,8 @@ d.addEventListener("click", (e) => {
     btnUp = `[data-btn="up"]`,
     btnDown = `[data-btn="down"]`,
     btnMonthPrev = `[data-btn="month-prev"]`,
-    btnMonthNext = `[data-btn="month-next"]`;
+    btnMonthNext = `[data-btn="month-next"]`,
+    btnDay = `[data-btn="day"]`;
 
   if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`))
     addEditManager(e.target, btnAdd, true);
@@ -874,6 +879,41 @@ d.addEventListener("click", (e) => {
 
   if (e.target.matches(btnMonthNext) || e.target.matches(`${btnMonthNext} *`)) {
     drawCalendar(e.target, btnMonthNext, false);
+  }
+
+  if (e.target.matches(btnDay) || e.target.matches(`${btnDay} *`)) {
+    const $day = e.target.closest(btnDay),
+      $days = d.querySelectorAll(".btn-day"),
+      $p = $day.querySelector("p"),
+      $totalC = d.querySelector(".total-count"),
+      $workC = d.querySelector(".work-count"),
+      $calendar = d.querySelector(`[data-btn="month-prev"]`);
+
+    let dia = Number(findData(e.target, btnDay, "day")),
+      mCal = Number($calendar.dataset.month),
+      yCal = Number($calendar.dataset.year),
+      m = Number(findData(e.target, btnDay, "month")) || mCal,
+      y = Number(findData(e.target, btnDay, "year")) || yCal,
+      record = getTimes(dia, m + 1, y),
+      prev = true;
+
+    Array.from($days).forEach((e) => {
+      if (e.matches(`.bg-${props.color}`)) {
+        e.classList.remove(`bg-${props.color}`);
+        e.querySelector("p").classList.add("txt-dark");
+        e.querySelector("p").classList.remove("txt-semibold", "txt-white");
+      }
+    });
+
+    $day.classList.add(`bg-${props.color}`);
+    $p.classList.remove("txt-dark");
+    $p.classList.add("txt-semibold", "txt-white");
+
+    $totalC.innerHTML = record.totalSec;
+    $workC.innerHTML = record.workSec;
+
+    if (m > mCal || y > yCal) prev = false;
+    if (m !== mCal) drawCalendar($calendar, btnDay, prev, dia);
   }
 });
 

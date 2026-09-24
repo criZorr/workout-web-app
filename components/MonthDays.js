@@ -16,6 +16,10 @@ export default function MonthDays(day, month, year, color, today = true) {
         $day = d.createElement("div");
 
       $day.classList.add("btn-day", `btn-${color}-shadow`);
+      $day.dataset.btn = "day";
+      $day.dataset.day = drawDay.getDate();
+      $day.dataset.month = month - 1 < 0 ? 11 : month - 1;
+      $day.dataset.year = month - 1 < 0 ? year - 1 : year;
       $day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-grey">${drawDay.getDate()}</p>`;
       $fragment.appendChild($day);
     }
@@ -34,11 +38,18 @@ export default function MonthDays(day, month, year, color, today = true) {
 
     newDay.setDate(newDay.getDate() + i);
 
-    newDay.getMonth() === month
-      ? flag && today
+    $day.dataset.btn = "day";
+    $day.dataset.day = newDay.getDate();
+
+    if (newDay.getMonth() === month) {
+      flag && today
         ? ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-semibold txt-white">${newDay.getDate()}</p>`)
-        : ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-dark">${newDay.getDate()}</p>`)
-      : ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-grey">${newDay.getDate()}</p>`);
+        : ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-dark">${newDay.getDate()}</p>`);
+    } else {
+      $day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-grey">${newDay.getDate()}</p>`;
+      $day.dataset.year = month + 1 > 11 ? year + 1 : year;
+      $day.dataset.month = month + 1 > 11 ? 0 : month + 1;
+    }
 
     $fragment.appendChild($day);
   }
