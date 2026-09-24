@@ -55,11 +55,33 @@ let props = {},
   alarm = "",
   voiceName = "",
   voices = [],
+  maxStreak = 0,
+  streak = 0,
   day = new Date(),
   dateString =
     day.getFullYear().toString() +
     (day.getMonth() + 1).toString().padStart(2, "0") +
     day.getDate().toString().padStart(2, "0");
+
+const handleStreak = (list = workedDays) => {
+  let ytd = new Date(day),
+    ytdString = "";
+
+  ytd.setDate(ytd.getDate() - 1);
+  ytdString =
+    ytd.getFullYear().toString() +
+    (ytd.getMonth() + 1).toString().padStart(2, "0") +
+    ytd.getDate().toString().padStart(2, "0");
+
+  if (list === workedDays) {
+    let sum = streak + 1;
+    localStorage.setItem("streak", sum);
+    if (sum > maxStreak) localStorage.setItem("maxStreak", sum);
+  } else {
+    if (!list[ytdString] && !list[dateString])
+      localStorage.setItem("streak", 0);
+  }
+};
 
 const speak = (text = "", speed = 1) => {
   if ("speechSynthesis" in window && text !== "") {
@@ -208,6 +230,7 @@ const setTimes = (type) => {
   }
 
   if (Math.floor(counterWorkout) > 0) {
+    if (!workedDays[dateString]) handleStreak();
     workedDays[dateString] = {
       workSec: Math.floor(todayWork + counterWorkout),
       restSec: Math.floor(todayRest + counterRest),
@@ -509,6 +532,9 @@ const localData = async () => {
   props.lang = localStorage.getItem("language");
 
   voiceName = localStorage.getItem("voiceName");
+  handleStreak(JSON.parse(localStorage.getItem("workedDays")));
+  maxStreak = Number(localStorage.getItem("maxStreak"));
+  streak = Number(localStorage.getItem("streak"));
 };
 
 d.addEventListener("DOMContentLoaded", async () => {
@@ -770,6 +796,7 @@ d.addEventListener("click", (e) => {
     e.target.matches(interactionClose) ||
     e.target.matches(`${interactionClose} *`)
   ) {
+    speechSynthesis.cancel();
     clearTimes();
     hideInteractive();
   }
