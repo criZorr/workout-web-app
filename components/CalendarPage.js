@@ -54,17 +54,17 @@ export default function CalendarPage(props) {
 
   $calendarCard.classList.add("calendar-card", "calendar-container");
   $calendarCard.innerHTML = `
-    <section class="list-btn">
+    <section class="list-btn calendar-header">
       <p class="txt-semibold txt-s5 txt-s4-sm txt-dark p-one-line">${today.toLocaleDateString(lang, { month: "short" }).toUpperCase()}</p>
       <section class="btn-icons-container">
-        <div class="btn-no-fill">
+        <div class="btn-no-fill" data-btn="month-prev" data-month=${month} data-year=${year}>
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" >
               <path class="fill-${color}" d="M10.689 0L3 8L10.689 16L13 13.5958L7.61991 8L13 2.40419L10.689 0Z"/>
             </svg>
           </div>
         </div>
-        <div class="btn-no-fill">
+        <div class="btn-no-fill" data-btn="month-next" data-month=${month} data-year=${year}>
           <div class="icon-svg">
             <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg" >
               <path class="fill-${color}" d="M2.31104 16L10 8L2.31104 0L0 2.40419L5.38009 8L0 13.5958L2.31104 16Z"/>
@@ -122,11 +122,11 @@ export default function CalendarPage(props) {
     <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Times</p>
     <article class="calendar-counter-container">
       <aside class="calendar-counter">
-        <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100">${dayTime.totalSec}</p>
+        <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100 total-count">${dayTime.totalSec}</p>
         <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100">Total time</p>
       </aside>
       <aside class="calendar-counter">
-        <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100">${dayTime.workSec}</p>
+        <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100 work-count">${dayTime.workSec}</p>
         <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100">Workout time</p>
       </aside>
     </article>

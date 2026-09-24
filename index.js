@@ -13,6 +13,7 @@ import ModalList from "./components/ModalList.js";
 import ModalAdd from "./components/ModalAdd.js";
 import ModalInstructions from "./components/ModalInstructions.js";
 import RestCard from "./components/RestCard.js";
+import MonthDays from "./components/MonthDays.js";
 
 const d = document,
   w = window,
@@ -57,14 +58,55 @@ let props = {},
   voices = [],
   maxStreak = 0,
   streak = 0,
-  day = new Date(),
-  dateString =
-    day.getFullYear().toString() +
-    (day.getMonth() + 1).toString().padStart(2, "0") +
-    day.getDate().toString().padStart(2, "0");
+  today = "",
+  day = "",
+  month = "",
+  year = "",
+  dateString = "";
+
+const drawCalendar = (target, node, prev = true) => {
+  const $fragment = d.createDocumentFragment(),
+    $header = d.querySelector(".calendar-header"),
+    $name = $header.querySelector("p"),
+    $btns = $header.querySelectorAll("[data-month]"),
+    $calendar = d.querySelector(".calendar"),
+    $days = $calendar.querySelectorAll(".day");
+
+  let m = findData(target, node, "month") || month,
+    y = findData(target, node, "year") || year,
+    newD = new Date(),
+    num = prev ? 1 : -1;
+
+  newD.setFullYear(Number(y));
+  newD.setMonth(Number(m) - num);
+
+  $name.innerHTML = newD
+    .toLocaleDateString(props.lang, { month: "short" })
+    .toUpperCase();
+
+  Array.from($btns).forEach((e) => {
+    e.dataset.month = newD.getMonth();
+    e.dataset.year = newD.getFullYear();
+  });
+
+  Array.from($days).forEach((e) => $fragment.appendChild(e));
+
+  $fragment.appendChild(
+    MonthDays(
+      newD.getDate(),
+      newD.getMonth(),
+      newD.getFullYear(),
+      props.color,
+      newD.getMonth() === month && newD.getFullYear() === year ? true : false,
+    ),
+  );
+
+  $calendar.innerHTML = null;
+  $calendar.appendChild($fragment);
+};
 
 const handleStreak = (list = workedDays) => {
-  let ytd = new Date(day),
+  let ytd = new Date(today),
     ytdString = "";
 
   ytd.setDate(ytd.getDate() - 1);
@@ -513,6 +555,15 @@ const router = () => {
 };
 
 const localData = async () => {
+  today = new Date();
+  day = today.getDate();
+  month = today.getMonth();
+  year = today.getFullYear();
+  dateString =
+    year.toString() +
+    (month + 1).toString().padStart(2, "0") +
+    day.toString().padStart(2, "0");
+
   alarm = new Audio("./assets/sounds/bell-98033.mp3");
   voices = w.speechSynthesis.getVoices();
   console.log(voices);
@@ -573,7 +624,9 @@ d.addEventListener("click", (e) => {
     modalClose = `[data-modal="close"]`,
     interactionClose = `[data-interaction="close"]`,
     btnUp = `[data-btn="up"]`,
-    btnDown = `[data-btn="down"]`;
+    btnDown = `[data-btn="down"]`,
+    btnMonthPrev = `[data-btn="month-prev"]`,
+    btnMonthNext = `[data-btn="month-next"]`;
 
   if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`))
     addEditManager(e.target, btnAdd, true);
@@ -813,6 +866,14 @@ d.addEventListener("click", (e) => {
     e.target.matches(`${modalClose} *`)
   ) {
     hideModal();
+  }
+
+  if (e.target.matches(btnMonthPrev) || e.target.matches(`${btnMonthPrev} *`)) {
+    drawCalendar(e.target, btnMonthPrev);
+  }
+
+  if (e.target.matches(btnMonthNext) || e.target.matches(`${btnMonthNext} *`)) {
+    drawCalendar(e.target, btnMonthNext, false);
   }
 });
 

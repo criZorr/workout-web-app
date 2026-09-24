@@ -1,4 +1,4 @@
-export default function MonthDays(today, month, year, color) {
+export default function MonthDays(day, month, year, color, today = true) {
   const d = document,
     $fragment = d.createDocumentFragment();
 
@@ -29,13 +29,13 @@ export default function MonthDays(today, month, year, color) {
       flag = false;
 
     $day.classList.add("btn-day", `btn-${color}-shadow`);
-    if (today - 1 === i) flag = true;
-    if (flag) $day.classList.add(`bg-${color}`);
+    if (day - 1 === i) flag = true;
+    if (flag && today) $day.classList.add(`bg-${color}`);
 
     newDay.setDate(newDay.getDate() + i);
 
     newDay.getMonth() === month
-      ? flag
+      ? flag && today
         ? ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-semibold txt-white">${newDay.getDate()}</p>`)
         : ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-dark">${newDay.getDate()}</p>`)
       : ($day.innerHTML = `<p class="txt-s6 txt-s5-sm txt-grey">${newDay.getDate()}</p>`);
