@@ -250,7 +250,16 @@ const activityActions = (count = 0, seriesCount = 1) => {
 
   let workoutProps = actualRoutine.workouts[count],
     workoutsLength = actualRoutine.workouts.length,
-    workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id));
+    workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id)),
+    txt = [
+      "Do the exercise!",
+      `${workout.name}.`,
+      workoutProps.time
+        ? `${workoutProps.time} seconds.`
+        : `${workoutProps.reps} repetitions.`,
+    ];
+
+  speak(txt.join(" "));
 
   if (!workoutProps.time) {
     $countTime.classList.add("dp-none");
@@ -351,11 +360,9 @@ const manageRest = (time, workoutProps, msg = "Take a rest!") => {
 
   txt = [
     msg,
+    `${time} second${time > 1 ? "s" : "time"}.`,
     "Next exercise:",
-    `${workout.name},`,
-    workoutProps.time
-      ? `${workoutProps.time} seconds.`
-      : `${workoutProps.reps} repetitions.`,
+    `${workout.name}.`,
   ];
   speak(txt.join(" "));
 
@@ -688,7 +695,6 @@ d.addEventListener("click", (e) => {
 
     handleClock.action = (action = true) => {
       if (action) playSound(alarm);
-
       clearInterval(workoutWatch);
       showInteractive("action-page");
       paintInteractive("action-page", "activity", actualRoutine);
