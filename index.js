@@ -69,6 +69,22 @@ const findData = (el, node, name) => {
   return el.dataset[name] || el.closest(node).dataset[name];
 };
 
+const hdlTheme = (theme = "auto") => {
+  const $html = d.querySelector("html");
+  if (theme === "auto") {
+    $html.classList.add("color-os");
+    $html.classList.remove("color-dark", "color-light");
+  }
+  if (theme === "dark") {
+    $html.classList.add("color-dark");
+    $html.classList.remove("color-os", "color-light");
+  }
+  if (theme === "light") {
+    $html.classList.add("color-light");
+    $html.classList.remove("color-dark", "color-os");
+  }
+};
+
 const drawCalendar = (target, node, prev = true, dia = false) => {
   const $fragment = d.createDocumentFragment(),
     $header = d.querySelector(".calendar-header"),
@@ -597,6 +613,8 @@ const localData = async () => {
   handleStreak(JSON.parse(localStorage.getItem("workedDays")));
   maxStreak = Number(localStorage.getItem("maxStreak"));
   streak = Number(localStorage.getItem("streak"));
+
+  hdlTheme(localStorage.getItem("theme"));
 };
 
 d.addEventListener("DOMContentLoaded", async () => {
@@ -925,6 +943,11 @@ d.addEventListener("change", (e) => {
     e.target.value > 1
       ? d.querySelector(".add-series-time").classList.remove("dp-none")
       : d.querySelector(".add-series-time").classList.add("dp-none");
+  }
+
+  if (e.target.matches(".bg-selector")) {
+    localStorage.setItem("theme", e.target.id);
+    hdlTheme(e.target.id);
   }
 });
 

@@ -105,7 +105,7 @@ a {
 /* *********************  ********************* */
 
 /* ********************* UTILITY CLASS ********************* */
-/* **************** COLORS **************** */
+/* **************** ACCENT COLORS **************** */
 .bg-green {
   background-color: var(--color-green);
 }
@@ -128,29 +128,6 @@ a {
 
 .bg-red-comp {
   background-color: var(--color-red-comp);
-}
-
-.color-os .bg-white,
-.color-light .bg-white {
-  background-color: var(--color-bg-light);
-  transition: background-color 125ms ease-out;
-}
-
-.bg-dark-alpha {
-  background-color: var(--color-dark-alpha);
-}
-
-.fill-dark {
-  fill: var(--color-dark);
-}
-
-.fill-light {
-  fill: var(--color-white);
-}
-
-.color-os .fill-dark-bg,
-.color-light .fill-dark-bg {
-  fill: var(--color-dark);
 }
 
 .fill-green {
@@ -185,27 +162,6 @@ a {
   border-color: var(--color-red-light);
 }
 
-.color-os .border-grey,
-.color-light .border-grey {
-  border-color: var(--color-grey-dark);
-}
-
-.txt-white {
-  color: var(--color-white);
-  transition: color 125ms ease-out;
-}
-
-.color-os .txt-dark,
-.color-light .txt-dark {
-  color: var(--color-dark);
-  transition: color 125ms ease-out;
-}
-
-.color-os .txt-grey,
-.color-light .txt-grey {
-  color: var(--color-grey-dark);
-}
-
 .txt-green {
   color: var(--color-green);
 }
@@ -227,9 +183,86 @@ a {
   box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
 }
 
+.color-dark .shadow-green {
+  box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
+}
+
 .color-os .shadow-red,
 .color-light .shadow-red {
   box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
+}
+
+.color-dark .shadow-red {
+  box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
+}
+
+/* **************** COLORS **************** */
+.color-os .bg-white,
+.color-light .bg-white {
+  background-color: var(--color-bg-light);
+  transition: background-color 125ms ease-out;
+}
+
+.color-dark .bg-white {
+  background-color: var(--color-bg-dark);
+  transition: background-color 125ms ease-out;
+}
+
+.bg-dark-alpha {
+  background-color: var(--color-dark-alpha);
+}
+
+.fill-dark {
+  fill: var(--color-dark);
+}
+
+.fill-light {
+  fill: var(--color-white);
+}
+
+.color-os .fill-dark-bg,
+.color-light .fill-dark-bg {
+  fill: var(--color-dark);
+  transition: fill 125ms ease-out;
+}
+
+.color-dark .fill-dark-bg {
+  fill: var(--color-white);
+  transition: fill 125ms ease-out;
+}
+
+.color-os .border-grey,
+.color-light .border-grey {
+  border-color: var(--color-grey-dark);
+}
+
+.color-dark .border-grey {
+  border-color: var(--color-grey-light);
+}
+
+.txt-white {
+  color: var(--color-white);
+  transition: color 125ms ease-out;
+}
+
+.color-os .txt-dark,
+.color-light .txt-dark {
+  color: var(--color-dark);
+  transition: color 125ms ease-out;
+}
+
+.color-dark .txt-dark {
+  color: var(--color-white);
+  transition: color 125ms ease-out;
+}
+
+.color-os .txt-grey,
+.color-light .txt-grey {
+  color: var(--color-grey-dark);
+}
+
+.color-dark .txt-grey {
+  color: var(--color-grey-light);
 }
 
 .color-os .hidden-deg,
@@ -239,20 +272,25 @@ a {
     var(--color-bg-light) 5%,
     transparent 75%
   );
+}
 
-  @media screen and (min-width: 80em) {
-    background-image: linear-gradient(
-      to bottom,
-      var(--color-bg-light) 10%,
-      transparent 75%
-    );
-  }
+.color-dark .hidden-deg {
+  background-image: linear-gradient(
+    to top,
+    var(--color-bg-dark) 5%,
+    transparent 75%
+  );
 }
 
 @media screen and (min-width: 18em) {
+  /* **************** ACCENT COLORS **************** */
   .color-os .shadow-green-sm,
   .color-light .shadow-green-sm {
     box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
+  }
+
+  .color-dark .shadow-green-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
   }
 
   .color-os .shadow-red-sm,
@@ -260,6 +298,11 @@ a {
     box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
   }
 
+  .color-dark .shadow-red-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
+  }
+
+  /* **************** COLORS **************** */
   .color-os .hidden-deg-sm-md,
   .color-light .hidden-deg-sm-md {
     background-image: linear-gradient(
@@ -267,28 +310,79 @@ a {
       var(--color-bg-light) 5%,
       transparent 75%
     );
+  }
 
-    @media screen and (min-width: 80em) {
-      background-image: none;
-    }
+  .color-dark .hidden-deg-sm-md {
+    background-image: linear-gradient(
+      to top,
+      var(--color-bg-dark) 5%,
+      transparent 75%
+    );
   }
 }
 
 @media screen and (min-width: 80em) {
+  /* **************** ACCENT COLORS **************** */
   .color-os .shadow-green-lg,
   .color-light .shadow-green-lg {
     box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
+  }
+
+  .color-dark .shadow-green-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
   }
 
   .color-os .shadow-red-lg,
   .color-light .shadow-red-lg {
     box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
   }
+
+  .color-dark .shadow-red-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
+  }
+
+  /* **************** COLORS **************** */
+  .color-os .hidden-deg,
+  .color-light .hidden-deg {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-bg-light) 10%,
+      transparent 75%
+    );
+  }
+
+  .color-dark .hidden-deg {
+    background-image: linear-gradient(
+      to bottom,
+      var(--color-bg-dark) 10%,
+      transparent 75%
+    );
+  }
+
+  .color-os .hidden-deg-sm-md,
+  .color-light .hidden-deg-sm-md,
+  .color-dark .hidden-deg-sm-md {
+    background-image: none;
+  }
 }
 
 @media screen and (prefers-color-scheme: dark) {
+  /* **************** ACCENT COLORS **************** */
+  .color-os .shadow-green {
+    box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
+  }
+
+  .color-os .shadow-red {
+    box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
+  }
+
+  /* **************** COLORS **************** */
   .color-os .bg-white {
     background-color: var(--color-bg-dark);
+  }
+
+  .color-os .fill-dark-bg {
+    fill: var(--color-white);
   }
 
   .color-os .border-grey {
@@ -307,14 +401,6 @@ a {
     fill: var(--color-white);
   }
 
-  .color-os .shadow-green {
-    box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
-  }
-
-  .color-os .shadow-red {
-    box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
-  }
-
   .color-os .hidden-deg {
     background-image: linear-gradient(
       to top,
@@ -324,6 +410,7 @@ a {
   }
 
   @media screen and (min-width: 18em) {
+    /* **************** ACCENT COLORS **************** */
     .color-os .shadow-green-sm {
       box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
     }
@@ -332,6 +419,7 @@ a {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
 
+    /* **************** COLORS **************** */
     .color-os .hidden-deg-sm-md {
       background-image: linear-gradient(
         to top,
@@ -342,6 +430,7 @@ a {
   }
 
   @media screen and (min-width: 80em) {
+    /* **************** ACCENT COLORS **************** */
     .color-os .shadow-green-lg {
       box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
     }
@@ -350,6 +439,7 @@ a {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
 
+    /* **************** COLORS **************** */
     .color-os .hidden-deg {
       background-image: linear-gradient(
         to bottom,

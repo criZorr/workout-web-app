@@ -9,21 +9,21 @@ export default function SettingsPage(props) {
           <article class="settings-opts">
             <section class="radio-container">
               <label for="light" class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100">Light</label>
-              <input type="radio" name="background" id="light" class="radio-html"/>
+              <input type="radio" name="background" id="light" class="radio-html bg-selector"/>
               <div class="custom-radio border-${color}">
                 <div class="border-${color}-light"></div>
               </div>
             </section>
             <section class="radio-container">
               <label for="auto" class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100">Auto</label>
-              <input type="radio" name="background" id="auto" class="radio-html"/>
+              <input type="radio" name="background" id="auto" class="radio-html bg-selector"/>
               <div class="custom-radio border-${color}">
                 <div class="border-${color}-light"></div>
               </div>
             </section>
             <section class="radio-container">
               <label for="dark" class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100">Dark</label>
-              <input type="radio" name="background" id="dark" class="radio-html"/>
+              <input type="radio" name="background" id="dark" class="radio-html bg-selector"/>
               <div class="custom-radio border-${color}">
                 <div class="border-${color}-light"></div>
               </div>
