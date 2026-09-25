@@ -936,6 +936,8 @@ d.addEventListener("click", (e) => {
 });
 
 d.addEventListener("change", (e) => {
+  console.log(e.target);
+
   if (e.target.matches(".filter-snd") || e.target.matches(".filter-fst"))
     manageFilter();
 
@@ -948,6 +950,11 @@ d.addEventListener("change", (e) => {
   if (e.target.matches(".bg-selector")) {
     localStorage.setItem("theme", e.target.id);
     hdlTheme(e.target.id);
+  }
+
+  if (e.target.matches(".color-selector")) {
+    localStorage.setItem("color", e.target.value);
+    w.location.reload();
   }
 });
 

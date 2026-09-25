@@ -6,13 +6,13 @@
   --color-green-light-25: #3fc47e40;
   --color-green-light-50: #3fc47e80;
   --color-green-light-75: #3fc47ebf;
-  --color-green-comp: #b01100;
-  --color-red: #b10000;
-  --color-red-dark: #3d1313;
-  --color-red-dark-25: #3d131340;
-  --color-red-light: #c43f3f;
-  --color-red-light-25: #c43f3f40;
-  --color-red-comp: #06b000;
+  --color-green-comp: #b1005e;
+  --color-red: #d7331d;
+  --color-red-dark: #360d07;
+  --color-red-dark-25: #360d0740;
+  --color-red-light: #e95744;
+  --color-red-light-25: #e9574440;
+  --color-red-comp: #1dc1d7;
   --color-bg-light: #fafafa;
   --color-bg-light-75: #fafafabf;
   --color-bg-dark: #0f0f0f;
@@ -118,18 +118,6 @@ a {
   background-color: var(--color-green-comp);
 }
 
-.bg-red {
-  background-color: var(--color-red);
-}
-
-.bg-red-light {
-  background-color: var(--color-red-light);
-}
-
-.bg-red-comp {
-  background-color: var(--color-red-comp);
-}
-
 .fill-green {
   fill: var(--color-green);
 }
@@ -144,6 +132,37 @@ a {
 
 .border-green-light {
   border-color: var(--color-green-light);
+}
+
+.txt-green {
+  color: var(--color-green);
+}
+
+.txt-green-light {
+  color: var(--color-green-light);
+}
+
+.color-os .shadow-green,
+.color-light .shadow-green {
+  box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
+}
+
+.color-dark .shadow-green {
+  box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
+}
+
+/* RED */
+
+.bg-red {
+  background-color: var(--color-red);
+}
+
+.bg-red-light {
+  background-color: var(--color-red-light);
+}
+
+.bg-red-comp {
+  background-color: var(--color-red-comp);
 }
 
 .fill-red {
@@ -162,29 +181,12 @@ a {
   border-color: var(--color-red-light);
 }
 
-.txt-green {
-  color: var(--color-green);
-}
-
-.txt-green-light {
-  color: var(--color-green-light);
-}
-
 .txt-red {
   color: var(--color-red);
 }
 
 .txt-red-light {
   color: var(--color-red-light);
-}
-
-.color-os .shadow-green,
-.color-light .shadow-green {
-  box-shadow: 0 0 0.25rem 0 var(--color-green-dark-25);
-}
-
-.color-dark .shadow-green {
-  box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
 }
 
 .color-os .shadow-red,
@@ -293,6 +295,7 @@ a {
     box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
   }
 
+  /* RED */
   .color-os .shadow-red-sm,
   .color-light .shadow-red-sm {
     box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
@@ -332,6 +335,7 @@ a {
     box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
   }
 
+  /* RED */
   .color-os .shadow-red-lg,
   .color-light .shadow-red-lg {
     box-shadow: 0 0 0.25rem 0 var(--color-red-dark-25);
@@ -372,6 +376,7 @@ a {
     box-shadow: 0 0 0.25rem 0.05rem var(--color-green-light-25);
   }
 
+  /* RED */
   .color-os .shadow-red {
     box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
   }
@@ -415,6 +420,7 @@ a {
       box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
     }
 
+    /* RED */
     .color-os .shadow-red-sm {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
@@ -435,6 +441,7 @@ a {
       box-shadow: 0 0 0.25rem 0 var(--color-green-light-25);
     }
 
+    /* RED */
     .color-os .shadow-red-lg {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
@@ -979,6 +986,15 @@ input[type="radio"]:checked ~ .custom-radio > div {
   background-color: var(--color-green-dark-25);
 }
 
+/* RED */
+.icon-text.active-red > img {
+  background-color: var(--color-red-light);
+}
+
+.icon-text.hover-red:hover img {
+  background-color: var(--color-red-dark-25);
+}
+
 @media screen and (min-width: 18em) {
   .header-container {
     max-width: 28rem;
@@ -1411,6 +1427,15 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
 .btn-green-shadow:hover:not(.bg-green, .active-green) {
   background-color: var(--color-green-light-25);
+}
+
+/* RED */
+.btn-day.active-red {
+  background-color: var(--color-red-light-75);
+}
+
+.btn-red-shadow:hover:not(.bg-red, .active-red) {
+  background-color: var(--color-red-light-25);
 }
 
 .calendar {

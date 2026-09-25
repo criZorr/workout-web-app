@@ -36,7 +36,7 @@ export default function SettingsPage(props) {
         content: `
           <section class="card-container-sm radio-sm-sm shadow-${color}-sm">
             <section class="list-btn custom-select">
-              <select class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line">
+              <select class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line color-selector">
                 <option value="green">Green</option>
                 <option value="red">Red</option>
               </select>
