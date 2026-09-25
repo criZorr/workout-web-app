@@ -188,8 +188,8 @@ export default function CalendarPage(props) {
 
   //Calendar Page
   $fragment.appendChild($calendar);
-  $fragment.appendChild($streaks);
   $fragment.appendChild($times);
+  $fragment.appendChild($streaks);
   $fragment.appendChild($statistics);
 
   return $fragment;
