@@ -1,5 +1,6 @@
 import getTimes from "../helpers/getTimes.js";
 import MonthDays from "./MonthDays.js";
+import Texts from "../db/texts.js";
 
 export default function CalendarPage(props) {
   const d = document,
@@ -24,7 +25,8 @@ export default function CalendarPage(props) {
       current: localStorage.getItem("streak"),
       max: localStorage.getItem("maxStreak"),
     },
-    dayTime = getTimes(day, month + 1, year);
+    dayTime = getTimes(day, month + 1, year),
+    txt = Texts("calendar");
 
   //Calendar Card
   const getDayNames = () => {
@@ -50,7 +52,7 @@ export default function CalendarPage(props) {
   };
 
   $calendar.classList.add("calendar-card", "calendar-days");
-  $calendar.innerHTML = `<p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Calendar</p>`;
+  $calendar.innerHTML = `<p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line txt-item"></p>`;
 
   $calendarCard.classList.add("calendar-card", "calendar-container");
   $calendarCard.innerHTML = `
@@ -85,7 +87,7 @@ export default function CalendarPage(props) {
   //Streak Card
   $streaks.classList.add("calendar-card", "streak");
   $streaks.innerHTML = `
-    <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Streak</p>
+    <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line txt-item"></p>
     <article class="calendar-counter-container">
       <aside class="calendar-counter">
         <section class="streak-icon w-100">
@@ -98,7 +100,7 @@ export default function CalendarPage(props) {
           </div>
           <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line">${streaks.current}</p>
         </section>
-        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100">Current streak</p>
+        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100 txt-item"></p>
       </aside>
       <aside class="calendar-counter">
         <section class="streak-icon w-100">
@@ -111,7 +113,7 @@ export default function CalendarPage(props) {
           </div>
           <p class="txt-regular txt-s4 txt-s3-sm txt-${color}-light p-one-line">${streaks.max}</p>
         </section>
-        <p class="txt-regular txt-s5 txt-s4-sm txt-grey p-one-line w-100">Max streak</p>
+        <p class="txt-regular txt-s5 txt-s4-sm txt-grey p-one-line w-100 txt-item"></p>
       </aside>
     </article>
   `;
@@ -119,29 +121,29 @@ export default function CalendarPage(props) {
   //Times Card
   $times.classList.add("calendar-card", "times");
   $times.innerHTML = `
-    <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Times</p>
+    <p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line txt-item"></p>
     <article class="calendar-counter-container">
       <aside class="calendar-counter">
         <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100 total-count">${dayTime.totalSec}</p>
-        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100">Total time</p>
+        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100 txt-item"></p>
       </aside>
       <aside class="calendar-counter">
         <p class="txt-regular txt-s4 txt-s3-sm txt-${color} p-one-line w-100 work-count">${dayTime.workSec}</p>
-        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100">Workout time</p>
+        <p class="txt-regular txt-s5 txt-s4-sm txt-dark p-one-line w-100 txt-item"></p>
       </aside>
     </article>
   `;
 
   //Statistics Card
   $statistics.classList.add("calendar-card", "statistics");
-  $statistics.innerHTML = `<p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line">Statistics</p>`;
+  $statistics.innerHTML = `<p class="txt-bold txt-s4 txt-s3-sm txt-dark p-one-line txt-item"></p>`;
   $statisticsWeek.classList.add("week-stat", "days-info");
-  $statisticsWeek.innerHTML = `<p class="txt-semibold txt-s5 txt-s4-sm txt-dark p-one-line">Last 7 days</p>`;
+  $statisticsWeek.innerHTML = `<p class="txt-semibold txt-s5 txt-s4-sm txt-dark p-one-line txt-item"></p>`;
   for (let i = 0; i < 7; i++) {
     const $card = d.createElement("div");
     $card.classList.add("daily-time");
 
-    let slug = "Today",
+    let slug = txt[`${lang}Dy`].slug1,
       time = "",
       day = new Date(today);
 
@@ -150,7 +152,7 @@ export default function CalendarPage(props) {
 
     if (i > 0)
       slug = `${day.toLocaleDateString(lang, { month: "short" })} ${day.getDate().toString().padStart(2, "0")}`;
-    if (i === 1) slug = "Yesterday";
+    if (i === 1) slug = txt[`${lang}Dy`].slug2;
 
     $card.innerHTML = `
       <p class="txt-regular txt-s5 txt-s4-sm txt-grey p-one-line">${slug}</p>
@@ -160,7 +162,7 @@ export default function CalendarPage(props) {
     $statisticsWeek.appendChild($card);
   }
   $statisticsMonth.classList.add("month-stat", "days-info");
-  $statisticsMonth.innerHTML = `<p class="txt-semibold txt-s5 txt-s4-sm txt-dark p-one-line">Last 30 days</p>`;
+  $statisticsMonth.innerHTML = `<p class="txt-semibold txt-s5 txt-s4-sm txt-dark p-one-line txt-item"></p>`;
   $statisticsMonthDays.classList.add("month-days");
   for (let i = 0; i < 30; i++) {
     const workedDays = JSON.parse(localStorage.getItem("workedDays")),
@@ -191,6 +193,10 @@ export default function CalendarPage(props) {
   $fragment.appendChild($times);
   $fragment.appendChild($streaks);
   $fragment.appendChild($statistics);
+
+  Array.from($fragment.querySelectorAll(".txt-item")).forEach(
+    (e, i) => (e.innerHTML = txt[lang][i]),
+  );
 
   return $fragment;
 }

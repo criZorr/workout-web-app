@@ -1,10 +1,13 @@
+import Texts from "../db/texts.js";
+
 export default function HomePage(props) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $addCard = d.createElement("section"),
     routines = JSON.parse(localStorage.getItem("routines"));
 
-  let { color, lang } = props;
+  let { color, lang } = props,
+    txt = Texts("home");
 
   $addCard.classList.add(
     "card-container",
@@ -14,7 +17,7 @@ export default function HomePage(props) {
   );
   $addCard.innerHTML = `
     <section class="list-btn">
-      <p class="txt-s4 txt-s3-sm txt-semibold txt-dark">Create routine</p>
+      <p class="txt-s4 txt-s3-sm txt-semibold txt-dark">${txt[lang][0]}</p>
       <div class="btn-icon btn-icon-sm bg-${color}" data-btn="create">
         <div class="icon-svg">
           <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
@@ -48,7 +51,7 @@ export default function HomePage(props) {
     $card.innerHTML = `
       <figure class="banner-container">
         <div class="shadow-banner"></div>
-        <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imgName}.jpg" alt="${e.name} banner image"/>
+        <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imgName}.jpg" alt="${e.name}: ${txt[lang][1]}"/>
       </figure>
       <section class="card-container">
         <section class="list-btn">

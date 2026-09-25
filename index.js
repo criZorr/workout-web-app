@@ -594,7 +594,7 @@ const localData = async () => {
   }
   if (!localStorage.getItem("theme")) localStorage.setItem("theme", "auto");
   if (!localStorage.getItem("color")) localStorage.setItem("color", "green");
-  if (!localStorage.getItem("language")) localStorage.setItem("language", "en");
+  if (!localStorage.getItem("lang")) localStorage.setItem("lang", "en");
   if (!localStorage.getItem("maxStreak")) localStorage.setItem("maxStreak", 0);
   if (!localStorage.getItem("streak")) localStorage.setItem("streak", 0);
   if (!localStorage.getItem("workedDays"))
@@ -607,7 +607,7 @@ const localData = async () => {
   routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");
   props.color = localStorage.getItem("color");
-  props.lang = localStorage.getItem("language");
+  props.lang = localStorage.getItem("lang");
 
   voiceName = localStorage.getItem("voiceName");
   handleStreak(JSON.parse(localStorage.getItem("workedDays")));
@@ -954,6 +954,11 @@ d.addEventListener("change", (e) => {
 
   if (e.target.matches(".color-selector")) {
     localStorage.setItem("color", e.target.value);
+    w.location.reload();
+  }
+
+  if (e.target.matches(".lang-selector")) {
+    localStorage.setItem("lang", e.target.value);
     w.location.reload();
   }
 });

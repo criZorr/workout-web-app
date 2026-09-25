@@ -1,8 +1,11 @@
+import Texts from "../db/texts.js";
+
 export default function Header(props) {
   const d = document,
     $section = d.createElement("section");
 
-  let { color, lang } = props;
+  let { color, lang } = props,
+    txt = Texts("header");
 
   $section.classList.add("header-container", `bg-${color}`, "shadow");
   $section.innerHTML = `
@@ -19,6 +22,10 @@ export default function Header(props) {
       <p class="txt-semibold txt-s6 txt-s4-md txt-white dp-none dp-block-sm p-one-line w-100" >Settings</p>
     </a>
   `;
+
+  Array.from($section.querySelectorAll("p")).forEach(
+    (e, i) => (e.innerHTML = txt[lang][i]),
+  );
 
   return $section;
 }
