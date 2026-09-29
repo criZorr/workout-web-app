@@ -6,7 +6,7 @@ export default function DetailsCard(props, routine, workoutDB) {
     $fragment = d.createDocumentFragment(),
     $container = d.createElement("section"),
     $content = d.createElement("section"),
-    { color, lang } = props;
+    { color } = props;
 
   let workoutsLength = routine.workouts.length;
 

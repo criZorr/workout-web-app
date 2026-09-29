@@ -1,5 +1,6 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
 import HeaderBack from "./HeaderBack.js";
+import Texts from "../db/texts.js";
 
 export default function PreviewCard(props, routine, workoutDB) {
   const d = document,
@@ -7,7 +8,8 @@ export default function PreviewCard(props, routine, workoutDB) {
     $content = d.createElement("section"),
     { color, lang } = props;
 
-  let workoutsLength = routine.workouts.length;
+  let workoutsLength = routine.workouts.length,
+    txt = Texts("preview");
 
   $fragment.appendChild(
     HeaderBack(routine.name, color, `data-interaction="close"`),
@@ -20,7 +22,7 @@ export default function PreviewCard(props, routine, workoutDB) {
     <section class="action-list-container"></section>
     <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
       <div class="btn border-${color} btn-fill bg-${color}" data-btn="start">
-        <p class="txt-s4 txt-bold txt-white p-one-line">Start</p>
+        <p class="txt-s4 txt-bold txt-white p-one-line">${txt[lang].btn}</p>
       </div>
     </section>
   `;
@@ -35,7 +37,7 @@ export default function PreviewCard(props, routine, workoutDB) {
     $option.classList.add("action-list", "list-btn");
     $option.innerHTML = `
       <p class="txt-s5 txt-s4-sm txt-semibold txt-grey p-one-line-sm">${toSentenceCase(workout.name)}</p>
-      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey">${workoutProps.series ? `${workoutProps.series} x ` : ""}${workoutProps.reps ? `${workoutProps.reps} reps` : `${workoutProps.time} secs`}</p>
+      <p class="txt-s5 txt-s4-sm txt-semibold txt-grey">${workoutProps.series ? `${workoutProps.series} x ` : ""}${workoutProps.reps ? `${workoutProps.reps} ${workoutProps.reps > 1 ? txt[lang].txt1 : txt[lang].txt2}` : `${workoutProps.time} ${workoutProps.time > 1 ? txt[lang].txt3 : txt[lang].txt4}`}</p>
     `;
     $list.appendChild($option);
   }

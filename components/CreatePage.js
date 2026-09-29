@@ -1,4 +1,5 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
+import Texts from "../db/texts.js";
 
 export default function CreatePage(props, routine, workoutDB) {
   const d = document,
@@ -11,16 +12,18 @@ export default function CreatePage(props, routine, workoutDB) {
     $buttonsSection = d.createElement("section"),
     { color, lang } = props;
 
-  let workoutsLength = routine.workouts.length;
+  let workoutsLength = routine.workouts.length,
+    txt = Texts("create"),
+    dyn = `${lang}Dy`;
 
   $createSection.classList.add("create-section");
   $createSection.innerHTML += `
-    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Name</p>
-    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" id="routine-name" placeholder="Insert name" value="${routine.name ? routine.name : ""}"/>
-    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Custom Image</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" id="routine-name" placeholder="${txt[dyn].ph1}" value="${routine.name ? routine.name : ""}"/>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
-        <p class="txt-s4 txt-regular txt-dark">Add image</p>
+        <p class="txt-s4 txt-regular txt-dark txt-item"></p>
         <div class="btn-no-fill">
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
@@ -30,10 +33,10 @@ export default function CreatePage(props, routine, workoutDB) {
         </div>
       </section>
     </section>
-    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Add more workouts</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
-        <p class="txt-s4 txt-regular txt-dark">Add workout</p>
+        <p class="txt-s4 txt-regular txt-dark txt-item"></p>
         <div class="btn-no-fill" data-id=${routine.id} data-btn="list">
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
@@ -43,9 +46,9 @@ export default function CreatePage(props, routine, workoutDB) {
         </div>
       </section>
     </section>
-    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Seconds between each workout</p>
-    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" id="routine-time" placeholder="Times" value="${routine.seconds_general ? routine.seconds_general : localStorage.getItem("restTime")}"/>
-    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark">Workouts list</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="number" min="0" id="routine-time" placeholder="${txt[dyn].ph2}" value="${routine.seconds_general ? routine.seconds_general : localStorage.getItem("restTime")}"/>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
   `;
 
   $createList.classList.add("card-container", "radio-sm", `shadow-${color}`);
@@ -53,11 +56,11 @@ export default function CreatePage(props, routine, workoutDB) {
 
   //Preview section
   $previewSection.classList.add("radio-sm", `shadow-${color}`);
-  $previewSection.innerHTML = `<img class="banner-img" src="./assets/img/${routine.imgName || "placeholder"}.jpg" alt="${routine.name} image" />`;
+  $previewSection.innerHTML = `<img class="banner-img" src="./assets/img/${routine.imgName || "placeholder"}.jpg" alt="${routine.name}: ${txt[dyn].alt1}" />`;
 
   $previewCard.classList.add("card-container");
   $previewList.classList.add("preview-info");
-  $previewList.innerHTML = `<p class="txt-s4 txt-s3-sm txt-semibold p-one-line txt-dark">${routine.name || "Wourkout name"}</p>`;
+  $previewList.innerHTML = `<p class="txt-s4 txt-s3-sm txt-semibold p-one-line txt-dark">${routine.name || txt[dyn].txt1}</p>`;
 
   for (let i = 0; i < workoutsLength; i++) {
     let $option = d.createElement("section"),
@@ -77,9 +80,15 @@ export default function CreatePage(props, routine, workoutDB) {
         minText = "",
         secText = "";
 
-      if (hor) horText = hor > 1 ? `${hor} hours` : `${hor} hour`;
-      if (min) minText = min > 1 ? `${min} minutes` : `${min} minute`;
-      if (sec) secText = sec > 1 ? `${sec} seconds` : `${sec} second`;
+      if (hor)
+        horText =
+          hor > 1 ? `${hor} ${txt[dyn].txt2}` : `${hor} ${txt[dyn].txt3}`;
+      if (min)
+        minText =
+          min > 1 ? `${min} ${txt[dyn].txt4}` : `${min} ${txt[dyn].txt5}`;
+      if (sec)
+        secText =
+          sec > 1 ? `${sec} ${txt[dyn].txt6}` : `${sec} ${txt[dyn].txt7}`;
 
       timeSlug = [horText, minText, secText].filter(Boolean).join(" - ");
     }
@@ -140,7 +149,7 @@ export default function CreatePage(props, routine, workoutDB) {
     );
 
     $workName.innerHTML = toSentenceCase(workout.name);
-    $workDescription.innerHTML = `${workoutProps.series} series of ${workoutProps.reps ? `${workoutProps.reps} repetitions` : timeSlug} `;
+    $workDescription.innerHTML = `${workoutProps.series} ${workoutProps.series > 1 ? txt[dyn].txt8 : txt[dyn].txt9} ${workoutProps.reps ? `${workoutProps.reps} ${workoutProps.reps > 1 ? txt[dyn].txt10 : txt[dyn].txt11}` : timeSlug} `;
 
     $listContainer.classList.add("preview-item");
     $listContainer.appendChild($workName);
@@ -153,13 +162,13 @@ export default function CreatePage(props, routine, workoutDB) {
   $buttonsSection.classList.add("btns-container");
   $buttonsSection.innerHTML = `
     <div class="btn border-${color}" data-interaction="close">
-      <p class="txt-s4 txt-bold p-one-line txt-dark dp-none dp-block-sm">Cancel</p>
+      <p class="txt-s4 txt-bold p-one-line txt-dark dp-none dp-block-sm txt-item"></p>
       <svg class="dp-none-sm" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="fill-dark-bg" d="M14.0002 0L7.99929 6L1.99982 0L0 2L5.99947 8L0 14L1.99982 16L7.99929 10L14.0002 16L16 14L10.0005 8L16 2L14.0002 0Z"/>
       </svg>
     </div>
     <div class="btn border-${color} btn-fill bg-${color}" data-save="routine">
-      <p class="txt-s4 txt-bold txt-white p-one-line dp-none dp-block-sm">Save</p>
+      <p class="txt-s4 txt-bold txt-white p-one-line dp-none dp-block-sm txt-item"></p>
       <svg class="dp-none-sm" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="fill-light" d="M5.22492 9.69418L1.56958 5.8448L0 7.49771L5.22492 13L16 1.65291L14.4304 0L5.22492 9.69418Z"/>
       </svg>
@@ -174,6 +183,10 @@ export default function CreatePage(props, routine, workoutDB) {
   $fragment.appendChild($createSection);
   $fragment.appendChild($previewSection);
   $fragment.appendChild($buttonsSection);
+
+  Array.from($fragment.querySelectorAll(".txt-item")).forEach(
+    (e, i) => (e.innerHTML = txt[lang][i]),
+  );
 
   return $fragment;
 }

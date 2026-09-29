@@ -1,10 +1,13 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
+import Texts from "../db/texts.js";
 
 export default function ModalInstructions(props, workout) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("article"),
     { color, lang } = props;
+
+  let txt = Texts("buttons");
 
   $content.classList.add(
     "modal-card",
@@ -20,7 +23,7 @@ export default function ModalInstructions(props, workout) {
     <p class="description txt-dark flex-s-0">${workout.instruction_steps[lang].join("<br/><br/>")}</p>
     <section class="btns-container w-100">
       <div class="btn border-${color} btn-fill bg-${color}" data-modal="close">
-        <p class="txt-s4 txt-bold txt-white p-one-line">Confirm</p>
+        <p class="txt-s4 txt-bold txt-white p-one-line">${txt[lang][0]}</p>
       </div>
     </section>
   `;

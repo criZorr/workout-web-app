@@ -1,8 +1,33 @@
+import Texts from "../db/texts.js";
 export default function ModalList(id, props) {
   const d = document,
     $fragment = d.createDocumentFragment(),
     $content = d.createElement("article"),
     { color, lang } = props;
+
+  let txt = Texts("list");
+
+  const addOpt = (data, filterClass) => {
+    let obj = [],
+      sort = [];
+
+    Object.keys(data).forEach((key, i) =>
+      obj.push({ name: data[key], value: key, id: i }),
+    );
+
+    sort = obj.sort((a, b) => {
+      if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+      if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
+      return 0;
+    });
+
+    sort.forEach((e) => {
+      let $option = d.createElement("option");
+      $option.value = e.value;
+      $option.innerHTML = e.name;
+      $fragment.querySelector(`.${filterClass}`).appendChild($option);
+    });
+  };
 
   $content.classList.add(
     "modal",
@@ -13,25 +38,15 @@ export default function ModalList(id, props) {
   );
 
   $content.innerHTML = `
-    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark">Search</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
-      <input class="list-search txt-s5 txt-s4-sm txt-regular txt-dark" type="search" placeholder="Search">
+      <input class="list-search txt-s5 txt-s4-sm txt-regular txt-dark" type="search" placeholder="${txt[lang][0]}">
     </section>
-    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark">Body parts</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn custom-select">
         <select class="txt-s5 txt-s4-sm txt-regular txt-dark filter-fst">
-          <option value="all" selected>All</option>
-          <option value="back">Back</option>
-          <option value="cardio">Cardio</option>
-          <option value="chest">Chest</option>
-          <option value="lower arms">Lower-arms</option>
-          <option value="lower legs">Lower-legs</option>
-          <option value="neck">Neck</option>
-          <option value="shoulders">Shoulders</option>
-          <option value="upper arms">Upper arms</option>
-          <option value="upper legs">Upper legs</option>
-          <option value="waist">Waist</option>
+          <option class="txt-item" value="all" selected></option>
         </select>
         <div class="btn-no-fill">
           <div class="icon-svg">
@@ -42,39 +57,11 @@ export default function ModalList(id, props) {
         </div>
       </section>
     </section>
-    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark">Equipment</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold p-one-line txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn custom-select">
-        <select class="txt-s5 txt-s4-sm txt-regular txt-dark  filter-snd">
-          <option value="all" selected>All</option>
-          <option value="assisted">Assisted</option>
-          <option value="band">Band</option>
-          <option value="barbell">Barbell</option>
-          <option value="body weight">Body weight</option>
-          <option value="bosu ball">Bosu ball</option>
-          <option value="cable">Cable</option>
-          <option value="dumbbell">Dumbbell</option>
-          <option value="elliptical machine">Elliptical machine</option>
-          <option value="ez barbell">Ez barbell</option>
-          <option value="hammer">Hammer</option>
-          <option value="kettlebell">Kettlebell</option>
-          <option value="leverage machine">Leverage machine</option>
-          <option value="medicine ball">Medicine ball</option>
-          <option value="olympic barbell">Olympic barbell</option>
-          <option value="resistance band">Resistance band</option>
-          <option value="roller">Roller</option>
-          <option value="rope">Rope</option>
-          <option value="skierg machine">Skierg machine</option>
-          <option value="sled machine">Sled machine</option>
-          <option value="smith machine">Smith machine</option>
-          <option value="stability ball">Stability ball</option>
-          <option value="stationary bike">Stationary bike</option>
-          <option value="stepmill machine">Stepmill machine</option>
-          <option value="tire">Tire</option>
-          <option value="trap bar">Trap bar</option>
-          <option value="upper body ergometer">Upper body ergometer</option>
-          <option value="weighted">Weighted</option>
-          <option value="wheel roller">Wheel roller</option>
+        <select class="txt-s5 txt-s4-sm txt-regular txt-dark filter-snd">
+          <option value="all" selected>${txt[lang][2]}</option>
         </select>
         <div class="btn-no-fill">
           <div class="icon-svg">
@@ -88,12 +75,16 @@ export default function ModalList(id, props) {
     <section class="card-container radio-sm bg-white shadow-${color} list-container workouts-list"></section>
     <section class="btns-container w-100">
       <div class="btn border-${color}" data-modal="close">
-        <p class="txt-s4 txt-bold p-one-line txt-dark">Cancel</p>
+        <p class="txt-s4 txt-bold p-one-line txt-dark txt-item"></p>
       </div>
     </section>
   `;
 
   $fragment.appendChild($content);
-
+  addOpt(txt[`${lang}Dy`].body, "filter-fst");
+  addOpt(txt[`${lang}Dy`].equip, "filter-snd");
+  Array.from($fragment.querySelectorAll(".txt-item")).forEach(
+    (e, i) => (e.innerHTML = txt[lang][i]),
+  );
   return $fragment;
 }

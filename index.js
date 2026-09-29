@@ -15,6 +15,7 @@ import ModalInstructions from "./components/ModalInstructions.js";
 import RestCard from "./components/RestCard.js";
 import MonthDays from "./components/MonthDays.js";
 import getTimes from "./helpers/getTimes.js";
+import Texts from "./db/texts.js";
 
 const d = document,
   w = window,
@@ -63,7 +64,8 @@ let props = {},
   day = "",
   month = "",
   year = "",
-  dateString = "";
+  dateString = "",
+  txt = "";
 
 const findData = (el, node, name) => {
   return el.dataset[name] || el.closest(node).dataset[name];
@@ -313,15 +315,16 @@ const activityActions = (count = 0, seriesCount = 1) => {
   let workoutProps = actualRoutine.workouts[count],
     workoutsLength = actualRoutine.workouts.length,
     workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id)),
-    txt = [
-      "Do the exercise!",
+    msg = [
+      txt[props.lang].do_msg,
+      ,
       `${workout.name}.`,
       workoutProps.time
-        ? `${workoutProps.time} seconds.`
-        : `${workoutProps.reps} repetitions.`,
+        ? `${workoutProps.time} ${workoutProps.time > 1 ? txt[props.lang].txt1 : txt[props.lang].txt2}.`
+        : `${workoutProps.reps} ${workoutProps.reps > 1 ? txt[props.lang].txt3 : txt[props.lang].txt4}.`,
     ];
 
-  speak(txt.join(" "));
+  speak(msg.join(" "));
 
   if (!workoutProps.time) {
     $countTime.classList.add("dp-none");
@@ -373,7 +376,8 @@ const activityActions = (count = 0, seriesCount = 1) => {
     });
     if (!(Number(count) < workoutsLength - 1)) {
       count = 0;
-      Array.from($btnsNext)[1].querySelector("p").innerHTML = "Finish";
+      Array.from($btnsNext)[1].querySelector("p").innerHTML =
+        txt[props.lang].btn1;
       Array.from($btnsNext).forEach((btn) => {
         btn.removeAttribute("data-rest");
         btn.dataset.btn = "finish";
@@ -400,10 +404,10 @@ const paintInteractive = (clase = false, type = false, obj) => {
   $article.appendChild(painter[type](props, obj, workoutDB));
 };
 
-const manageRest = (time, workoutProps, msg = "Take a rest!") => {
+const manageRest = (time, workoutProps, msg) => {
   let workout = workoutDB.find((e) => Number(e.id) === Number(workoutProps.id)),
     $bar = d.createElement("div"),
-    txt = [];
+    label = [];
 
   $bar.classList.add("bar-animated", `border-${props.color}`);
   $bar.style.transitionDuration = `${time}s`;
@@ -420,13 +424,14 @@ const manageRest = (time, workoutProps, msg = "Take a rest!") => {
   const $counterTime = d.querySelector(".dynamic"),
     $counter = $counterTime.querySelector(".dynamic-number");
 
-  txt = [
-    msg,
-    `${time} second${time > 1 ? "s" : "time"}.`,
-    "Next exercise:",
+  label = [
+    `${msg}.`,
+    `${time} ${time > 1 ? txt[props.lang].txt1 : txt[props.lang].txt2}.`,
+    `${txt[props.lang].next_msg}:`,
     `${workout.name}.`,
   ];
-  speak(txt.join(" "));
+
+  speak(label.join(" "));
 
   $counterTime.appendChild($bar);
   $counterTime.querySelector(".bar-animated").offsetHeight;
@@ -463,7 +468,11 @@ const handleNext = (el, type, skip = false) => {
   clearInterval(workoutCounter);
 
   if (Number(rest) > 0) {
-    manageRest(Number(rest), actualRoutine.workouts[numb]);
+    manageRest(
+      Number(rest),
+      actualRoutine.workouts[numb],
+      txt[props.lang].rest_msg,
+    );
     workoutClock = setTimeout(handleClock.action, Number(rest) * 1000);
   } else {
     startRestTime = Date.now();
@@ -587,6 +596,8 @@ const localData = async () => {
   alarm = new Audio("./assets/sounds/bell-98033.mp3");
   voices = w.speechSynthesis.getVoices();
   console.log(voices);
+
+  txt = Texts("index");
 
   if (!localStorage.getItem("routines")) {
     let defaultRoutines = await getData("./db/default-routines.json");
@@ -785,7 +796,7 @@ d.addEventListener("click", (e) => {
     todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
 
     showInteractive("action-page");
-    manageRest(fstTime, actualRoutine.workouts[0], "Get ready!");
+    manageRest(fstTime, actualRoutine.workouts[0], txt[props.lang].start_msg);
     workoutClock = setTimeout(handleClock.action, fstTime * 1000);
   }
 
@@ -799,7 +810,7 @@ d.addEventListener("click", (e) => {
     setTimes("workout");
     hideInteractive();
     clearTimes();
-    speak("Congratulations!");
+    speak(txt[props.lang].finish_msg);
   }
 
   if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
@@ -819,7 +830,7 @@ d.addEventListener("click", (e) => {
         props,
         routines.find((e) => e.id === id),
         "routine",
-        "Do you want to delete the routine:",
+        txt[props.lang].routine_msg,
         id,
       ),
     );
@@ -838,7 +849,7 @@ d.addEventListener("click", (e) => {
         props,
         workoutDB.find((e) => e.id === id),
         "workout",
-        "Do you want to delete the workout:",
+        txt[props.lang].workout_msg,
         position,
       ),
     );
