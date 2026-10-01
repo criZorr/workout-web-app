@@ -58,6 +58,7 @@ let props = {},
   alarm = "",
   voiceName = "",
   voices = [],
+  localVoices = [],
   maxStreak = 0,
   streak = 0,
   today = "",
@@ -69,6 +70,24 @@ let props = {},
 
 const findData = (el, node, name) => {
   return el.dataset[name] || el.closest(node).dataset[name];
+};
+
+const getSpeech = () => {
+  if (w.speechSynthesis.getVoices().length === 0) return;
+
+  let selected = localStorage.getItem("voiceName");
+  voices = w.speechSynthesis.getVoices();
+  localVoices = voices.filter((e) => e.lang.includes(props.lang));
+
+  if (
+    (voices.length > 0 && selected === "") ||
+    !localVoices.find((e) => e.name.includes(selected))
+  )
+    localVoices.length > 0
+      ? localStorage.setItem("voiceName", localVoices[0].name)
+      : localStorage.setItem("voiceName", voices[0].name);
+
+  props["voice"] = localStorage.getItem("voiceName");
 };
 
 const hdlTheme = (theme = "auto") => {
@@ -546,7 +565,9 @@ const hideInteractive = () => {
 const contentPainter = (hash, manager) => {
   const $container = d.querySelector(`.${hash}-page`);
   $container.innerHTML = null;
-  $container.appendChild(manager(props));
+  hash === "settings"
+    ? $container.appendChild(manager({ ...props, voices: localVoices }))
+    : $container.appendChild(manager(props));
 };
 
 const managePage = (hash) => {
@@ -594,9 +615,6 @@ const localData = async () => {
     day.toString().padStart(2, "0");
 
   alarm = new Audio("./assets/sounds/bell-98033.mp3");
-  voices = w.speechSynthesis.getVoices();
-  console.log(voices);
-
   txt = Texts("index");
 
   if (!localStorage.getItem("routines")) {
@@ -612,8 +630,7 @@ const localData = async () => {
     localStorage.setItem("workedDays", JSON.stringify({}));
   if (!localStorage.getItem("startTime")) localStorage.setItem("startTime", 10);
   if (!localStorage.getItem("restTime")) localStorage.setItem("restTime", 30);
-  if (!localStorage.getItem("voiceName"))
-    localStorage.setItem("voiceName", voices[0] ? voices[0].name : "");
+  if (!localStorage.getItem("voiceName")) localStorage.setItem("voiceName", "");
 
   routines = JSON.parse(localStorage.getItem("routines"));
   props.theme = localStorage.getItem("theme");
@@ -630,10 +647,13 @@ const localData = async () => {
 
 d.addEventListener("DOMContentLoaded", async () => {
   await localData();
+  getSpeech();
   paintHeader();
   router();
   workoutDB = await getData("./db/exercises.json");
 });
+
+w.speechSynthesis.addEventListener("voiceschanged", getSpeech);
 
 d.addEventListener("click", (e) => {
   let btnCreate = `[data-btn="create"]`,
@@ -971,6 +991,12 @@ d.addEventListener("change", (e) => {
   if (e.target.matches(".lang-selector")) {
     localStorage.setItem("lang", e.target.value);
     w.location.reload();
+  }
+
+  if (e.target.matches(".voice-selector")) {
+    voiceName = e.target.value;
+    speak(txt[props.lang].voice_msg);
+    localStorage.setItem("voiceName", e.target.value);
   }
 });
 

@@ -3,7 +3,7 @@ import Texts from "../db/texts.js";
 export default function SettingsPage(props) {
   const d = document,
     $fragment = d.createDocumentFragment(),
-    { theme, color, lang } = props,
+    { theme, color, lang, voice, voices } = props,
     cardContents = [
       `<article class="settings-opts">
         <section class="radio-container">
@@ -58,6 +58,18 @@ export default function SettingsPage(props) {
           </div>
         </section>
       </section>`,
+      `<section class="card-container-sm radio-sm-sm shadow-${color}-sm">
+        <section class="list-btn custom-select">
+          <select class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line voice-selector"></select>
+          <div class="btn-no-fill">
+            <div class="icon-svg">
+              <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="fill-${color}" d="M3 7H13V9H3V7ZM0 3H16V5H0V3ZM6 11H10V13H6V11Z"/>
+              </svg>
+            </div>
+          </div>
+        </section>
+      </section>`,
       `<section class="btns-container">
         <div class="btn border-${color}">
           <p class="txt-s5 txt-s4-sm txt-bold txt-dark p-one-line dp-none dp-block-sm txt-item"></p>
@@ -76,17 +88,25 @@ export default function SettingsPage(props) {
       </section>`,
     ];
 
-  let txt = Texts("settings");
   // <option value="de">Deustch</option>
   // <option value="en">English</option>
   // <option value="es">Español</option>
   // <option value="pt">Português</option>
   // <option value="ru">Русский</option>
 
+  let txt = Texts("settings"),
+    sortedVoices = voices.sort((a, b) => {
+      if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+      if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
+      return 0;
+    });
+
   const loadUser = () => {
     $fragment.querySelector(`option[value="${lang}"]`).selected = "selected";
     $fragment.querySelector(`option[value="${color}"]`).selected = "selected";
     $fragment.querySelector(`input[id="${theme}"]`).checked = true;
+    if (voices.length !== 0)
+      $fragment.querySelector(`option[value="${voice}"]`).selected = "selected";
   };
 
   for (let i = 0; i < cardContents.length; i++) {
@@ -104,6 +124,14 @@ export default function SettingsPage(props) {
   Array.from($fragment.querySelectorAll(".txt-item")).forEach(
     (e, i) => (e.innerHTML = txt[lang][i]),
   );
+
+  sortedVoices.forEach((e) => {
+    let $option = d.createElement("option"),
+      $select = $fragment.querySelector(".voice-selector");
+    $option.value = e.name;
+    $option.innerHTML = e.name;
+    $select.appendChild($option);
+  });
 
   loadUser();
   return $fragment;
