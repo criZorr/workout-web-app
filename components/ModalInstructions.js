@@ -23,7 +23,7 @@ export default function ModalInstructions(props, workout) {
     <p class="description txt-dark flex-s-0">${workout.instruction_steps[lang].join("<br/><br/>")}</p>
     <section class="btns-container w-100">
       <div class="btn border-${color} btn-fill bg-${color}" data-modal="close">
-        <p class="txt-s4 txt-bold txt-white p-one-line">${txt[lang][0]}</p>
+        <p class="txt-s4 txt-bold ${color === "blackwhite" ? "txt-bow" : "txt-white"} p-one-line">${txt[lang][0]}</p>
       </div>
     </section>
   `;

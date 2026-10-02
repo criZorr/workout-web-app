@@ -32,7 +32,7 @@ export default function ActivityCard(props, routine) {
         </svg>
       </div>
       <div class="btn border-${color} btn-fill bg-${color} counter-btns" data-count="0" data-btn="next">
-        <p class="txt-s4 txt-bold txt-white p-one-line dp-none dp-block-sm">${txt[lang][3]}</p>
+        <p class="txt-s4 txt-bold ${color === "blackwhite" ? "txt-bow" : "txt-white"} p-one-line dp-none dp-block-sm">${txt[lang][3]}</p>
         <svg class="dp-none-sm" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="fill-light" d="M5.22492 9.69418L1.56958 5.8448L0 7.49771L5.22492 13L16 1.65291L14.4304 0L5.22492 9.69418Z"/>
         </svg>

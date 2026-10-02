@@ -20,8 +20,8 @@ export default function HomePage(props) {
       <p class="txt-s4 txt-s3-sm txt-semibold txt-dark">${txt[lang][0]}</p>
       <div class="btn-icon btn-icon-sm bg-${color}" data-btn="create">
         <div class="icon-svg">
-          <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
-            <path class="fill-light" d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"/>
+          <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"/>
           </svg>
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function HomePage(props) {
           <div class="btn-icon bg-${color} btn-icon-sm" data-id="${e.id}" data-btn="preview">
             <div class="icon-svg">
               <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path class="fill-light" d="M3 0V16L16 8L3 0Z" fill="white"/>
+               <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M3 0V16L16 8L3 0Z" fill="white"/>
              </svg>
             </div>
           </div>
@@ -70,14 +70,14 @@ export default function HomePage(props) {
           <div class="btn-sm-icon bg-${color} btn-sm-icon-sm" data-id="${e.id}" data-btn="details">
             <div class="icon-svg">
               <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="fill-light" d="M8 0C3.5888 0 0 3.5888 0 8C0 12.4112 3.5888 16 8 16C12.4112 16 16 12.4112 16 8C16 3.5888 12.4112 0 8 0ZM8.8 12H7.2V7.2H8.8V12ZM8.8 5.6H7.2V4H8.8V5.6Z"/>
+                <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M8 0C3.5888 0 0 3.5888 0 8C0 12.4112 3.5888 16 8 16C12.4112 16 16 12.4112 16 8C16 3.5888 12.4112 0 8 0ZM8.8 12H7.2V7.2H8.8V12ZM8.8 5.6H7.2V4H8.8V5.6Z"/>
               </svg>
             </div>
           </div>
           <div class="btn-sm-icon bg-${color} btn-sm-icon-sm" data-id="${e.id}" data-btn="create">
             <div class="icon-svg">
               <svg viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path class="fill-light" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z" fill="white"/>
+                <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z"/>
               </svg>
             </div>
           </div>

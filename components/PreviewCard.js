@@ -22,7 +22,7 @@ export default function PreviewCard(props, routine, workoutDB) {
     <section class="action-list-container"></section>
     <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
       <div class="btn border-${color} btn-fill bg-${color}" data-btn="start">
-        <p class="txt-s4 txt-bold txt-white p-one-line">${txt[lang].btn}</p>
+        <p class="txt-s4 txt-bold ${color === "blackwhite" ? "txt-bow" : "txt-white"} p-one-line">${txt[lang].btn}</p>
       </div>
     </section>
   `;

@@ -102,14 +102,14 @@ export default function CreatePage(props, routine, workoutDB) {
         <div class="btn-xs-icon bg-${color} btn-icon-sm ${i === 0 ? "disable" : ""}" data-position=${i} data-btn="up">
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path class="fill-light" d="M16 10.689L8 3L2.5338e-07 10.689L2.40419 13L8 7.61991L13.5958 13L16 10.689Z"/>
+              <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M16 10.689L8 3L2.5338e-07 10.689L2.40419 13L8 7.61991L13.5958 13L16 10.689Z"/>
             </svg>
           </div>
         </div>
         <div class="btn-xs-icon bg-${color} btn-icon-sm ${i === workoutsLength - 1 ? "disable" : ""}" data-position=${i} data-btn="down">
           <div class="icon-svg">
             <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path class="fill-light" d="M0 5.31104L8 13L16 5.31104L13.5958 3L8 8.38009L2.40419 3L0 5.31104Z"/>
+              <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M0 5.31104L8 13L16 5.31104L13.5958 3L8 8.38009L2.40419 3L0 5.31104Z"/>
             </svg>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function CreatePage(props, routine, workoutDB) {
         <div class="btn-xs-icon bg-${color} btn-icon-sm" data-id="${workoutProps.id}" data-btn="edit" data-position=${i}>
           <div class="icon-svg">
             <svg viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path class="fill-light" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z"/>
+              <path class="${color === "blackwhite" ? "fill-bow" : "fill-light"}" d="M9.75 0L12.1875 2.40144L10.3293 4.23294L7.89181 1.8315L9.75 0ZM0 9.59616V11.9976H2.4375L9.18044 5.36402L6.74294 2.96258L0 9.59616ZM0 14.399H13V16H0V14.399Z"/>
             </svg>
           </div>
         </div>
@@ -168,7 +168,7 @@ export default function CreatePage(props, routine, workoutDB) {
       </svg>
     </div>
     <div class="btn border-${color} btn-fill bg-${color}" data-save="routine">
-      <p class="txt-s4 txt-bold txt-white p-one-line dp-none dp-block-sm txt-item"></p>
+      <p class="txt-s4 txt-bold ${color === "blackwhite" ? "txt-bow" : "txt-white"} p-one-line dp-none dp-block-sm txt-item"></p>
       <svg class="dp-none-sm" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path class="fill-light" d="M5.22492 9.69418L1.56958 5.8448L0 7.49771L5.22492 13L16 1.65291L14.4304 0L5.22492 9.69418Z"/>
       </svg>

@@ -227,7 +227,7 @@ const showResults = (list, search = false) => {
           <div class="btn-xs-icon circle bg-${props.color} btn-icon-sm" data-btn="add" data-id="${workout.id}">
             <div class="icon-svg">
               <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z" class="fill-light"/>
+                <path d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z" class="${props.color === "blackwhite" ? "fill-bow" : "fill-light"}"/>
               </svg>
             </div>
           </div>
@@ -967,8 +967,6 @@ d.addEventListener("click", (e) => {
 });
 
 d.addEventListener("change", (e) => {
-  console.log(e.target);
-
   if (e.target.matches(".filter-snd") || e.target.matches(".filter-fst"))
     manageFilter();
 
