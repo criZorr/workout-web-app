@@ -888,6 +888,7 @@ d.addEventListener("click", (e) => {
     clearTimes();
     speak(txt[props.lang].finish_msg);
     stopLock();
+    w.location.hash = "#calendar";
   }
 
   if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
