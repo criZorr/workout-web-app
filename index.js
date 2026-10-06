@@ -42,6 +42,7 @@ let props = {},
   workedDays = {},
   currentFilter = ["all", "all"],
   currentSearch = "",
+  activeRoutine = false,
   startTime = 0,
   startRestTime = 0,
   counterWorkout = 0,
@@ -866,6 +867,7 @@ d.addEventListener("click", (e) => {
       activityActions();
     };
 
+    activeRoutine = true;
     workedDays = JSON.parse(localStorage.getItem("workedDays"));
     todayWork = workedDays[dateString] ? workedDays[dateString].workSec : 0;
     todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
@@ -967,10 +969,16 @@ d.addEventListener("click", (e) => {
     e.target.matches(interactionClose) ||
     e.target.matches(`${interactionClose} *`)
   ) {
-    speechSynthesis.cancel();
-    clearTimes();
-    hideInteractive();
-    stopLock();
+    let flag = true;
+
+    if (activeRoutine) flag = w.confirm(txt[props.lang].confirm_msg);
+
+    if (flag) {
+      speechSynthesis.cancel();
+      clearTimes();
+      hideInteractive();
+      stopLock();
+    }
   }
 
   if (
