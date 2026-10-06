@@ -66,7 +66,17 @@ let props = {},
   month = "",
   year = "",
   dateString = "",
-  txt = "";
+  txt = "",
+  wakeLock = null;
+
+const stopLock = () => {
+  if (wakeLock !== null) wakeLock.release().then(() => (wakeLock = null));
+};
+
+const startLock = async () => {
+  if ("wakeLock" in navigator)
+    wakeLock = await navigator.wakeLock.request("screen");
+};
 
 const importFile = (data) => {
   let obj = JSON.parse(data);
@@ -863,6 +873,7 @@ d.addEventListener("click", (e) => {
     showInteractive("action-page");
     manageRest(fstTime, actualRoutine.workouts[0], txt[props.lang].start_msg);
     workoutClock = setTimeout(handleClock.action, fstTime * 1000);
+    startLock();
   }
 
   if (e.target.matches(btnNext) || e.target.matches(`${btnNext} *`))
@@ -876,6 +887,7 @@ d.addEventListener("click", (e) => {
     hideInteractive();
     clearTimes();
     speak(txt[props.lang].finish_msg);
+    stopLock();
   }
 
   if (e.target.matches(btnSkipRest) || e.target.matches(`${btnSkipRest} *`)) {
@@ -957,6 +969,7 @@ d.addEventListener("click", (e) => {
     speechSynthesis.cancel();
     clearTimes();
     hideInteractive();
+    stopLock();
   }
 
   if (
