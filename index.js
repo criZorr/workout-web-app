@@ -709,6 +709,14 @@ d.addEventListener("DOMContentLoaded", async () => {
 
 w.speechSynthesis.addEventListener("voiceschanged", getSpeech);
 
+w.addEventListener("beforeunload", (e) => {
+  if (activeRoutine) e.preventDefault();
+});
+
+w.addEventListener("popstate", () => {
+  if (activeRoutine) history.pushState(null, null, window.location.href);
+});
+
 d.addEventListener("click", (e) => {
   let btnCreate = `[data-btn="create"]`,
     btnPreview = `[data-btn="preview"]`,
@@ -868,6 +876,7 @@ d.addEventListener("click", (e) => {
     };
 
     activeRoutine = true;
+    history.pushState(null, null, window.location.href);
     workedDays = JSON.parse(localStorage.getItem("workedDays"));
     todayWork = workedDays[dateString] ? workedDays[dateString].workSec : 0;
     todayRest = workedDays[dateString] ? workedDays[dateString].restSec : 0;
@@ -885,6 +894,7 @@ d.addEventListener("click", (e) => {
     handleNext(e.target, btnSkip, true);
 
   if (e.target.matches(btnFinish) || e.target.matches(`${btnFinish} *`)) {
+    activeRoutine = false;
     setTimes("workout");
     hideInteractive();
     clearTimes();
@@ -970,10 +980,9 @@ d.addEventListener("click", (e) => {
     e.target.matches(`${interactionClose} *`)
   ) {
     let flag = true;
-
     if (activeRoutine) flag = w.confirm(txt[props.lang].confirm_msg);
-
     if (flag) {
+      activeRoutine = false;
       speechSynthesis.cancel();
       clearTimes();
       hideInteractive();
