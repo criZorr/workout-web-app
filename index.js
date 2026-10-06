@@ -68,6 +68,49 @@ let props = {},
   dateString = "",
   txt = "";
 
+const importFile = (data) => {
+  let obj = JSON.parse(data);
+
+  if (obj["routines"])
+    localStorage.setItem("routines", JSON.stringify(obj["routines"]));
+  if (obj["maxStreak"])
+    localStorage.setItem("maxStreak", JSON.stringify(obj["maxStreak"]));
+  if (obj["streak"])
+    localStorage.setItem("streak", JSON.stringify(obj["streak"]));
+  if (obj["workedDays"])
+    localStorage.setItem("workedDays", JSON.stringify(obj["workedDays"]));
+};
+
+const handleFile = (input) => {
+  const file = input.files[0];
+
+  if (file.type === "application/json") {
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.addEventListener("load", () => importFile(reader.result));
+  } else {
+    window.alert("Use the exported JSON file!");
+  }
+};
+
+const exportFile = () => {
+  const data = {};
+
+  data["routines"] = JSON.parse(localStorage.getItem("routines") || "[]");
+  data["maxStreak"] = JSON.parse(localStorage.getItem("maxStreak") || 0);
+  data["streak"] = JSON.parse(localStorage.getItem("streak") || 0);
+  data["workedDays"] = JSON.parse(localStorage.getItem("workedDays") || "{}");
+
+  const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = d.createElement("a");
+  a.href = url;
+  a.download = "workouts-data";
+  a.click();
+  a.remove();
+};
+
 const findData = (el, node, name) => {
   return el.dataset[name] || el.closest(node).dataset[name];
 };
@@ -680,7 +723,9 @@ d.addEventListener("click", (e) => {
     btnDown = `[data-btn="down"]`,
     btnMonthPrev = `[data-btn="month-prev"]`,
     btnMonthNext = `[data-btn="month-next"]`,
-    btnDay = `[data-btn="day"]`;
+    btnDay = `[data-btn="day"]`,
+    btnExport = `[data-btn="export"]`,
+    btnImport = `[data-btn="import"]`;
 
   if (e.target.matches(btnAdd) || e.target.matches(`${btnAdd} *`))
     addEditManager(e.target, btnAdd, true);
@@ -963,6 +1008,18 @@ d.addEventListener("click", (e) => {
 
     if (m > mCal || y > yCal) prev = false;
     if (m !== mCal) drawCalendar($calendar, btnDay, prev, dia);
+  }
+
+  if (e.target.matches(btnExport) || e.target.matches(`${btnExport} *`))
+    exportFile();
+
+  if (e.target.matches(btnImport) || e.target.matches(`${btnImport} *`)) {
+    let input = d.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+
+    input.click();
+    input.addEventListener("change", () => handleFile(input));
   }
 });
 
