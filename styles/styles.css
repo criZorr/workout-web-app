@@ -13,6 +13,18 @@
   --color-red-light: #e95744;
   --color-red-light-25: #e9574440;
   --color-red-comp: #1dc1d7;
+  --color-pink: #e27396;
+  --color-pink-dark: #22070f;
+  --color-pink-dark-25: #22070f40;
+  --color-pink-light: #eeaac0;
+  --color-pink-light-25: #eeaac040;
+  --color-pink-comp: #73e2bf;
+  --color-purple: #8f49c1;
+  --color-purple-dark: #21102e;
+  --color-purple-dark-25: #21102e40;
+  --color-purple-light: #9f63ca;
+  --color-purple-light-25: #9f63ca40;
+  --color-purple-comp: #7bc149;
   --color-blackwhite: #000;
   --color-blackwhite-dark: #292929;
   --color-blackwhite-dark-25: #29292940;
@@ -72,6 +84,7 @@ select {
 }
 
 input[type="radio"],
+input[type="checkbox"],
 figure {
   margin: 0;
   padding: 0;
@@ -205,6 +218,100 @@ a {
 
 .color-dark .shadow-red {
   box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
+}
+
+/* PINK */
+
+.bg-pink {
+  background-color: var(--color-pink);
+}
+
+.bg-pink-light {
+  background-color: var(--color-pink-light);
+}
+
+.bg-pink-comp {
+  background-color: var(--color-pink-comp);
+}
+
+.fill-pink {
+  fill: var(--color-pink);
+}
+
+.fill-pink-light {
+  fill: var(--color-pink-light);
+}
+
+.border-pink {
+  border-color: var(--color-pink);
+}
+
+.border-pink-light {
+  border-color: var(--color-pink-light);
+}
+
+.txt-pink {
+  color: var(--color-pink);
+}
+
+.txt-pink-light {
+  color: var(--color-pink-light);
+}
+
+.color-os .shadow-pink,
+.color-light .shadow-pink {
+  box-shadow: 0 0 0.25rem 0 var(--color-pink-dark-25);
+}
+
+.color-dark .shadow-pink {
+  box-shadow: 0 0 0.25rem 0.05rem var(--color-pink-light-25);
+}
+
+/* PURPLE */
+
+.bg-purple {
+  background-color: var(--color-purple);
+}
+
+.bg-purple-light {
+  background-color: var(--color-purple-light);
+}
+
+.bg-purple-comp {
+  background-color: var(--color-purple-comp);
+}
+
+.fill-purple {
+  fill: var(--color-purple);
+}
+
+.fill-purple-light {
+  fill: var(--color-purple-light);
+}
+
+.border-purple {
+  border-color: var(--color-purple);
+}
+
+.border-purple-light {
+  border-color: var(--color-purple-light);
+}
+
+.txt-purple {
+  color: var(--color-purple);
+}
+
+.txt-purple-light {
+  color: var(--color-purple-light);
+}
+
+.color-os .shadow-purple,
+.color-light .shadow-purple {
+  box-shadow: 0 0 0.25rem 0 var(--color-purple-dark-25);
+}
+
+.color-dark .shadow-purple {
+  box-shadow: 0 0 0.25rem 0.05rem var(--color-purple-light-25);
 }
 
 /* B/W */
@@ -408,6 +515,26 @@ a {
     box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
   }
 
+  /* PINK */
+  .color-os .shadow-pink-sm,
+  .color-light .shadow-pink-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-pink-dark-25);
+  }
+
+  .color-dark .shadow-pink-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-pink-light-25);
+  }
+
+  /* PURPLE */
+  .color-os .shadow-purple-sm,
+  .color-light .shadow-purple-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-purple-dark-25);
+  }
+
+  .color-dark .shadow-purple-sm {
+    box-shadow: 0 0 0.25rem 0 var(--color-purple-light-25);
+  }
+
   /* B/W */
   .color-os .shadow-blackwhite-sm,
   .color-light .shadow-blackwhite-sm {
@@ -458,6 +585,26 @@ a {
     box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
   }
 
+  /* PINK */
+  .color-os .shadow-pink-lg,
+  .color-light .shadow-pink-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-pink-dark-25);
+  }
+
+  .color-dark .shadow-pink-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-pink-light-25);
+  }
+
+  /* PURPLE */
+  .color-os .shadow-purple-lg,
+  .color-light .shadow-purple-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-purple-dark-25);
+  }
+
+  .color-dark .shadow-purple-lg {
+    box-shadow: 0 0 0.25rem 0 var(--color-purple-light-25);
+  }
+
   /* B/W */
   .color-os .shadow-blackwhite-lg,
   .color-light .shadow-blackwhite-lg {
@@ -502,6 +649,16 @@ a {
   /* RED */
   .color-os .shadow-red {
     box-shadow: 0 0 0.25rem 0.05rem var(--color-red-light-25);
+  }
+
+  /* PINK */
+  .color-os .shadow-pink {
+    box-shadow: 0 0 0.25rem 0.05rem var(--color-pink-light-25);
+  }
+
+  /* PURPLE */
+  .color-os .shadow-purple {
+    box-shadow: 0 0 0.25rem 0.05rem var(--color-purple-light-25);
   }
 
   /* B/W */
@@ -594,6 +751,16 @@ a {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
     }
 
+    /* PINK */
+    .color-os .shadow-pink-sm {
+      box-shadow: 0 0 0.25rem 0 var(--color-pink-light-25);
+    }
+
+    /* PURPLE */
+    .color-os .shadow-purple-sm {
+      box-shadow: 0 0 0.25rem 0 var(--color-purple-light-25);
+    }
+
     /* B/W */
     .color-os .shadow-blackwhite-sm {
       box-shadow: 0 0 0.25rem 0 var(--color-blackwhite-inv-light-25);
@@ -618,6 +785,16 @@ a {
     /* RED */
     .color-os .shadow-red-lg {
       box-shadow: 0 0 0.25rem 0 var(--color-red-light-25);
+    }
+
+    /* PINK */
+    .color-os .shadow-pink-lg {
+      box-shadow: 0 0 0.25rem 0 var(--color-pink-light-25);
+    }
+
+    /* PURPLE */
+    .color-os .shadow-purple-lg {
+      box-shadow: 0 0 0.25rem 0 var(--color-purple-light-25);
     }
 
     /* B/W */
@@ -780,7 +957,8 @@ a {
   z-index: 2;
 }
 
-.custom-radio {
+.custom-radio,
+.custom-check {
   min-width: 1rem;
   min-height: 1rem;
   max-width: 1rem;
@@ -795,7 +973,12 @@ a {
   right: 0;
 }
 
-.custom-radio > div {
+.custom-check {
+  left: 0;
+}
+
+.custom-radio > div,
+.custom-check > div {
   min-width: 0.75rem;
   min-height: 0.75rem;
   border-radius: 50%;
@@ -804,16 +987,38 @@ a {
   transition: border 125ms ease-in;
 }
 
+.custom-check {
+  border-radius: 25%;
+}
+
 input[type="radio"]:checked ~ .custom-radio > div {
   border-width: 0.25rem;
 }
 
-.radio-html {
+input[type="checkbox"]:checked ~ .custom-check > div {
+  border-width: 0.25rem;
+}
+
+.radio-html,
+.checkbox-html {
   opacity: 0;
   height: 1rem;
   width: 1rem;
   z-index: 2;
   cursor: pointer;
+}
+
+.check-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.check-container > .check-card {
+  text-align: center;
+  width: 4rem;
 }
 
 /* *************** CARDS *************** */
@@ -1024,6 +1229,12 @@ input[type="radio"]:checked ~ .custom-radio > div {
   transition: transform 75ms ease-in;
 }
 
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .btn.disable {
   opacity: 0.5;
   cursor: not-allowed;
@@ -1172,6 +1383,24 @@ input[type="radio"]:checked ~ .custom-radio > div {
 
 .icon-text.hover-red:hover svg {
   background-color: var(--color-red-dark-25);
+}
+
+/* PINK */
+.icon-text.active-pink > svg {
+  background-color: var(--color-pink-light);
+}
+
+.icon-text.hover-pink:hover svg {
+  background-color: var(--color-pink-dark-25);
+}
+
+/* PURPLE */
+.icon-text.active-purple > svg {
+  background-color: var(--color-purple-light);
+}
+
+.icon-text.hover-purple:hover svg {
+  background-color: var(--color-purple-dark-25);
 }
 
 /* B/W */
@@ -1634,6 +1863,24 @@ input[type="radio"]:checked ~ .custom-radio > div {
   background-color: var(--color-red-light-25);
 }
 
+/* PINK */
+.btn-day.active-pink {
+  background-color: var(--color-pink-light-75);
+}
+
+.btn-pink-shadow:hover:not(.bg-pink, .active-pink) {
+  background-color: var(--color-pink-light-25);
+}
+
+/* PURPLE */
+.btn-day.active-purple {
+  background-color: var(--color-purple-light-75);
+}
+
+.btn-purple-shadow:hover:not(.bg-purple, .active-purple) {
+  background-color: var(--color-purple-light-25);
+}
+
 /* B/W */
 
 .btn-day.active-blackwhite {
@@ -2008,6 +2255,10 @@ input[type="radio"]:checked ~ .custom-radio > div {
   .input-container {
     flex-direction: row;
     gap: 1rem;
+  }
+
+  .extra-options .input-container:first-child {
+    margin-left: 2rem;
   }
 }
 

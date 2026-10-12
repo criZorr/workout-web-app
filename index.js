@@ -15,7 +15,7 @@ import ModalInstructions from "./components/ModalInstructions.js";
 import RestCard from "./components/RestCard.js";
 import MonthDays from "./components/MonthDays.js";
 import getTimes from "./helpers/getTimes.js";
-import Texts from "./db/texts.js";
+import Texts from "./db/Texts.js";
 
 const d = document,
   w = window,
@@ -260,6 +260,8 @@ const addEditManager = (target, type, action) => {
         ? currentProps.seconds_serie
         : actualEdit.seconds_general,
       sec_end: currentProps ? currentProps.seconds_end : 0,
+      series_time: currentProps ? currentProps.series_time : false,
+      end_time: currentProps ? currentProps.end_time : false,
     };
 
   showModal();
@@ -442,8 +444,9 @@ const activityActions = (count = 0, seriesCount = 1) => {
 
   if (Number(seriesCount) === workoutProps.series) {
     Array.from($btnsNext).forEach((btn) => {
-      btn.dataset.rest =
-        workoutProps.seconds_end || actualRoutine.seconds_general;
+      workoutProps.end_time
+        ? (btn.dataset.rest = workoutProps.seconds_end)
+        : (btn.dataset.rest = actualRoutine.seconds_general);
       btn.dataset.count = 1 + Number(count);
       btn.removeAttribute("data-reps");
     });
@@ -458,7 +461,9 @@ const activityActions = (count = 0, seriesCount = 1) => {
     }
   } else {
     Array.from($btnsNext).forEach((btn) => {
-      btn.dataset.rest = workoutProps.seconds_serie;
+      workoutProps.series_time
+        ? (btn.dataset.rest = workoutProps.seconds_serie)
+        : (btn.dataset.rest = actualRoutine.seconds_general);
       btn.dataset.count = Number(count);
       btn.dataset.reps = 1 + Number(seriesCount);
     });
@@ -760,7 +765,9 @@ d.addEventListener("click", (e) => {
       reps = 0,
       series = Number(d.getElementById("add-series").value) || 1,
       seconds_serie = 0,
-      seconds_end = Number(d.getElementById("add-sec-end").value) || 0;
+      seconds_end = Number(d.getElementById("add-sec-end").value) || 0,
+      series_time = d.getElementById("series-time").checked,
+      end_time = d.getElementById("end-time").checked;
 
     d.getElementById("tab-1").checked
       ? (time = Number(d.getElementById("add-time").value) || 30)
@@ -776,6 +783,8 @@ d.addEventListener("click", (e) => {
       series,
       seconds_serie,
       seconds_end,
+      series_time,
+      end_time,
     };
 
     position
@@ -1083,6 +1092,16 @@ d.addEventListener("change", (e) => {
     voiceName = e.target.value;
     speak(txt[props.lang].voice_msg);
     localStorage.setItem("voiceName", e.target.value);
+  }
+
+  if (e.target.matches("#end-time") || e.target.matches("#series-time")) {
+    let status = e.target.checked,
+      type = e.target.dataset.check,
+      list = d.querySelectorAll(`.${type}`);
+
+    status
+      ? Array.from(list).forEach((e) => e.classList.remove("disabled"))
+      : Array.from(list).forEach((e) => e.classList.add("disabled"));
   }
 });
 

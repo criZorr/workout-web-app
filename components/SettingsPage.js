@@ -1,4 +1,4 @@
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function SettingsPage(props) {
   const d = document,
@@ -33,6 +33,8 @@ export default function SettingsPage(props) {
           <select class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line color-selector">
             <option value="green" class="txt-item"></option>
             <option value="red" class="txt-item"></option>
+            <option value="pink" class="txt-item"></option>
+            <option value="purple" class="txt-item"></option>
             <option value="blackwhite" class="txt-item"></option>
           </select>
           <div class="btn-no-fill">

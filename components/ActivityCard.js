@@ -1,5 +1,5 @@
 import HeaderBack from "./HeaderBack.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function ActivityCard(props, routine) {
   const d = document,
@@ -18,10 +18,10 @@ export default function ActivityCard(props, routine) {
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark workout-title"></p>
     <img src="./assets/img/placeholder.jpg" alt="" class="dp-none dp-block-sm workout-img"/>
     <section class="counter static">
-      <p class="txt-s5 txt-s4-sm txt-bold txt-${color} workout-reps"></p>
+      <p class="txt-s4 txt-s3-sm txt-bold txt-${color} workout-reps"></p>
     </section>
     <section class="counter dynamic">
-      <p class="txt-s5 txt-s4-sm txt-bold txt-${color} workout-time"></p>
+      <p class="txt-s4 txt-s3-sm txt-bold txt-${color} workout-time"></p>
     </section>
     <p class="dp-none dp-block-sm description txt-dark workout-description"></p>
     <section class="btns-container">

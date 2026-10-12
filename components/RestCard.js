@@ -1,5 +1,5 @@
 import HeaderBack from "./HeaderBack.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function RestCard(props, routine) {
   const d = document,
@@ -18,7 +18,7 @@ export default function RestCard(props, routine) {
   $content.innerHTML = `
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${routine.msg}</p>
     <section class="counter dynamic">
-      <p class="txt-s5 txt-s4-sm txt-bold txt-${color} dynamic-number"></p>
+      <p class="txt-s4 txt-s3-sm txt-bold txt-${color} dynamic-number"></p>
     </section>
     <p class="txt-s5 txt-s4-sm txt-semibold txt-dark p-one-line w-100 txt-dark flex-s-0">${txt[lang].label}</p>
     <img src="./db/img/${routine.mediaName}.webp" alt="${routine.name} ${txt[lang].alt}" class="dp-none dp-block-sm"/>

@@ -1,4 +1,4 @@
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 import toSentenceCase from "../helpers/toSentenceCase.js";
 
 export default function ModalAdd(props, data, action, position) {
@@ -7,7 +7,16 @@ export default function ModalAdd(props, data, action, position) {
     $content = d.createElement("article"),
     { color, lang } = props;
 
-  let { workout, time, reps, series, sec_serie, sec_end } = data,
+  let {
+      workout,
+      time,
+      reps,
+      series,
+      sec_serie,
+      sec_end,
+      series_time,
+      end_time,
+    } = data,
     txt = Texts("add");
 
   $content.classList.add(
@@ -51,25 +60,37 @@ export default function ModalAdd(props, data, action, position) {
         <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
       </div>
       <div class="add-series-time input-container w-100 ${series <= 1 ? "dp-none" : ""}">
-        <input
-          class="card-container radio-sm shadow-${color} txt-s5 txt-s4-sm txt-regular txt-dark"
-          type="number"
-          min="0"
-          id="add-sec-series"
-          value="${sec_serie}"
-        />
-        <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
+        <div class="check-container">
+          <input type="checkbox" name="series-time" id="series-time" class="checkbox-html" data-check="watch-series">
+          <div class="custom-check border-${color}">
+            <div class="border-${color}-light"></div>
+          </div>
+          <input
+            class="check-card card-container radio-sm shadow-${color} txt-s5 txt-s4-sm txt-regular txt-dark watch-series"
+            type="number"
+            min="0"
+            id="add-sec-series"
+            value="${sec_serie}"
+          />
+        </div>
+        <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item watch-series"></p>
       </div>
       <div class="input-container w-100">
-        <input
-          class="card-container radio-sm shadow-${color} txt-s5 txt-s4-sm txt-regular txt-dark"
-          type="number"
-          min="0"
-          id="add-sec-end"
-          placeholder="0"
-          ${sec_end ? `value=${sec_end}` : ""}
-        />
-        <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
+        <div class="check-container">
+          <input type="checkbox" name="end-time" id="end-time" class="checkbox-html" data-check="watch-end">
+          <div class="custom-check border-${color}">
+            <div class="border-${color}-light"></div>
+          </div>
+          <input
+            class="check-card card-container radio-sm shadow-${color} txt-s5 txt-s4-sm txt-regular txt-dark watch-end"
+            type="number"
+            min="0"
+            id="add-sec-end"
+            placeholder="0"
+            ${sec_end ? `value=${sec_end}` : ""}
+          />
+        </div>
+        <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item watch-end"></p>
       </div>
     </section>
     <section class="btns-container w-100">
@@ -91,6 +112,18 @@ export default function ModalAdd(props, data, action, position) {
   time
     ? ($content.querySelector("#tab-1").checked = true)
     : ($content.querySelector("#tab-2").checked = true);
+
+  series_time
+    ? ($content.querySelector("#series-time").checked = true)
+    : Array.from($content.querySelectorAll(".watch-series")).forEach((e) =>
+        e.classList.add("disabled"),
+      );
+
+  end_time
+    ? ($content.querySelector("#end-time").checked = true)
+    : Array.from($content.querySelectorAll(".watch-end")).forEach((e) =>
+        e.classList.add("disabled"),
+      );
 
   $fragment.appendChild($content);
   Array.from($fragment.querySelectorAll(".txt-item")).forEach(
