@@ -84,7 +84,6 @@ export default function Texts(section) {
       en: [
         "Name",
         "Custom Image",
-        "Add image",
         "Add exercises",
         "Add exercise",
         "Seconds between each exercise",
@@ -95,6 +94,7 @@ export default function Texts(section) {
       enDy: {
         ph1: "Insert name",
         ph2: "Seconds",
+        ph3: "Image Direct Link (https://i.ibb.co/AbC1DeF2/ejemplo.jpg)",
         alt1: "Banner image",
         txt1: "Routine name",
         txt2: "hours",
@@ -103,15 +103,14 @@ export default function Texts(section) {
         txt5: "minute",
         txt6: "seconds",
         txt7: "second",
-        txt8: "series of",
-        txt9: "serie of",
+        txt8: "sets of",
+        txt9: "set of",
         txt10: "repetitions",
         txt11: "repetition",
       },
       es: [
         "Nombre",
         "Imagen personalizada",
-        "Añadir imagen",
         "Añadir ejercicios",
         "Añadir ejercicio",
         "Segundos entre ejercicios",
@@ -122,6 +121,7 @@ export default function Texts(section) {
       esDy: {
         ph1: "Inserta el nombre",
         ph2: "Segundos",
+        ph3: "Link directo de imagen (https://i.ibb.co/AbC1DeF2/ejemplo.jpg)",
         alt1: "Imagen ilustrativa",
         txt1: "Nombre de la rutina",
         txt2: "horas",
@@ -236,8 +236,8 @@ export default function Texts(section) {
       en: [
         "Time",
         "Reps",
-        "Series",
-        "Rest time between series",
+        "Sets",
+        "Rest time between sets",
         "Time before next exercise",
         "Cancel",
         "Save",

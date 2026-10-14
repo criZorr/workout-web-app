@@ -806,7 +806,7 @@ d.addEventListener("click", (e) => {
     const obj = {};
     obj.id = actualEdit.id;
     obj.name = d.getElementById("routine-name").value || "New Routine";
-    obj.imgName = "placeholder";
+    obj.imgName = d.getElementById("img-link").value || null;
     obj.seconds_general = Number(d.getElementById("routine-time").value) || 30;
     obj.workouts = actualEdit.workouts;
 
@@ -840,7 +840,7 @@ d.addEventListener("click", (e) => {
 
       actualEdit = {
         id: newId,
-        imgName: "placeholder",
+        imgName: null,
         seconds_general: Number(localStorage.getItem("restTime")),
         workouts: [],
       };
@@ -848,8 +848,15 @@ d.addEventListener("click", (e) => {
 
     showInteractive("create-page");
     paintInteractive("create-page", "create", actualEdit);
+
     d.querySelector("#routine-name").addEventListener("keyup", (e) => {
       actualEdit["name"] = e.target.value;
+    });
+    d.querySelector("#img-link").addEventListener("keyup", (e) => {
+      actualEdit["imgName"] = e.target.value;
+    });
+    d.querySelector("#routine-time").addEventListener("keyup", (e) => {
+      actualEdit["seconds_general"] = e.target.value;
     });
   }
 

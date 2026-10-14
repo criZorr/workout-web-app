@@ -1,5 +1,5 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function CreatePage(props, routine, workoutDB) {
   const d = document,
@@ -21,18 +21,7 @@ export default function CreatePage(props, routine, workoutDB) {
     <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
     <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" id="routine-name" placeholder="${txt[dyn].ph1}" value="${routine.name ? routine.name : ""}"/>
     <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
-    <section class="card-container radio-sm shadow-${color}">
-      <section class="list-btn">
-        <p class="txt-s4 txt-regular txt-dark txt-item"></p>
-        <div class="btn-no-fill">
-          <div class="icon-svg">
-            <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="auto">
-              <path class="fill-${color}" d="M10.4 0H5.6V5.59688H0V10.4031H5.6V16H10.4V10.4031H16V5.59688H10.4V0Z"/>
-            </svg>
-          </div>
-        </div>
-      </section>
-    </section>
+    <input class="card-container radio-sm shadow-${color} txt-s4 txt-regular txt-dark" type="text" id="img-link" placeholder="${txt[dyn].ph3}" value="${routine.imgName ? routine.imgName : ""}"/>
     <p class="txt-s5 txt-s4-sm txt-semibold txt-dark txt-item"></p>
     <section class="card-container radio-sm shadow-${color}">
       <section class="list-btn">
@@ -56,7 +45,7 @@ export default function CreatePage(props, routine, workoutDB) {
 
   //Preview section
   $previewSection.classList.add("radio-sm", `shadow-${color}`);
-  $previewSection.innerHTML = `<img class="banner-img" src="./assets/img/${routine.imgName || "placeholder"}.jpg" alt="${routine.name}: ${txt[dyn].alt1}" />`;
+  $previewSection.innerHTML = `<img class="banner-img" src="${routine.imgName ? routine.imgName : "./assets/img/placeholder.jpg"}" alt="${routine.name}: ${txt[dyn].alt1}" />`;
 
   $previewCard.classList.add("card-container");
   $previewList.classList.add("preview-info");

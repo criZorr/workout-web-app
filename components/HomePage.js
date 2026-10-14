@@ -1,4 +1,4 @@
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function HomePage(props) {
   const d = document,
@@ -51,7 +51,7 @@ export default function HomePage(props) {
     $card.innerHTML = `
       <figure class="banner-container">
         <div class="shadow-banner"></div>
-        <img class="banner-img dp-none dp-block-sm" src="./assets/img/${e.imgName}.jpg" alt="${e.name}: ${txt[lang][1]}"/>
+        <img class="banner-img dp-none dp-block-sm" loading="lazy" src="${e.imgName ? e.imgName : "./assets/img/placeholder.jpg"}" alt="${e.name}: ${txt[lang][1]}"/>
       </figure>
       <section class="card-container">
         <section class="list-btn">

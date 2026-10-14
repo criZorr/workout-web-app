@@ -2,7 +2,7 @@
   {
     "id": "1",
     "name": "ZZZ",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
@@ -50,7 +50,7 @@
   {
     "id": "2",
     "name": "Test2",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
@@ -98,7 +98,7 @@
   {
     "id": "3",
     "name": "Furina",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
@@ -266,7 +266,7 @@
   {
     "id": "4",
     "name": "Test4",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
@@ -314,7 +314,7 @@
   {
     "id": "5",
     "name": "Test4",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
@@ -362,7 +362,7 @@
   {
     "id": "6",
     "name": "Upper body test",
-    "imgName": "placeholder",
+    "imgName": null,
     "seconds_general": 30,
     "workouts": [
       {
