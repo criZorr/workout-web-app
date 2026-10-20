@@ -704,11 +704,11 @@ const localData = async () => {
   hdlTheme(localStorage.getItem("theme"));
 
   d.querySelector(`link[rel="favicon"]`).href =
-    `http://127.0.0.1:5500/assets/favicon-${props.color}.png`;
+    `https://workout.crizorr.com/assets/favicon-${props.color}.png`;
   d.querySelector(`link[rel="icon"]`).href =
-    `http://127.0.0.1:5500/assets/favicon-${props.color}.png`;
+    `https://workout.crizorr.com/assets/favicon-${props.color}.png`;
   d.querySelector(`link[rel="apple-touch-icon"]`).href =
-    `http://127.0.0.1:5500/assets/favicon-${props.color}.png`;
+    `https://workout.crizorr.com/assets/favicon-${props.color}.png`;
 };
 
 d.addEventListener("DOMContentLoaded", async () => {
