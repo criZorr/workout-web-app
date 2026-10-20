@@ -70,6 +70,23 @@ let props = {},
   txt = "",
   wakeLock = null;
 
+const delay = (ms = 0) => new Promise((e) => setTimeout(e, ms));
+
+const notification = async (msg = "") => {
+  const $container = d.querySelector(".notification");
+
+  $container.parentElement.classList.remove("dp-none");
+  $container.innerHTML = `
+  <p class="txt-white txt-s5 txt-s4-sm">${msg}</p>
+  `;
+  await delay(100);
+  $container.classList.remove("hide");
+  await delay(2000);
+  $container.classList.add("hide");
+  await delay(250);
+  $container.parentElement.classList.add("dp-none");
+};
+
 const stopLock = () => {
   if (wakeLock !== null) wakeLock.release().then(() => (wakeLock = null));
 };
@@ -90,6 +107,7 @@ const importFile = (data) => {
     localStorage.setItem("streak", JSON.stringify(obj["streak"]));
   if (obj["workedDays"])
     localStorage.setItem("workedDays", JSON.stringify(obj["workedDays"]));
+  notification(txt[props.lang].not2);
 };
 
 const handleFile = (input) => {
@@ -120,6 +138,7 @@ const exportFile = () => {
   a.download = "workouts-data";
   a.click();
   a.remove();
+  notification(txt[props.lang].not1);
 };
 
 const findData = (el, node, name) => {

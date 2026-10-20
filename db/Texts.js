@@ -316,6 +316,8 @@ export default function Texts(section) {
         txt2: "second",
         txt3: "repetitions",
         txt4: "repetition",
+        not1: "Exported!",
+        not2: "Imported!",
       },
       es: {
         btn1: "Terminar",
@@ -332,6 +334,8 @@ export default function Texts(section) {
         txt2: "segundo",
         txt3: "repeticiones",
         txt4: "repetición",
+        not1: "¡Exportado!",
+        not2: "¡Importado!",
       },
     };
   }

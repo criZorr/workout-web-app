@@ -2262,6 +2262,51 @@ input[type="checkbox"]:checked ~ .custom-check > div {
   }
 }
 
+/* **************** NOTIFICATION **************** */
+
+.notification {
+  display: flex;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+  border-radius: 1rem;
+  background-color: #00000096;
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+  max-width: 80%;
+}
+
+.notification.hide {
+  opacity: 0;
+}
+
+.notification-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-block: 2dvh;
+  z-index: 4;
+}
+
+@media screen and (min-width: 18em) {
+  .notification {
+    max-width: 60dvw;
+  }
+}
+
+@media screen and (min-width: 39em) {
+  .notification {
+    max-width: 30dvw;
+  }
+}
+
+@media screen and (min-width: 80em) {
+  .notification {
+    max-width: 20dvw;
+  }
+}
+
 /* **************** VISUALS **************** */
 .dp-none {
   display: none;
