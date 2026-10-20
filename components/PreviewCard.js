@@ -1,6 +1,6 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
 import HeaderBack from "./HeaderBack.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function PreviewCard(props, routine, workoutDB) {
   const d = document,
@@ -18,7 +18,7 @@ export default function PreviewCard(props, routine, workoutDB) {
   $content.classList.add("action-content");
   $content.innerHTML = `
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark">${routine.name}</p>
-    <img src="./assets/img/${routine.imgName}.jpg" alt="${routine.name} image" class="dp-none dp-block-sm"/>
+    <img src="${routine.imgName ? routine.imgName : "./assets/img/placeholder.jpg"}" alt="${routine.name} image" class="dp-none dp-block-sm"/>
     <section class="action-list-container"></section>
     <section class="btns-container btns-end-sm-md hidden-deg-sm-md">
       <div class="btn border-${color} btn-fill bg-${color}" data-btn="start">

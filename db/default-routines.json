@@ -1,42 +1,110 @@
 [
   {
     "id": "1",
-    "name": "ZZZ",
+    "name": "Upper Body",
     "imgName": null,
-    "seconds_general": 30,
+    "seconds_general": 60,
     "workouts": [
       {
-        "id": "0662",
+        "id": "0279",
         "time": 0,
-        "reps": 10,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 30,
+        "seconds_end": 0
+      },
+      {
+        "id": "0687",
+        "time": 0,
+        "reps": 40,
         "series": 3,
         "seconds_serie": 30,
         "seconds_end": 0,
-        "series_time": true,
+        "series_time": false,
         "end_time": false
       },
       {
-        "id": "0812",
+        "id": "0662",
         "time": 0,
         "reps": 15,
         "series": 3,
         "seconds_serie": 30,
         "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3544",
+        "time": 60,
+        "reps": 0,
+        "series": 2,
+        "seconds_serie": 10,
+        "seconds_end": 0,
         "series_time": true,
         "end_time": false
       },
       {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
+        "id": "3544",
+        "time": 45,
+        "reps": 0,
+        "series": 2,
+        "seconds_serie": 10,
         "seconds_end": 60,
         "series_time": true,
-        "end_time": true
+        "end_time": false
       },
       {
         "id": "3544",
+        "time": 30,
+        "reps": 0,
+        "series": 2,
+        "seconds_serie": 10,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0493",
+        "time": 0,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "2135",
+        "time": 60,
+        "reps": 0,
+        "series": 2,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "2135",
+        "time": 45,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "1273",
+        "time": 0,
+        "reps": 15,
+        "series": 3,
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0691",
         "time": 60,
         "reps": 0,
         "series": 3,
@@ -49,408 +117,166 @@
   },
   {
     "id": "2",
-    "name": "Test2",
+    "name": "Lower Body",
     "imgName": null,
-    "seconds_general": 30,
+    "seconds_general": 60,
     "workouts": [
       {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0812",
+        "id": "1760",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds_serie": 30,
+        "seconds_serie": 60,
         "seconds_end": 0,
-        "series_time": true,
+        "series_time": false,
         "end_time": false
       },
       {
-        "id": "0283",
+        "id": "0865",
         "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60,
-        "series_time": true,
-        "end_time": true
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
+        "reps": 15,
+        "series": 1,
+        "seconds_serie": 0,
         "seconds_end": 0,
-        "series_time": true,
+        "series_time": false,
         "end_time": false
-      }
-    ]
-  },
-  {
-    "id": "3",
-    "name": "Furina",
-    "imgName": null,
-    "seconds_general": 30,
-    "workouts": [
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
       },
       {
-        "id": "0812",
+        "id": "0696",
+        "time": 0,
+        "reps": 20,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0696",
+        "time": 0,
+        "reps": 15,
+        "series": 2,
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0865",
+        "time": 0,
+        "reps": 15,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "1459",
         "time": 0,
         "reps": 15,
         "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
       },
       {
-        "id": "0283",
+        "id": "0865",
         "time": 0,
         "reps": 10,
         "series": 1,
-        "seconds_serie": 20,
-        "seconds_end": 60
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
       },
       {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 3,
-        "series": 10,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0812",
+        "id": "3533",
         "time": 0,
         "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0812",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0812",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0812",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0
-      }
-    ]
-  },
-  {
-    "id": "4",
-    "name": "Test4",
-    "imgName": null,
-    "seconds_general": 30,
-    "workouts": [
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0812",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60,
-        "series_time": true,
-        "end_time": true
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      }
-    ]
-  },
-  {
-    "id": "5",
-    "name": "Test4",
-    "imgName": null,
-    "seconds_general": 30,
-    "workouts": [
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0812",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0283",
-        "time": 0,
-        "reps": 10,
-        "series": 3,
-        "seconds_serie": 20,
-        "seconds_end": 60,
-        "series_time": true,
-        "end_time": true
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      }
-    ]
-  },
-  {
-    "id": "6",
-    "name": "Upper body test",
-    "imgName": null,
-    "seconds_general": 30,
-    "workouts": [
-      {
-        "id": "0279",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0687",
-        "time": 0,
-        "reps": 40,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0662",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "3544",
-        "time": 60,
-        "reps": 0,
-        "series": 4,
-        "seconds_serie": 30,
-        "seconds_end": 60,
-        "series_time": true,
-        "end_time": true
-      },
-      {
-        "id": "3544",
-        "time": 45,
-        "reps": 0,
-        "series": 2,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0259",
-        "time": 0,
-        "reps": 15,
-        "series": 3,
-        "seconds_serie": 30,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "2135",
-        "time": 60,
-        "reps": 0,
-        "series": 3,
-        "seconds_serie": 45,
-        "seconds_end": 0,
-        "series_time": true,
-        "end_time": false
-      },
-      {
-        "id": "0406",
-        "time": 0,
-        "reps": 20,
         "series": 6,
-        "seconds_serie": 30,
+        "seconds_serie": 10,
         "seconds_end": 0,
         "series_time": true,
         "end_time": false
       },
       {
-        "id": "0834",
+        "id": "0865",
         "time": 0,
-        "reps": 20,
+        "reps": 10,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3470",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 10,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0865",
+        "time": 0,
+        "reps": 5,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3561",
+        "time": 0,
+        "reps": 15,
         "series": 3,
-        "seconds_serie": 30,
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0865",
+        "time": 0,
+        "reps": 5,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0098",
+        "time": 0,
+        "reps": 26,
+        "series": 3,
+        "seconds_serie": 60,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0865",
+        "time": 0,
+        "reps": 5,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0409",
+        "time": 0,
+        "reps": 30,
+        "series": 6,
+        "seconds_serie": 5,
         "seconds_end": 0,
         "series_time": true,
         "end_time": false
@@ -459,8 +285,294 @@
         "id": "0691",
         "time": 60,
         "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "5 minutes cardio",
+    "imgName": null,
+    "seconds_general": 10,
+    "workouts": [
+      {
+        "id": "3220",
+        "time": 50,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0
+      },
+      {
+        "id": "2612",
+        "time": 50,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0
+      },
+      {
+        "id": "0630",
+        "time": 50,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0
+      },
+      {
+        "id": "3656",
+        "time": 50,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 30
+      },
+      {
+        "id": "1160",
+        "time": 50,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "7 minutes classic by Simple Desing",
+    "imgName": null,
+    "seconds_general": 15,
+    "workouts": [
+      {
+        "id": "3220",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0691",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0662",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0274",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0431",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0514",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0813",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "2135",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3656",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3470",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0664",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3544",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "3544",
+        "time": 30,
+        "reps": 0,
+        "series": 1,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Dumbell for arms",
+    "imgName": null,
+    "seconds_general": 60,
+    "workouts": [
+      {
+        "id": "0294",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0313",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0362",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0364",
+        "time": 0,
+        "reps": 30,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0334",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0380",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0361",
+        "time": 0,
+        "reps": 15,
+        "series": 6,
+        "seconds_serie": 0,
+        "seconds_end": 0,
+        "series_time": true,
+        "end_time": false
+      },
+      {
+        "id": "0419",
+        "time": 0,
+        "reps": 15,
         "series": 3,
-        "seconds_serie": 30,
+        "seconds_serie": 20,
+        "seconds_end": 0,
+        "series_time": false,
+        "end_time": false
+      },
+      {
+        "id": "0406",
+        "time": 0,
+        "reps": 30,
+        "series": 6,
+        "seconds_serie": 0,
         "seconds_end": 0,
         "series_time": true,
         "end_time": false

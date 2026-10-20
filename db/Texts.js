@@ -196,7 +196,7 @@ export default function Texts(section) {
           shoulders: "Hombro",
           "upper arms": "Brazos",
           "upper legs": "Piernas superior",
-          waist: "Cintura",
+          waist: "Abdomen",
         },
         equip: {
           assisted: "Asistido",

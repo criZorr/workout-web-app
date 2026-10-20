@@ -1,4 +1,4 @@
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 export default function ModalList(id, props) {
   const d = document,
     $fragment = d.createDocumentFragment(),

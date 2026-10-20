@@ -1,6 +1,6 @@
 import getTimes from "../helpers/getTimes.js";
 import MonthDays from "./MonthDays.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function CalendarPage(props) {
   const d = document,

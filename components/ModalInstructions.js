@@ -1,5 +1,5 @@
 import toSentenceCase from "../helpers/toSentenceCase.js";
-import Texts from "../db/texts.js";
+import Texts from "../db/Texts.js";
 
 export default function ModalInstructions(props, workout) {
   const d = document,
