@@ -18,11 +18,12 @@ export default function RestCard(props, routine) {
   $content.innerHTML = `
     <p class="txt-s4 txt-s3-sm txt-bold p-one-line w-100 txt-dark flex-s-0">${routine.msg}</p>
     <section class="counter dynamic">
-      <p class="txt-s4 txt-s3-sm txt-bold txt-${color} dynamic-number"></p>
+      <p class="txt-s3 txt-s2-sm txt-bold txt-${color} dynamic-number"></p>
     </section>
     <p class="txt-s5 txt-s4-sm txt-semibold txt-dark p-one-line w-100 txt-dark flex-s-0">${txt[lang].label}</p>
     <img src="./db/img/${routine.mediaName}.webp" alt="${routine.name} ${txt[lang].alt}" class="dp-none dp-block-sm"/>
-    <p class="txt-s5 txt-s4-sm txt-regular txt-dark p-one-line w-100 txt-dark flex-s-0">${routine.name} - ${routine.time ? `${routine.time} ${routine.time > 1 ? txt[lang].txt1 : txt[lang].txt2}` : `${routine.reps} ${routine.reps > 1 ? txt[lang].txt3 : txt[lang].txt4}`}</p>
+    <p class="txt-s5 txt-s4-sm txt-semibold txt-dark p-one-line w-100 txt-dark flex-s-0">${routine.name} - ${routine.time ? `${routine.time} ${routine.time > 1 ? txt[lang].txt1 : txt[lang].txt2}` : `${routine.reps} ${routine.reps > 1 ? txt[lang].txt3 : txt[lang].txt4}`}</p>
+    <p class="dp-none dp-block-sm description txt-dark txt-s5 txt-s4-sm">${routine.steps}</p>
     <section class="btns-container">
       <div class="btn border-${color}" data-btn="rest">
         <p class="txt-s4 txt-bold p-one-line txt-dark dp-none dp-block-sm">${txt[lang].btn}</p>

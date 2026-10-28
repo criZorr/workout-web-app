@@ -399,12 +399,13 @@ const setTimes = (type) => {
 
 const activityActions = (count = 0, seriesCount = 1) => {
   const $title = d.querySelector(".workout-title"),
-    $description = d.querySelector(".workout-description"),
+    $description = d.querySelector(".steps-container"),
     $img = d.querySelector(".workout-img"),
     $countTime = d.querySelector(".dynamic"),
     $counter = $countTime.querySelector("p"),
     $countReps = d.querySelector(".static"),
-    $btnsNext = d.querySelectorAll(".counter-btns");
+    $btnsNext = d.querySelectorAll(".counter-btns"),
+    $style = d.querySelector(".keyframe");
 
   let workoutProps = actualRoutine.workouts[count],
     workoutsLength = actualRoutine.workouts.length,
@@ -416,7 +417,14 @@ const activityActions = (count = 0, seriesCount = 1) => {
       workoutProps.time
         ? `${workoutProps.time} ${workoutProps.time > 1 ? txt[props.lang].txt1 : txt[props.lang].txt2}.`
         : `${workoutProps.reps} ${workoutProps.reps > 1 ? txt[props.lang].txt3 : txt[props.lang].txt4}.`,
-    ];
+    ],
+    steps = workout.instruction_steps[props.lang],
+    anim = "",
+    animTime = workoutProps.time ? workoutProps.time : 30,
+    step = 100 / steps.length,
+    ms = 250 / (animTime * 10);
+
+  console.log(animTime);
 
   speak(msg.join(" "));
 
@@ -491,8 +499,26 @@ const activityActions = (count = 0, seriesCount = 1) => {
   $img.src = `./db/gif/${workout.id}-${workout.media_id}.gif`;
   $img.alt = `${workout.name} image`;
   $title.innerHTML = toSentenceCase(workout.name);
-  $description.innerHTML =
-    workout.instruction_steps[props.lang].join("<br/><br/>");
+  steps.forEach((step) => {
+    const $step = d.createElement("article");
+    $step.classList.add("step");
+    $step.innerHTML = `<p>${step}</p>`;
+    $description.appendChild($step);
+  });
+
+  for (let i = 0; i < steps.length; i++) {
+    let key = `calc(${i * -100}% - ${i * 0.5}rem)`;
+
+    if (i === 0) {
+      anim += `0%, ${(i + 1) * step - ms}% { transform: translateX(0);}`;
+    } else {
+      i === steps.length - 1
+        ? (anim += `${i * step}%, 100% {transform: translateX(${key});}`)
+        : (anim += `${i * step}%, ${(i + 1) * step - ms}% {transform: translateX(${key});}`);
+    }
+  }
+  $style.innerHTML = `@keyframes steps { ${anim} }`;
+  $description.style.animation = `steps ${animTime}s ease-in-out alternate both running`;
 };
 
 const paintInteractive = (clase = false, type = false, obj) => {
@@ -512,6 +538,7 @@ const manageRest = (time, workoutProps, msg) => {
   paintInteractive("action-page", "rest", {
     headerName: actualRoutine.name,
     mediaName: `${workout.id}-${workout.media_id}`,
+    steps: workout.instruction_steps[props.lang].join("<br/><br/>"),
     name: toSentenceCase(workout.name),
     time: workoutProps.time,
     reps: workoutProps.reps,

@@ -23,7 +23,9 @@ export default function ActivityCard(props, routine) {
     <section class="counter dynamic">
       <p class="txt-s4 txt-s3-sm txt-bold txt-${color} workout-time"></p>
     </section>
-    <p class="dp-none dp-block-sm description txt-dark workout-description"></p>
+    <section class="dp-none dp-block-sm description txt-dark workout-description">
+      <section class="steps-container"></section>
+    </section>
     <section class="btns-container">
       <div class="btn border-${color} counter-btns" data-count="0" data-btn="skip">
         <p class="txt-s4 txt-bold p-one-line txt-dark dp-none dp-block-sm">${txt[lang][2]}</p>

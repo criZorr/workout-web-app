@@ -139,7 +139,7 @@ export default function Texts(section) {
   }
   if (section === "list") {
     return {
-      en: ["Search", "Body parts", "All", "Equipment", "Cancel"],
+      en: ["Search", "Body parts", "All", "Equipment", "Back"],
       enDy: {
         body: {
           back: "Back",
@@ -184,7 +184,7 @@ export default function Texts(section) {
           "wheel roller": "Wheel roller",
         },
       },
-      es: ["Busqueda", "Partes del cuerpo", "Todo", "Equipamento", "Cancelar"],
+      es: ["Busqueda", "Partes del cuerpo", "Todo", "Equipamento", "Atrás"],
       esDy: {
         body: {
           back: "Espalda",
