@@ -118,7 +118,7 @@ const handleFile = (input) => {
     reader.readAsText(file);
     reader.addEventListener("load", () => importFile(reader.result));
   } else {
-    window.alert("Use the exported JSON file!");
+    notification(txt[props.lang].not3);
   }
 };
 
@@ -864,7 +864,7 @@ d.addEventListener("click", (e) => {
     obj.workouts = actualEdit.workouts;
 
     if (actualEdit.workouts.length === 0) {
-      alert("You need to add at least one excersice");
+      notification(txt[props.lang].not4);
     } else {
       let index = routines.findIndex((e) => e.id === actualEdit.id);
       index !== -1 ? (routines[index] = obj) : routines.push(obj);

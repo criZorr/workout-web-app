@@ -318,6 +318,8 @@ export default function Texts(section) {
         txt4: "repetition",
         not1: "Exported!",
         not2: "Imported!",
+        not3: "Use the exported JSON file!",
+        not4: "You need to add at least one excersice in the routine before save",
       },
       es: {
         btn1: "Terminar",
@@ -336,6 +338,8 @@ export default function Texts(section) {
         txt4: "repetición",
         not1: "¡Exportado!",
         not2: "¡Importado!",
+        not3: "¡Usa el archivo JSON exportado!",
+        not4: "Necesitas al menos un ejercicio en la rutina antes de guardar",
       },
     };
   }
